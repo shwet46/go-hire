@@ -1,9 +1,13 @@
-import Image from "next/image";
+import Hero from "@/components/Hero";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
     <>
-    <h1>hii, this is under progress</h1>
+    <main  className="min-h-screen antialiased">
+      <Hero/>
+      <Footer/>
+    </main>
     </>
   );
 }
