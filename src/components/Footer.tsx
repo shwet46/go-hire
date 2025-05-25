@@ -12,7 +12,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-zinc-950 border-t border-zinc-800">
+    <footer className="bg-zinc-950 border-t mt-10 border-zinc-800">
       <div className="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         {/* Logo and description */}
         <div className="mb-8 text-center md:text-left">
