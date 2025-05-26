@@ -1,22 +1,23 @@
-import mongoose, { Schema, Document, model } from "mongoose";
+// src/models/Application.ts
 
-export interface IApplication extends Document {
-  student: mongoose.Types.ObjectId;
-  job: mongoose.Types.ObjectId;
-  resumeUrl?: string;
-  skillsSnapshot?: string[];
-  appliedAt: Date;
-}
+import mongoose from 'mongoose';
+import { IApplication, ApplicationStatus, IUser, IJob } from '../types/models';
 
-const ApplicationSchema = new Schema<IApplication>(
-  {
-    student: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    job: { type: Schema.Types.ObjectId, ref: "Job", required: true },
-    resumeUrl: String,
-    skillsSnapshot: [String],
-    appliedAt: { type: Date, default: Date.now },
-  },
-  { timestamps: true }
-);
+const ApplicationSchema = new mongoose.Schema<IApplication>({
+  studentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Link to the student who applied
+  jobId: { type: mongoose.Schema.Types.ObjectId, ref: 'Job', required: true }, // Link to the job listing
+  status: { type: String, enum: ['applied', 'reviewed', 'interviewed', 'offered', 'rejected'], default: 'applied', required: true },
+  pointsAwarded: { type: Number }, // Points awarded for applying (e.g., 5 points) [cite: 3]
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+});
 
-export default mongoose.models.Application || model<IApplication>("Application", ApplicationSchema);
+// Ensure a student can only apply to a specific job once
+ApplicationSchema.index({ studentId: 1, jobId: 1 }, { unique: true });
+
+ApplicationSchema.pre('save', function (next) {
+  this.updatedAt = new Date();
+  next();
+});
+
+export default mongoose.models.Application as mongoose.Model<IApplication> || mongoose.model<IApplication>('Application', ApplicationSchema);

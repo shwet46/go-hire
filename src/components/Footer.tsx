@@ -96,7 +96,7 @@ const Footer = () => {
           </p>
           <div className="text-zinc-500 text-xs flex items-center gap-2">
             <span className="hidden sm:inline">Made with</span>
-            <span className="text-pink-400 text-lg">♥</span>
+            <span className="text-pink-500 text-lg">♥</span>
             <span>by <a href="https://github.com/shwet46" className="hover:text-indigo-400 underline">Shweta Behera</a></span>
           </div>
         </div>

@@ -1,12 +1,21 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { IconLogin, IconLogout } from "@tabler/icons-react"; // Only include icons relevant to this component
 import type { JSX } from "react";
+
+// cn utility function (assuming it's from "@/lib/utils")
+// This function is typically used to conditionally join Tailwind CSS classes.
+function cn(...inputs: (string | undefined | null | boolean)[]) {
+  return inputs.filter(Boolean).join(" ");
+}
 
 export const FloatingNav = ({
   navItems,
   className,
+  isLoggedIn,
+  onSignInOut,
+  userRole, // Added userRole prop
 }: {
   navItems: {
     name: string;
@@ -14,6 +23,9 @@ export const FloatingNav = ({
     icon?: JSX.Element;
   }[];
   className?: string;
+  isLoggedIn: boolean;
+  onSignInOut: () => void;
+  userRole: string; // Added userRole prop type
 }) => {
   return (
     <motion.div
@@ -35,8 +47,29 @@ export const FloatingNav = ({
           <span className="hidden sm:block text-sm">{navItem.name}</span>
         </a>
       ))}
-      <button className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full">
-        <span>Sign up</span>
+
+      {/* Display user role if logged in */}
+      {isLoggedIn && userRole && (
+        <span className="text-sm font-medium text-blue-600 dark:text-blue-400 ml-4">
+          Role: {userRole}
+        </span>
+      )}
+
+      <button
+        onClick={onSignInOut}
+        className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full flex items-center space-x-2"
+      >
+        {isLoggedIn ? (
+          <>
+            <IconLogout className="h-4 w-4" />
+            <span>Sign Out</span>
+          </>
+        ) : (
+          <>
+            <IconLogin className="h-4 w-4" />
+            <span>Sign In</span>
+          </>
+        )}
         <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent h-px" />
       </button>
     </motion.div>

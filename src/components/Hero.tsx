@@ -106,11 +106,6 @@ const FeaturesSection = () => {
       description: "Compete with classmates and peers on skill-based leaderboards"
     },
     {
-      icon: Gift,
-      title: "Exclusive Rewards",
-      description: "Redeem points for premium resources, courses, and career tools"
-    },
-    {
       icon: TrendingUp,
       title: "Track Progress",
       description: "Monitor your career development with detailed analytics and milestones"
@@ -124,7 +119,12 @@ const FeaturesSection = () => {
       icon: Zap,
       title: "Real-time Updates",
       description: "Get instant notifications about new opportunities and point earnings"
-    }
+    },
+    {
+      icon: Star,
+      title: "Practice & Skill Development",
+      description: "Sharpen your skills with our practice feature and prepare for real-world challenges"
+    },
   ];
 
   return (
