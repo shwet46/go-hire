@@ -1,9 +1,9 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import clientPromise from './lib/mongodb'; // MongoDB client for adapter
-import User from './models/User'; // Your Mongoose User model
-import { IUser } from './types/models'; // User interface for type hints
+import clientPromise from './lib/mongodb'; 
+import User from './models/User';
+
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
   },
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user}) {
       try {
         let existingUser = await User.findOne({ email: user.email });
 
@@ -26,8 +26,8 @@ export const authOptions: NextAuthOptions = {
             email: user.email,
             name: user.name,
             image: user.image,
-            role: 'student', // Default role for new sign-ups
-            points: 0,       // Initialize points for students
+            role: 'student', 
+            points: 0,       
           });
           user.role = 'student';
           user.id = existingUser._id.toString();

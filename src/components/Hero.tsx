@@ -1,5 +1,5 @@
 import React from 'react';
-import { Briefcase, Users, Target, Zap, Star, ArrowRight, CheckCircle, Building, TrendingUp, Trophy, Gift, UserPlus, Upload } from 'lucide-react';
+import { Briefcase, Users, Target, Zap, Star, ArrowRight, CheckCircle, Building, TrendingUp, Trophy, UserPlus, Upload } from 'lucide-react';
 import { BackgroundBeams } from "./ui/background-beams";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,13 +14,16 @@ const StatsSection = () => {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 mb-12">
-      {stats.map((stat, index) => (
-        <div key={index} className="text-center p-4 rounded-lg bg-neutral-900/50 backdrop-blur-sm border border-neutral-800">
-          <stat.icon className="mx-auto mb-2 text-indigo-400" size={24} />
-          <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.value}</div>
-          <div className="text-sm text-neutral-400">{stat.label}</div>
-        </div>
-      ))}
+      {stats.map((stat, index) => {
+        const StatIcon = stat.icon;
+        return (
+          <div key={index} className="text-center p-4 rounded-lg bg-neutral-900/50 backdrop-blur-sm border border-neutral-800">
+            <StatIcon className="mx-auto mb-2 text-indigo-400" size={24} />
+            <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.value}</div>
+            <div className="text-sm text-neutral-400">{stat.label}</div>
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -74,20 +77,23 @@ const GameMechanicsSection = () => {
         Complete career-building tasks to earn points, climb the leaderboard, and unlock exclusive rewards
       </p>
       <div className="grid md:grid-cols-3 gap-6">
-        {tasks.map((task, index) => (
-          <div key={index} className="p-6 rounded-xl bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 backdrop-blur-sm border border-neutral-700 hover:border-indigo-500/50 transition-all duration-300 group">
-            <div className="flex items-center justify-between mb-4">
-              <div className="bg-gradient-to-r from-indigo-500 to-purple-500 w-12 h-12 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <task.icon className="text-white" size={24} />
+        {tasks.map((task, index) => {
+          const TaskIcon = task.icon;
+          return (
+            <div key={index} className="p-6 rounded-xl bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 backdrop-blur-sm border border-neutral-700 hover:border-indigo-500/50 transition-all duration-300 group">
+              <div className="flex items-center justify-between mb-4">
+                <div className="bg-gradient-to-r from-indigo-500 to-purple-500 w-12 h-12 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <TaskIcon className="text-white" size={24} />
+                </div>
+                <div className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-semibold">
+                  {task.points}
+                </div>
               </div>
-              <div className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-semibold">
-                {task.points}
-              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">{task.title}</h3>
+              <p className="text-neutral-400 text-sm">{task.description}</p>
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">{task.title}</h3>
-            <p className="text-neutral-400 text-sm">{task.description}</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -129,15 +135,18 @@ const FeaturesSection = () => {
 
   return (
     <div className="grid md:grid-cols-3 gap-8 mt-16">
-      {features.map((feature, index) => (
-        <div key={index} className="p-6 rounded-xl bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 backdrop-blur-sm border border-neutral-700 hover:border-indigo-500/50 transition-all duration-300 group">
-          <div className="bg-gradient-to-r from-indigo-500 to-purple-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-            <feature.icon className="text-white" size={24} />
+      {features.map((feature, index) => {
+        const FeatureIcon = feature.icon;
+        return (
+          <div key={index} className="p-6 rounded-xl bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 backdrop-blur-sm border border-neutral-700 hover:border-indigo-500/50 transition-all duration-300 group">
+            <div className="bg-gradient-to-r from-indigo-500 to-purple-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+              <FeatureIcon className="text-white" size={24} />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
+            <p className="text-neutral-400">{feature.description}</p>
           </div>
-          <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
-          <p className="text-neutral-400">{feature.description}</p>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };
@@ -196,7 +205,7 @@ const TestimonialsSection = () => {
                 {testimonial.points}
               </div>
             </div>
-            <p className="text-neutral-300 mb-4 italic">"{testimonial.content}"</p>
+            <p className="text-neutral-300 mb-4 italic">&quot;{testimonial.content}&quot;</p>
             <div className="flex items-center">
               <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white font-semibold">
                 {testimonial.name.charAt(0)}
@@ -299,8 +308,7 @@ function Hero() {
               <button className="p-[3px] relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
                 <div className="px-8 py-3 bg-black rounded-[6px] relative transition duration-200 text-white hover:bg-transparent flex items-center space-x-2">
-                  <Star size={18} />
-                  <span>Join the Game</span>
+                  <span>Start Applying</span>
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </div>
               </button>

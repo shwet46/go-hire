@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
 
 interface Company {
   id: string
@@ -70,6 +71,7 @@ const CompanyLogoTabs: React.FC<CompanyLogoTabsProps> = ({
   const companies = propCompanies || defaultCompanies
   const [activeId, setActiveId] = useState<string>(activeCompanyId || companies[0]?.id || '')
   const [isHovered, setIsHovered] = useState(false)
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
 
   const scrollContainerRef1 = useRef<HTMLDivElement>(null)
   const scrollContainerRef2 = useRef<HTMLDivElement>(null)
@@ -82,6 +84,16 @@ const CompanyLogoTabs: React.FC<CompanyLogoTabsProps> = ({
   // Create seamless infinite scroll by tripling the companies for each row
   const tripleFirstRow = [...firstRowCompanies, ...firstRowCompanies, ...firstRowCompanies]
   const tripleSecondRow = [...secondRowCompanies, ...secondRowCompanies, ...secondRowCompanies]
+
+  // Handle image errors
+  const handleImageError = (companyId: string) => {
+    setImageErrors(prev => new Set(prev).add(companyId))
+  }
+
+  // Generate fallback image URL
+  const getFallbackImageUrl = (companyName: string) => {
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(companyName)}&background=374151&color=8b5cf6&size=64&font-size=0.5`
+  }
 
   // Auto-scroll animation (right to left for first row, left to right for second row)
   useEffect(() => {
@@ -153,62 +165,68 @@ const CompanyLogoTabs: React.FC<CompanyLogoTabsProps> = ({
   const handleMouseEnter = () => setIsHovered(true)
   const handleMouseLeave = () => setIsHovered(false)
 
-  const renderCompanyButton = (company: Company, idx: number) => (
-    <button
-      key={`${company.id}-${idx}`}
-      onClick={() => handleCompanySelect(company)}
-      className={`
-        group relative flex-shrink-0 p-2 transition-all duration-300 transform
-        hover:scale-110 hover:-translate-y-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50
-        ${activeId === company.id ? 'scale-105' : ''}
-      `}
-      title={`${company.name} - ${company.category}`}
-      tabIndex={-1}
-      style={{ background: 'none', border: 'none', outline: 'none', cursor: 'pointer' }}
-    >
-      <div className="flex flex-col items-center space-y-2 min-w-[85px]">
-        {/* Logo container - no border, no bg */}
-        <div className="relative w-16 h-16 rounded-xl overflow-hidden transition-all duration-300">
-          <img
-            src={company.logo}
-            alt={`${company.name} logo`}
-            className="w-full h-full object-contain p-2 transition-transform duration-300 group-hover:scale-110"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement
-              target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(company.name)}&background=374151&color=8b5cf6&size=64&font-size=0.5`
-            }}
-          />
-          {/* Active indicator */}
-          {activeId === company.id && (
-            <div className="absolute -top-2 -right-2 w-5 h-5 bg-gradient-to-r from-violet-500 to-purple-500 rounded-full shadow-lg">
-              <div className="w-full h-full bg-gradient-to-r from-violet-400 to-purple-400 rounded-full animate-pulse"></div>
+  const renderCompanyButton = (company: Company, idx: number) => {
+    const hasError = imageErrors.has(company.id)
+    const imageSrc = hasError ? getFallbackImageUrl(company.name) : company.logo
+
+    return (
+      <button
+        key={`${company.id}-${idx}`}
+        onClick={() => handleCompanySelect(company)}
+        className={`
+          group relative flex-shrink-0 p-2 transition-all duration-300 transform
+          hover:scale-110 hover:-translate-y-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50
+          ${activeId === company.id ? 'scale-105' : ''}
+        `}
+        title={`${company.name} - ${company.category}`}
+        tabIndex={-1}
+        style={{ background: 'none', border: 'none', outline: 'none', cursor: 'pointer' }}
+      >
+        <div className="flex flex-col items-center space-y-2 min-w-[85px]">
+          {/* Logo container - no border, no bg */}
+          <div className="relative w-16 h-16 rounded-xl overflow-hidden transition-all duration-300">
+            <Image
+              src={imageSrc}
+              alt={`${company.name} logo`}
+              width={64}
+              height={64}
+              className="w-full h-full object-contain p-2 transition-transform duration-300 group-hover:scale-110"
+              onError={() => handleImageError(company.id)}
+              priority={idx < 10} // Prioritize first 10 images
+              unoptimized={hasError} // Don't optimize fallback images
+            />
+            {/* Active indicator */}
+            {activeId === company.id && (
+              <div className="absolute -top-2 -right-2 w-5 h-5 bg-gradient-to-r from-violet-500 to-purple-500 rounded-full shadow-lg">
+                <div className="w-full h-full bg-gradient-to-r from-violet-400 to-purple-400 rounded-full animate-pulse"></div>
+              </div>
+            )}
+          </div>
+          {/* Company info */}
+          <div className="text-center space-y-1">
+            <div className={`
+              text-sm font-bold truncate max-w-[80px] transition-all duration-300
+              ${activeId === company.id
+                ? 'text-violet-300'
+                : 'text-zinc-200 group-hover:text-white'
+              }
+            `}>
+              {company.name}
             </div>
-          )}
-        </div>
-        {/* Company info */}
-        <div className="text-center space-y-1">
-          <div className={`
-            text-sm font-bold truncate max-w-[80px] transition-all duration-300
-            ${activeId === company.id
-              ? 'text-violet-300'
-              : 'text-zinc-200 group-hover:text-white'
-            }
-          `}>
-            {company.name}
-          </div>
-          <div className={`
-            text-xs font-medium truncate max-w-[80px] transition-colors duration-300
-            ${activeId === company.id
-              ? 'text-purple-300/90'
-              : 'text-zinc-400 group-hover:text-zinc-300'
-            }
-          `}>
-            {company.category}
+            <div className={`
+              text-xs font-medium truncate max-w-[80px] transition-colors duration-300
+              ${activeId === company.id
+                ? 'text-purple-300/90'
+                : 'text-zinc-400 group-hover:text-zinc-300'
+              }
+            `}>
+              {company.category}
+            </div>
           </div>
         </div>
-      </div>
-    </button>
-  )
+      </button>
+    )
+  }
 
   return (
     <div className={className}>
@@ -263,13 +281,23 @@ const CompanyLogoTabs: React.FC<CompanyLogoTabsProps> = ({
 
 export default CompanyLogoTabs
 
-
 export const CompanyTabsExample: React.FC = () => {
   const [selectedCompany, setSelectedCompany] = useState<any>(null)
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
 
-  const handleCompanySelect = (company: any) => {
+  const handleCompanySelect = (company: Company) => {
     setSelectedCompany(company)
     console.log('Selected company:', company)
+  }
+
+  // Fallback image URL generator
+  const getFallbackImageUrl = (companyName: string) => {
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(companyName)}&background=374151&color=8b5cf6&size=64&font-size=0.5`
+  }
+
+  // Handle image error
+  const handleImageError = (companyId: string) => {
+    setImageErrors(prev => new Set(prev).add(companyId))
   }
 
   return (
@@ -291,10 +319,17 @@ export const CompanyTabsExample: React.FC = () => {
               <div className="relative z-10">
                 <div className="flex items-start space-x-8 mb-8">
                   <div className="relative">
-                    <img
-                      src={selectedCompany.logo}
+                    <Image
+                      src={imageErrors.has(selectedCompany.id) 
+                        ? getFallbackImageUrl(selectedCompany.name) 
+                        : selectedCompany.logo
+                      }
                       alt={`${selectedCompany.name} logo`}
-                      className="w-24 h-24 rounded-2xl p-4 shadow-xl"
+                      width={96}
+                      height={96}
+                      className="w-24 h-24 rounded-2xl p-4 shadow-xl object-contain"
+                      onError={() => handleImageError(selectedCompany.id)}
+                      unoptimized={imageErrors.has(selectedCompany.id)}
                     />
                     <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
                       <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>

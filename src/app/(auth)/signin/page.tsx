@@ -1,17 +1,16 @@
 'use client';
 
-import { signIn, getProviders, LiteralUnion, ClientSafeProvider } from 'next-auth/react';
-import { BuiltInProviderType } from 'next-auth/providers';
+import { signIn, getProviders, ClientSafeProvider } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 export default function SignInPage() {
-  const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType>, ClientSafeProvider> | null>(null);
+  const [providers, setProviders] = useState<Record<string, ClientSafeProvider> | null>(null);
 
   useEffect(() => {
     const fetchProviders = async () => {
       const res = await getProviders();
-      setProviders(res);
+      setProviders(res ?? null); // Defensive fallback
     };
     fetchProviders();
   }, []);
@@ -32,12 +31,12 @@ export default function SignInPage() {
         {Object.values(providers).map((provider) => (
           <div key={provider.id} className="mb-4">
             <button
-              className="flex items-center px-6 py-3 border border-gray-300 rounded-md shadow-sm text-base font-medium text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               onClick={() => signIn(provider.id, { callbackUrl: '/' })}
               type="button"
+              className="flex items-center px-6 py-3 border border-gray-300 rounded-md shadow-sm text-base font-medium text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              {provider.name === 'Google' && (
-                <svg className="w-5 h-5 mr-3" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {provider.name.toLowerCase().includes('google') && (
+                <svg className="w-5 h-5 mr-3" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                   <path d="M44.5 20H24V28.5H35.25C34.72 31.25 33.02 33.56 30.56 35.11V40.35H36.21C39.99 36.85 42.5 31.84 42.5 26C42.5 24.32 42.27 22.75 41.83 21.25L44.5 20Z" fill="#4285F4"/>
                   <path d="M24 44C29.47 44 34.19 42.13 37.89 39.04L30.56 35.11C28.53 36.46 26.04 37.3 24 37.3C19.74 37.3 16.03 34.42 14.73 30.57L8.47 33.01V38.5C10.74 41.56 14.9 44 24 44Z" fill="#34A853"/>
                   <path d="M14.73 30.57C14.28 29.28 14.02 27.91 14.02 26.5C14.02 25.09 14.28 23.72 14.73 22.43L8.47 19.99V14.5C6.15 17.58 4.72 21.84 4.72 26.5C4.72 31.16 6.15 35.42 8.47 38.5L14.73 30.57Z" fill="#FBBC05"/>
