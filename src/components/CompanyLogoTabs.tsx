@@ -282,7 +282,7 @@ const CompanyLogoTabs: React.FC<CompanyLogoTabsProps> = ({
 export default CompanyLogoTabs
 
 export const CompanyTabsExample: React.FC = () => {
-  const [selectedCompany, setSelectedCompany] = useState<any>(null)
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null)
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
 
   const handleCompanySelect = (company: Company) => {

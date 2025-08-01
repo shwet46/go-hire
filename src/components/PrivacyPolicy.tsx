@@ -13,7 +13,7 @@ const PrivacyPolicy = () => {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-zinc-100 mb-4">Introduction</h2>
             <p>
-              Welcome to GoHire ("we", "our", or "us"). We respect your privacy and are committed to protecting your personal data.
+              Welcome to GoHire (&ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;). We respect your privacy and are committed to protecting your personal data.
               This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our job portal platform and services.
             </p>
           </section>
@@ -99,7 +99,7 @@ const PrivacyPolicy = () => {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-zinc-100 mb-4">Children's Privacy</h2>
+            <h2 className="text-2xl font-semibold text-zinc-100 mb-4">Children&apos;s Privacy</h2>
             <p>
               Our services are not intended for individuals under the age of 13. We do not knowingly collect personal data from children under 13.
               If you become aware that a child has provided us with personal data, please contact us.
@@ -110,7 +110,7 @@ const PrivacyPolicy = () => {
             <h2 className="text-2xl font-semibold text-zinc-100 mb-4">Changes to This Privacy Policy</h2>
             <p>
               We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page
-              and updating the "Last updated" date. You are advised to review this Privacy Policy periodically for any changes.
+              and updating the &ldquo;Last updated&rdquo; date. You are advised to review this Privacy Policy periodically for any changes.
             </p>
           </section>
 

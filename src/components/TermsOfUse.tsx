@@ -13,7 +13,7 @@ const TermsOfUse = () => {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-zinc-100 mb-4">Agreement to Terms</h2>
             <p>
-              By accessing and using GoHire's website and services ("Services"), you agree to be bound by these Terms of Use ("Terms").
+              By accessing and using GoHire&apos;s website and services (&ldquo;Services&rdquo;), you agree to be bound by these Terms of Use (&ldquo;Terms&rdquo;).
               If you do not agree to these Terms, please do not use our Services.
             </p>
           </section>
@@ -59,7 +59,7 @@ const TermsOfUse = () => {
             <p className="mt-2">You represent and warrant that:</p>
             <ul className="list-disc pl-6">
               <li>You own or control all rights to the content you post</li>
-              <li>The content does not infringe upon any third party's rights</li>
+              <li>The content does not infringe upon any third party&apos;s rights</li>
               <li>The content is not harmful, offensive, illegal, or otherwise objectionable</li>
             </ul>
           </section>
@@ -69,7 +69,7 @@ const TermsOfUse = () => {
             <p>You agree not to:</p>
             <ul className="list-disc pl-6">
               <li>Use our Services for any illegal purpose</li>
-              <li>Attempt to gain unauthorized access to our systems or other users' accounts</li>
+              <li>Attempt to gain unauthorized access to our systems or other users&apos; accounts</li>
               <li>Interfere with or disrupt the operation of our Services</li>
               <li>Transmit any viruses, malware, or other harmful code</li>
               <li>Collect or harvest user data without permission</li>
@@ -81,7 +81,7 @@ const TermsOfUse = () => {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-zinc-100 mb-4">Disclaimer of Warranties</h2>
             <p>
-              The Services are provided "as is" and "as available," without any warranties of any kind, either express or implied. We do not warrant that:
+              The Services are provided &ldquo;as is&rdquo; and &ldquo;as available,&rdquo; without any warranties of any kind, either express or implied. We do not warrant that:
             </p>
             <ul className="list-disc pl-6">
               <li>The Services will be uninterrupted or error-free</li>

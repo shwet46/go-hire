@@ -1,356 +1,147 @@
 import React from 'react';
-import { Briefcase, Users, Target, Zap, Star, ArrowRight, CheckCircle, Building, TrendingUp, Trophy, UserPlus, Upload } from 'lucide-react';
+import {ArrowRight, CheckCircle, Users, Trophy, Gift} from 'lucide-react';
 import { BackgroundBeams } from "./ui/background-beams";
 import Link from "next/link";
 import Image from "next/image";
-
-const StatsSection = () => {
-  const stats = [
-    { icon: Users, label: "Active Students", value: "10K+" },
-    { icon: Building, label: "Partner Companies", value: "500+" },
-    { icon: Briefcase, label: "Jobs Available", value: "2K+" },
-    { icon: Trophy, label: "Points Awarded", value: "5M+" }
-  ];
-
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 mb-12">
-      {stats.map((stat, index) => {
-        const StatIcon = stat.icon;
-        return (
-          <div key={index} className="text-center p-4 rounded-lg bg-neutral-900/50 backdrop-blur-sm border border-neutral-800">
-            <StatIcon className="mx-auto mb-2 text-indigo-400" size={24} />
-            <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.value}</div>
-            <div className="text-sm text-neutral-400">{stat.label}</div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-const GameMechanicsSection = () => {
-  const tasks = [
-    {
-      icon: CheckCircle,
-      title: "Daily Sign-In",
-      points: "10 pts",
-      description: "Check in daily to earn consistent points and maintain your streak"
-    },
-    {
-      icon: UserPlus,
-      title: "Refer Friends",
-      points: "200 pts",
-      description: "Invite peers to join and earn points when they successfully register"
-    },
-    {
-      icon: Briefcase,
-      title: "Apply for Jobs",
-      points: "5 pts",
-      description: "Each job application through our portal earns you points"
-    },
-    {
-      icon: Upload,
-      title: "Upload Resume",
-      points: "20 pts",
-      description: "Keep your profile updated with your latest resume"
-    },
-    {
-      icon: Target,
-      title: "Complete Profile",
-      points: "50 pts",
-      description: "Fill out all profile fields including education and skills"
-    },
-    {
-      icon: Trophy,
-      title: "Climb Leaderboard",
-      points: "Bonus",
-      description: "Compete with peers and unlock milestone rewards"
-    }
-  ];
-
-  return (
-    <div className="mt-20">
-      <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-4">
-        Earn Points, Get Rewarded
-      </h2>
-      <p className="text-center text-neutral-400 mb-12 max-w-2xl mx-auto">
-        Complete career-building tasks to earn points, climb the leaderboard, and unlock exclusive rewards
-      </p>
-      <div className="grid md:grid-cols-3 gap-6">
-        {tasks.map((task, index) => {
-          const TaskIcon = task.icon;
-          return (
-            <div key={index} className="p-6 rounded-xl bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 backdrop-blur-sm border border-neutral-700 hover:border-indigo-500/50 transition-all duration-300 group">
-              <div className="flex items-center justify-between mb-4">
-                <div className="bg-gradient-to-r from-indigo-500 to-purple-500 w-12 h-12 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <TaskIcon className="text-white" size={24} />
-                </div>
-                <div className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-semibold">
-                  {task.points}
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2">{task.title}</h3>
-              <p className="text-neutral-400 text-sm">{task.description}</p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
-
-const FeaturesSection = () => {
-  const features = [
-    {
-      icon: Target,
-      title: "Smart Job Matching",
-      description: "Get matched with jobs that fit your skills, experience, and career goals"
-    },
-    {
-      icon: Users,
-      title: "Peer Competition",
-      description: "Compete with classmates and peers on skill-based leaderboards"
-    },
-    {
-      icon: TrendingUp,
-      title: "Track Progress",
-      description: "Monitor your career development with detailed analytics and milestones"
-    },
-    {
-      icon: Building,
-      title: "Direct Recruiter Access",
-      description: "Connect directly with recruiters from top companies actively hiring"
-    },
-    {
-      icon: Zap,
-      title: "Real-time Updates",
-      description: "Get instant notifications about new opportunities and point earnings"
-    },
-    {
-      icon: Star,
-      title: "Practice & Skill Development",
-      description: "Sharpen your skills with our practice feature and prepare for real-world challenges"
-    },
-  ];
-
-  return (
-    <div className="grid md:grid-cols-3 gap-8 mt-16">
-      {features.map((feature, index) => {
-        const FeatureIcon = feature.icon;
-        return (
-          <div key={index} className="p-6 rounded-xl bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 backdrop-blur-sm border border-neutral-700 hover:border-indigo-500/50 transition-all duration-300 group">
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-              <FeatureIcon className="text-white" size={24} />
-            </div>
-            <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
-            <p className="text-neutral-400">{feature.description}</p>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-const TestimonialsSection = () => {
-  const testimonials = [
-    {
-      name: "Priya Sharma",
-      role: "Computer Science Student",
-      company: "IIT Delhi",
-      content: "I earned 1,500 points in my first week! The gamification made job searching actually fun and engaging.",
-      rating: 5,
-      points: "Top 10 on leaderboard"
-    },
-    {
-      name: "Rahul Gupta",
-      role: "Final Year Student",
-      company: "NIT Trichy",
-      content: "Referred 5 friends and earned 1,000 bonus points. The referral system is amazing!",
-      rating: 5,
-      points: "Referral Champion"
-    },
-    {
-      name: "Sneha Patel",
-      role: "Fresher",
-      company: "Recently Placed",
-      content: "Got my first job through the portal and the points I earned helped me access premium interview prep!",
-      rating: 5,
-      points: "Mission Accomplished"
-    },
-    {
-      name: "Arjun Singh",
-      role: "HR Manager",
-      company: "TechStart Inc",
-      content: "The point-based ranking helps us identify the most engaged and motivated candidates quickly.",
-      rating: 5,
-      points: "Recruiter Verified"
-    }
-  ];
-
-  return (
-    <div className="mt-20">
-      <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-12">
-        Success Stories from Our Community
-      </h2>
-      <div className="grid md:grid-cols-2 gap-8">
-        {testimonials.map((testimonial, index) => (
-          <div key={index} className="p-6 rounded-xl bg-neutral-900/60 backdrop-blur-sm border border-neutral-800 hover:border-indigo-500/30 transition-all duration-300">
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="text-yellow-400 fill-current" size={16} />
-                ))}
-              </div>
-              <div className="bg-indigo-500/20 text-indigo-400 px-2 py-1 rounded text-xs">
-                {testimonial.points}
-              </div>
-            </div>
-            <p className="text-neutral-300 mb-4 italic">&quot;{testimonial.content}&quot;</p>
-            <div className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white font-semibold">
-                {testimonial.name.charAt(0)}
-              </div>
-              <div className="ml-3">
-                <div className="text-white font-medium">{testimonial.name}</div>
-                <div className="text-neutral-400 text-sm">{testimonial.role} • {testimonial.company}</div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const CTASection = () => {
-  return (
-    <div className="mt-20 text-center">
-      <div className="bg-gradient-to-r from-indigo-900/30 to-purple-900/30 rounded-2xl p-8 md:p-12 backdrop-blur-sm border border-indigo-500/20">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-          Start Your Career Journey Today
-        </h2>
-        <p className="text-xl text-neutral-300 mb-8 max-w-2xl mx-auto">
-          Join thousands of students earning points, building careers, and landing dream jobs. Your journey to success starts with a single click.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/auth/signin">
-            <button className="p-[3px] relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-              <div className="px-8 py-3 bg-black rounded-[6px] relative transition duration-200 text-white hover:bg-transparent flex items-center space-x-2">
-                <Trophy size={18} />
-                <span>Start Earning Points</span>
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </div>
-            </button>
-          </Link>
-          <Link href="/jobs">
-            <button className="px-8 py-3 border border-neutral-600 rounded-lg text-white hover:border-indigo-500 transition-colors duration-200 flex items-center space-x-2 justify-center">
-              <Briefcase size={18} />
-              <span>Browse Jobs</span>
-            </button>
-          </Link>
-        </div>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-          <div className="bg-neutral-800/50 rounded-lg p-4">
-            <div className="text-2xl font-bold text-green-400 mb-1">Free</div>
-            <div className="text-sm text-neutral-400">Always free for students</div>
-          </div>
-          <div className="bg-neutral-800/50 rounded-lg p-4">
-            <div className="text-2xl font-bold text-indigo-400 mb-1">Instant</div>
-            <div className="text-sm text-neutral-400">Start earning points immediately</div>
-          </div>
-          <div className="bg-neutral-800/50 rounded-lg p-4">
-            <div className="text-2xl font-bold text-purple-400 mb-1">Rewarding</div>
-            <div className="text-sm text-neutral-400">Unlock exclusive career tools</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const TrustIndicators = () => {
-  const partners = [
-    "Student Placement Cell", "Career Development Centers", "University Partners", "Industry Leaders", "Startup Ecosystem"
-  ];
-
-  return (
-    <div className="mt-16">
-      <p className="text-center text-neutral-500 mb-8">Trusted by educational institutions and industry partners</p>
-      <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-        {partners.map((partner, index) => (
-          <div key={index} className="text-neutral-400 font-medium text-sm">
-            {partner}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+import TrustIndicators from "./Hero/TrustIndicators";
+import GameMechanicsSection from './Hero/GameMechanicsSection';
+import FeaturesSection from './Hero/FeaturesSection';
+import StatsSection from './Hero/StatsSection';
+import TestimonialsSection from './Hero/TestimonialsSection';
+import CTASection from './Hero/CTASection';
 
 function Hero() {
   return (
-    <div className="min-h-screen w-full rounded-md bg-neutral-950 relative flex flex-col antialiased">
-      <div className="w-full max-w-6xl mx-auto px-6 sm:px-10 md:px-16 pt-28 pb-20 z-10 relative">
-        {/* Main Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="flex items-center justify-center gap-3 text-4xl md:text-6xl font-extrabold bg-gradient-to-r pb-4 from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-6">
-            <Image src="/gohire.png" alt="GoHire Logo" width={48} height={48} />
-            GoHire
-          </h1>
-
-          <p className="text-base md:text-xl font-normal text-neutral-300 mb-8 max-w-3xl mx-auto">
-            Transform your job search into an engaging game! Earn points by completing career tasks, compete on leaderboards, refer friends, and unlock exclusive rewards while landing your dream job.
-          </p>
-
-          <div className="flex justify-center mb-8">
-            <Link href="/auth/signin">
-              <button className="p-[3px] relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-                <div className="px-8 py-3 bg-black rounded-[6px] relative transition duration-200 text-white hover:bg-transparent flex items-center space-x-2">
-                  <span>Start Applying</span>
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                </div>
-              </button>
-            </Link>
+    <div className="min-h-screen w-full mt-10 rounded-md bg-neutral-950 relative flex flex-col antialiased">
+      <div className="w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-16 pt-28 pb-20 z-10 relative">
+        {/* Main Hero Section - Left/Right Layout */}
+        <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+          {/* Left Side - Content */}
+          <div className="space-y-8">
+            <div className="flex items-center gap-3 mb-6">
+              <Image src="/gohire.png" alt="GoHire Logo" width={56} height={56} />
+              <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                GoHire
+              </h1>
+            </div>
+            
+            <h2 className="text-2xl md:text-4xl font-bold text-white leading-tight">
+              Transform your job search into an 
+              <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent"> engaging game</span>
+            </h2>
+            
+            <p className="text-lg text-neutral-300 leading-relaxed max-w-xl">
+              Earn points by completing career tasks, compete on leaderboards, refer friends, and unlock exclusive rewards while landing your dream job.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/auth/signin">
+                <button className="p-[3px] relative group w-full sm:w-auto">
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
+                  <div className="px-8 py-4 bg-black rounded-[6px] relative transition duration-200 text-white hover:bg-transparent flex items-center justify-center space-x-2 font-semibold">
+                    <span>Get Started </span>
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </button>
+              </Link>
+            </div>
+            
+            {/* Key Benefits */}
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3 text-neutral-300">
+                <CheckCircle size={20} className="text-green-400 flex-shrink-0" />
+                <span className="text-base">Earn points for every career action you take</span>
+              </div>
+              <div className="flex items-center space-x-3 text-neutral-300">
+                <CheckCircle size={20} className="text-green-400 flex-shrink-0" />
+                <span className="text-base">Compete with peers on global leaderboards</span>
+              </div>
+              <div className="flex items-center space-x-3 text-neutral-300">
+                <CheckCircle size={20} className="text-green-400 flex-shrink-0" />
+                <span className="text-base">Unlock exclusive rewards and job opportunities</span>
+              </div>
+            </div>
           </div>
-
-          {/* Key Benefits */}
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-neutral-400">
-            <div className="flex items-center space-x-1">
-              <CheckCircle size={16} className="text-green-400" />
-              <span>Earn points for every action</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <CheckCircle size={16} className="text-green-400" />
-              <span>Compete with peers</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <CheckCircle size={16} className="text-green-400" />
-              <span>Unlock exclusive rewards</span>
+          
+          {/* Right Side - Visual Elements */}
+          <div className="relative lg:pl-8">
+            {/* Floating Cards */}
+            <div className="relative h-96 lg:h-[500px]">
+              {/* Main Card */}
+              <div className="absolute top-0 right-0 w-80 h-64 bg-gradient-to-br from-indigo-900/40 to-purple-900/40 rounded-2xl border border-indigo-500/20 backdrop-blur-sm p-6 transform rotate-3 hover:rotate-0 transition-transform duration-300">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-white font-bold text-lg">Your Progress</h3>
+                  <Trophy className="text-yellow-400" size={24} />
+                </div>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-neutral-300">Points Earned</span>
+                    <span className="text-indigo-400 font-bold">2,847</span>
+                  </div>
+                  <div className="w-full bg-neutral-800 rounded-full h-2">
+                    <div className="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full w-3/4"></div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-neutral-300">Rank</span>
+                    <span className="text-purple-400 font-bold">#47</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Secondary Card */}
+              <div className="absolute top-12 left-0 w-72 h-48 bg-gradient-to-br from-purple-900/40 to-pink-900/40 rounded-2xl border border-purple-500/20 backdrop-blur-sm p-6 transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-white font-bold">Achievements</h3>
+                  <Gift className="text-pink-400" size={24} />
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                    <span className="text-sm text-neutral-300">Profile 100% Complete</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                    <span className="text-sm text-neutral-300">5 Applications Sent</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                    <span className="text-sm text-neutral-300">First Interview Booked</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Leaderboard Card */}
+              <div className="absolute bottom-0 right-8 w-64 h-40 bg-gradient-to-br from-green-900/40 to-teal-900/40 rounded-2xl border border-green-500/20 backdrop-blur-sm p-4 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-white font-bold text-sm">Leaderboard</h3>
+                  <Users className="text-green-400" size={20} />
+                </div>
+                <div className="space-y-1 text-xs">
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-neutral-300">1. Sarah Chen</span>
+                    <span className="text-green-400 font-bold">5,234</span>
+                  </div>
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-neutral-300">2. Mike Johnson</span>
+                    <span className="text-green-400 font-bold">4,876</span>
+                  </div>
+                  <div className="flex justify-between items-center py-1 bg-indigo-500/20 px-2 rounded">
+                    <span className="text-white">47. You</span>
+                    <span className="text-indigo-400 font-bold">2,847</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Stats Section */}
+        
         <StatsSection />
-
-        {/* Trust Indicators */}
         <TrustIndicators />
-
-        {/* Game Mechanics Section */}
         <GameMechanicsSection />
-
-        {/* Features Section */}
         <FeaturesSection />
-
-        {/* Testimonials */}
         <TestimonialsSection />
-
-        {/* Final CTA */}
         <CTASection />
       </div>
-      
       <BackgroundBeams className="z-0" />
     </div>
   );
