@@ -3,6 +3,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import {
   IconHome,
   IconBriefcase,
@@ -14,28 +16,22 @@ import {
   IconX,
 } from "@tabler/icons-react";
 
-// cn utility function (assuming it's from "@/lib/utils")
-// This function is typically used to conditionally join Tailwind CSS classes.
+
 function cn(...inputs: (string | undefined | null | boolean)[]) {
   return inputs.filter(Boolean).join(" ");
 }
 
 export function Navbar({ className }: { className?: string }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userRole, setUserRole] = useState("student");
+  const { data: session } = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const handleSignInOut = () => {
-    setIsLoggedIn(!isLoggedIn);
-    if (!isLoggedIn) {
-      const roles = ["student", "recruiter", "admin"];
-      const randomRole = roles[Math.floor(Math.random() * roles.length)];
-      setUserRole(randomRole);
-      console.log(`User signed in as: ${randomRole}`);
+    if (session) {
+      signOut();
     } else {
-      setUserRole("");
-      console.log("User signed out");
+      router.push("/login");
     }
   };
 
@@ -69,11 +65,12 @@ export function Navbar({ className }: { className?: string }) {
       link: "/jobs",
       icon: <IconBriefcase className="h-5 w-5" />,
     },
-    {
+    // Only show Dashboard if user is authenticated
+    ...(session ? [{
       name: "Dashboard",
-      link: "/dashboard",
+      link: (session.user as { role?: string }).role === 'student' ? "/student" : "/recruiter",
       icon: <IconLayoutDashboard className="h-5 w-5" />,
-    },
+    }] : [])
   ];
 
   return (
@@ -120,9 +117,9 @@ export function Navbar({ className }: { className?: string }) {
           {/* Right side - User Role and Sign In/Out */}
           <div className="flex items-center space-x-4">
             {/* Display user role if logged in */}
-            {isLoggedIn && userRole && (
+            {session?.user && (
               <span className="hidden sm:block text-sm font-medium px-3 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full">
-                {userRole}
+                {(session.user as { role?: string }).role || 'user'}
               </span>
             )}
 
@@ -130,7 +127,7 @@ export function Navbar({ className }: { className?: string }) {
               onClick={handleSignInOut}
               className="hidden sm:flex border text-sm font-medium relative border-neutral-200 dark:border-zinc-700 text-black dark:text-white px-4 py-2 rounded-full items-center space-x-2 hover:bg-violet-50 dark:hover:bg-violet-900/20 transition-colors group"
             >
-              {isLoggedIn ? (
+              {session ? (
                 <>
                   <IconLogout className="h-4 w-4 text-violet-600 dark:text-violet-400" />
                   <span>Sign Out</span>
@@ -176,6 +173,7 @@ export function Navbar({ className }: { className?: string }) {
                   key={`mobile-link-${idx}`}
                   href={navItem.link}
                   className="block px-3 py-3 text-base font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-zinc-700 hover:text-violet-600 dark:hover:text-violet-400 rounded-md transition-colors flex items-center space-x-3"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <span className="text-violet-600 dark:text-violet-400">{navItem.icon}</span>
                   <span>{navItem.name}</span>
@@ -183,9 +181,9 @@ export function Navbar({ className }: { className?: string }) {
               ))}
               
               <div className="pt-4">
-                {isLoggedIn && userRole && (
+                {session?.user && (
                   <div className="px-3 py-2 mb-2 text-sm font-medium text-neutral-500 dark:text-neutral-400">
-                    Signed in as: <span className="text-violet-600 dark:text-violet-400">{userRole}</span>
+                    Signed in as: <span className="text-violet-600 dark:text-violet-400">{(session.user as { role?: string }).role || 'user'}</span>
                   </div>
                 )}
                 
@@ -193,7 +191,7 @@ export function Navbar({ className }: { className?: string }) {
                   onClick={handleSignInOut}
                   className="w-full mt-1 flex items-center px-3 py-3 text-base font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-zinc-700 hover:text-violet-600 dark:hover:text-violet-400 rounded-md transition-colors space-x-3"
                 >
-                  {isLoggedIn ? (
+                  {session ? (
                     <>
                       <IconLogout className="h-5 w-5 text-violet-600 dark:text-violet-400" />
                       <span>Sign Out</span>

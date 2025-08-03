@@ -6,8 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import type { JSX } from "react";
 
-// cn utility function (assuming it's from "@/lib/utils")
-// This function is typically used to conditionally join Tailwind CSS classes.
 function cn(...inputs: (string | undefined | null | boolean)[]) {
   return inputs.filter(Boolean).join(" ");
 }
@@ -17,7 +15,7 @@ export const FloatingNav = ({
   className,
   isLoggedIn,
   onSignInOut,
-  userRole, // Added userRole prop
+  userRole, 
 }: {
   navItems: {
     name: string;
@@ -27,12 +25,11 @@ export const FloatingNav = ({
   className?: string;
   isLoggedIn: boolean;
   onSignInOut: () => void;
-  userRole: string; // Added userRole prop type
+  userRole: string; 
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
-  // Close mobile menu when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
