@@ -4,6 +4,7 @@ import "./globals.css";
 import { ConditionalNavbar } from "@/components/ConditionalNavbar";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({
         <Providers>
           <ConditionalNavbar />
           {children}
+          <Toaster />
         </Providers>
       </body>
     </html>

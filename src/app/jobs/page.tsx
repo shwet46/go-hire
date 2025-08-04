@@ -24,7 +24,7 @@ interface ExtendedUser {
   role?: string;
 }
 
-function JobsPage() {
+export default function JobsPage() {
   const { data: session } = useSession();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
@@ -32,8 +32,10 @@ function JobsPage() {
   const [location, setLocation] = useState('');
   const [jobType, setJobType] = useState('');
   const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   const fetchJobs = useCallback(async () => {
+    setLoading(true);
     try {
       const params = new URLSearchParams({
         page: page.toString(),
@@ -46,26 +48,61 @@ function JobsPage() {
       const response = await fetch(`/api/jobs?${params}`);
       if (response.ok) {
         const data = await response.json();
+        console.log('API Response:', data); // Debug log
+        
         if (page === 1) {
-          setJobs(data.jobs);
+          setJobs(data.jobs || []);
         } else {
-          setJobs(prev => [...prev, ...data.jobs]);
+          setJobs(prev => [...prev, ...(data.jobs || [])]);
         }
+        
+        // Use hasMore from API response
+        setHasMore(data.hasMore || false);
+      } else {
+        console.error('Failed to fetch jobs:', response.status, response.statusText);
+        setJobs([]);
       }
     } catch (error) {
       console.error('Error fetching jobs:', error);
+      setJobs([]);
     } finally {
       setLoading(false);
     }
   }, [page, search, location, jobType]);
 
   useEffect(() => {
+    console.log('Fetching jobs...'); // Debug log
     fetchJobs();
   }, [fetchJobs]);
 
   const handleSearch = () => {
     setPage(1);
+    setHasMore(true);
     fetchJobs();
+  };
+
+  const handleLoadMore = () => {
+    if (!loading && hasMore) {
+      setPage(prev => prev + 1);
+    }
+  };
+
+  const handleApply = (jobId: string) => {
+    if (!session) {
+      // Show message and redirect to login
+      alert('Please log in to apply for jobs');
+      window.location.href = '/login';
+      return;
+    }
+    
+    if ((session.user as ExtendedUser)?.role !== 'student') {
+      alert('Only students can apply for jobs');
+      return;
+    }
+    
+    // Handle job application logic here
+    console.log('Applying for job:', jobId);
+    alert('Application submitted successfully!');
   };
 
   const formatDate = (dateString: string) => {
@@ -95,7 +132,7 @@ function JobsPage() {
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-violet-400 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-4">
               Find Your Dream Job
             </h1>
-            <p className="text-zinc-400 text-lg max-w-2xl">
+            <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
               Discover amazing opportunities from top companies looking for talented individuals like you
             </p>
           </div>
@@ -181,7 +218,31 @@ function JobsPage() {
           </div>
         ) : jobs.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-zinc-400 text-lg">No jobs found. Try adjusting your search criteria.</p>
+            <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-8 border border-zinc-700/50 max-w-md mx-auto">
+              <h3 className="text-xl font-bold text-white mb-4">No Jobs Available</h3>
+              <p className="text-zinc-400 mb-6">
+                {search || location || jobType 
+                  ? "No jobs match your search criteria. Try adjusting your filters." 
+                  : "Be the first to post a job on our platform!"
+                }
+              </p>
+              {!session && (
+                <div className="mb-4">
+                  <Link href="/login">
+                    <button className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-3 rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all duration-200 mr-3">
+                      Login to Apply
+                    </button>
+                  </Link>
+                </div>
+              )}
+              {session && (session.user as ExtendedUser)?.role === 'recruiter' && (
+                <Link href="/jobs/post">
+                  <button className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200">
+                    Post the First Job
+                  </button>
+                </Link>
+              )}
+            </div>
           </div>
         ) : (
           <div className="space-y-6">
@@ -197,7 +258,7 @@ function JobsPage() {
                         <h3 className="text-xl font-bold text-white group-hover:text-violet-300 transition-colors mb-1">
                           {job.title}
                         </h3>
-                        <div className="flex items-center text-zinc-400 text-sm space-x-4">
+                        <div className="flex flex-wrap items-center text-zinc-400 text-sm gap-4">
                           <div className="flex items-center space-x-1">
                             <Building size={16} />
                             <span>{job.company}</span>
@@ -217,8 +278,8 @@ function JobsPage() {
                           <DollarSign size={16} />
                           <span>{job.salary}</span>
                         </div>
-                        <span className="text-xs bg-violet-500/20 text-violet-300 px-2 py-1 rounded-full">
-                          {job.type}
+                        <span className="text-xs bg-violet-500/20 text-violet-300 px-2 py-1 rounded-full capitalize">
+                          {job.type.replace('-', ' ')}
                         </span>
                       </div>
                     </div>
@@ -229,7 +290,7 @@ function JobsPage() {
 
                     <div className="flex items-center justify-between">
                       <div className="flex flex-wrap gap-2">
-                        {job.tags?.map((tag, index) => (
+                        {job.tags?.slice(0, 3).map((tag, index) => (
                           <span
                             key={index}
                             className="text-xs bg-zinc-700/50 text-zinc-300 px-2 py-1 rounded-md"
@@ -237,6 +298,11 @@ function JobsPage() {
                             {tag}
                           </span>
                         ))}
+                        {job.tags && job.tags.length > 3 && (
+                          <span className="text-xs text-zinc-500">
+                            +{job.tags.length - 3} more
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -247,11 +313,16 @@ function JobsPage() {
                         View Details
                       </button>
                     </Link>
-                    {session && (session.user as ExtendedUser)?.role === 'student' && (
-                      <button className="border border-zinc-600 text-zinc-300 hover:border-emerald-500 hover:text-emerald-400 px-6 py-2 rounded-lg transition-all duration-200 w-full lg:w-auto">
-                        Apply Now
-                      </button>
-                    )}
+                    <button 
+                      onClick={() => handleApply(job._id)}
+                      className={`px-6 py-2 rounded-lg transition-all duration-200 w-full lg:w-auto ${
+                        !session 
+                          ? 'border border-emerald-600 text-emerald-300 hover:border-emerald-500 hover:text-emerald-400' 
+                          : 'border border-zinc-600 text-zinc-300 hover:border-emerald-500 hover:text-emerald-400'
+                      }`}
+                    >
+                      {!session ? 'Login to Apply' : 'Quick Apply'}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -260,12 +331,12 @@ function JobsPage() {
         )}
 
         {/* Load More */}
-        {jobs.length > 0 && (
+        {jobs.length > 0 && hasMore && (
           <div className="text-center mt-12">
             <button 
-              onClick={() => setPage(prev => prev + 1)}
+              onClick={handleLoadMore}
               disabled={loading}
-              className="bg-gradient-to-r from-zinc-800 to-zinc-700 text-white px-8 py-3 rounded-lg hover:from-zinc-700 hover:to-zinc-600 transition-all duration-200 border border-zinc-600 disabled:opacity-50"
+              className="bg-gradient-to-r from-zinc-800 to-zinc-700 text-white px-8 py-3 rounded-lg hover:from-zinc-700 hover:to-zinc-600 transition-all duration-200 border border-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Loading...' : 'Load More Jobs'}
             </button>
@@ -275,5 +346,3 @@ function JobsPage() {
     </div>
   )
 }
-
-export default JobsPage

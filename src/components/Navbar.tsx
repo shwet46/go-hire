@@ -33,12 +33,15 @@ export function Navbar({ className }: { className?: string }) {
       setIsSigningOut(true);
       try {
         await signOut({ 
-          redirect: false
+          redirect: false,
+          callbackUrl: "/"
         });
-        // Force a hard refresh to clear all session data
-        window.location.href = "/";
+        // Clear any cached data and redirect
+        router.push("/");
+        router.refresh();
       } catch (error) {
         console.error("Sign out error:", error);
+      } finally {
         setIsSigningOut(false);
       }
     } else {
