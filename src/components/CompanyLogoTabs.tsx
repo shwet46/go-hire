@@ -319,18 +319,20 @@ export const CompanyTabsExample: React.FC = () => {
               <div className="relative z-10">
                 <div className="flex items-start space-x-8 mb-8">
                   <div className="relative">
-                    <Image
-                      src={imageErrors.has(selectedCompany.id) 
-                        ? getFallbackImageUrl(selectedCompany.name) 
-                        : selectedCompany.logo
-                      }
-                      alt={`${selectedCompany.name} logo`}
-                      width={96}
-                      height={96}
-                      className="w-24 h-24 rounded-2xl p-4 shadow-xl object-contain"
-                      onError={() => handleImageError(selectedCompany.id)}
-                      unoptimized={imageErrors.has(selectedCompany.id)}
-                    />
+                    <div className="w-24 h-24 bg-zinc-800/50 rounded-2xl p-4 shadow-xl backdrop-blur-sm border border-zinc-700/50">
+                      <Image
+                        src={imageErrors.has(selectedCompany.id) 
+                          ? getFallbackImageUrl(selectedCompany.name) 
+                          : selectedCompany.logo
+                        }
+                        alt={`${selectedCompany.name} logo`}
+                        width={96}
+                        height={96}
+                        className="w-full h-full object-contain"
+                        onError={() => handleImageError(selectedCompany.id)}
+                        unoptimized={imageErrors.has(selectedCompany.id)}
+                      />
+                    </div>
                     <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
                       <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
                     </div>
@@ -340,7 +342,7 @@ export const CompanyTabsExample: React.FC = () => {
                       {selectedCompany.name}
                     </h3>
                     <div className="flex items-center space-x-6 mb-4">
-                      <span className="px-4 py-2 bg-gradient-to-r from-violet-500/20 to-purple-500/20 text-violet-300 font-semibold rounded-full shadow-lg">
+                      <span className="px-4 py-2 bg-gradient-to-r from-violet-500/20 to-purple-500/20 text-violet-300 font-semibold rounded-full shadow-lg border border-violet-500/30">
                         {selectedCompany.category}
                       </span>
                       <a

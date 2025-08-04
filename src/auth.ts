@@ -1,7 +1,29 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { authenticateUser } from "@/lib/auth";
-import type { NextAuthOptions, User, Session } from "next-auth";
+import type { NextAuthOptions, Session, User } from "next-auth";
 import type { JWT } from "next-auth/jwt";
+
+interface ExtendedUser extends User {
+  role?: "student" | "recruiter" | "admin";
+  referralCode?: string;
+}
+
+interface ExtendedSession extends Session {
+  user: {
+    points: number;
+    id?: string;
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    role?: "student" | "recruiter" | "admin";
+    referralCode?: string;
+  };
+}
+
+interface ExtendedJWT extends JWT {
+  role?: "student" | "recruiter" | "admin";
+  referralCode?: string;
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -18,7 +40,6 @@ export const authOptions: NextAuthOptions = {
 
         try {
           const user = await authenticateUser(credentials.email, credentials.password);
-          
           if (user) {
             return {
               id: user.id,
@@ -41,38 +62,27 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt" as const,
   },
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user?: User }) {
+    async jwt({ token, user }: { token: ExtendedJWT; user?: ExtendedUser }) {
       if (user) {
         token.role = user.role;
         token.referralCode = user.referralCode;
       }
       return token;
     },
-    async session({ session, token }: { session: Session; token: JWT }) {
-      if (token) {
+    async session({ session, token }: { session: ExtendedSession; token: ExtendedJWT }) {
+      if (token && session.user) {
         session.user.id = token.sub;
         session.user.role = token.role;
-        session.user.referralCode = typeof token.referralCode === "string" ? token.referralCode : undefined;
+        session.user.referralCode = token.referralCode;
       }
       return session;
     },
   },
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/login",
+    signOut: "/",
   },
 };
-
-import type { DefaultSession } from "next-auth";
-
-declare module "next-auth" {
-  interface Session {
-    user: DefaultSession["user"] & {
-      id?: string;
-      role?: "student" | "recruiter" | "admin";
-      referralCode?: string;
-    };
-  }
-}
 
 export type { Session } from "next-auth";
 export type { JWT } from "next-auth/jwt";

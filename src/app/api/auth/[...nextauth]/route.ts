@@ -4,26 +4,25 @@ import { authenticateUser } from "@/lib/auth";
 import type { NextAuthOptions, Session, User } from "next-auth";
 import type { JWT } from "next-auth/jwt";
 
-type UserRole = "student" | "recruiter" | "admin";
-
 interface ExtendedUser extends User {
-  role?: UserRole;
+  role?: "student" | "recruiter" | "admin";
   referralCode?: string;
 }
 
 interface ExtendedSession extends Session {
   user: {
+    points: number;
     id?: string;
     name?: string | null;
     email?: string | null;
     image?: string | null;
-    role?: UserRole;
+    role?: "student" | "recruiter" | "admin";
     referralCode?: string;
   };
 }
 
 interface ExtendedJWT extends JWT {
-  role?: UserRole;
+  role?: "student" | "recruiter" | "admin";
   referralCode?: string;
 }
 
@@ -47,7 +46,7 @@ const authOptions: NextAuthOptions = {
               id: user.id,
               email: user.email,
               name: user.name,
-              role: user.role as UserRole,
+              role: user.role,
               referralCode: user.referralCode
             };
           }
@@ -64,10 +63,10 @@ const authOptions: NextAuthOptions = {
     strategy: "jwt" as const,
   },
   callbacks: {
-    async jwt({ token, user }: { token: ExtendedJWT; user?: ExtendedUser }) {
+    async jwt({ token, user }: { token: JWT; user?: User }) {
       if (user) {
-        token.role = user.role;
-        token.referralCode = user.referralCode;
+        (token as ExtendedJWT).role = (user as ExtendedUser).role;
+        (token as ExtendedJWT).referralCode = (user as ExtendedUser).referralCode;
       }
       return token;
     },
@@ -81,7 +80,8 @@ const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/login",
+    signOut: "/",
   },
 };
 

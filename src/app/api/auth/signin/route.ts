@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authenticateUser, generateToken } from '@/lib/auth';
+import { signIn } from 'next-auth/react';
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,38 +12,27 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const user = await authenticateUser(email, password);
-    if (!user) {
+    // Use NextAuth signIn instead of custom auth
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
       return NextResponse.json(
         { error: 'Invalid credentials' },
         { status: 401 }
       );
     }
 
-    const token = generateToken(user);
-
-    const response = NextResponse.json(
+    return NextResponse.json(
       { 
         message: 'Authentication successful',
-        user: {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
-          referralCode: user.referralCode
-        }
+        success: true
       },
       { status: 200 }
     );
-
-    response.cookies.set('auth-token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7 // 7 days
-    });
-
-    return response;
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Internal server error';
     return NextResponse.json(

@@ -22,14 +22,25 @@ function cn(...inputs: (string | undefined | null | boolean)[]) {
 }
 
 export function Navbar({ className }: { className?: string }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  const handleSignInOut = () => {
+  const handleSignInOut = async () => {
     if (session) {
-      signOut();
+      setIsSigningOut(true);
+      try {
+        await signOut({ 
+          redirect: false
+        });
+        // Force a hard refresh to clear all session data
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Sign out error:", error);
+        setIsSigningOut(false);
+      }
     } else {
       router.push("/login");
     }
@@ -68,10 +79,37 @@ export function Navbar({ className }: { className?: string }) {
     // Only show Dashboard if user is authenticated
     ...(session ? [{
       name: "Dashboard",
-      link: (session.user as { role?: string }).role === 'student' ? "/student" : "/recruiter",
+      link: (session.user as { role?: string })?.role === 'student' ? "/student" : "/recruiter",
       icon: <IconLayoutDashboard className="h-5 w-5" />,
     }] : [])
   ];
+
+  // Don't render navbar content while session is loading
+  if (status === "loading") {
+    return (
+      <div className={cn(
+        "w-full fixed top-0 left-0 right-0 z-50 bg-white dark:bg-zinc-900 border-b border-neutral-200 dark:border-zinc-700 shadow-sm",
+        className
+      )}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex-shrink-0 flex items-center">
+              <Link href="/" className="flex items-center">
+                <Image 
+                  src="/gohire.png" 
+                  alt="GoHire Logo"
+                  width={32}
+                  height={32}
+                  className="h-8 w-auto"
+                />
+              </Link>
+            </div>
+            <div className="animate-pulse bg-gray-300 h-8 w-20 rounded"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -116,21 +154,22 @@ export function Navbar({ className }: { className?: string }) {
 
           {/* Right side - User Role and Sign In/Out */}
           <div className="flex items-center space-x-4">
-            {/* Display user role if logged in */}
+            {/* Display user name if logged in */}
             {session?.user && (
               <span className="hidden sm:block text-sm font-medium px-3 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full">
-                {(session.user as { role?: string }).role || 'user'}
+                {session.user.name || 'User'}
               </span>
             )}
 
             <button
               onClick={handleSignInOut}
-              className="hidden sm:flex border text-sm font-medium relative border-neutral-200 dark:border-zinc-700 text-black dark:text-white px-4 py-2 rounded-full items-center space-x-2 hover:bg-violet-50 dark:hover:bg-violet-900/20 transition-colors group"
+              disabled={isSigningOut}
+              className="hidden sm:flex border text-sm font-medium relative border-neutral-200 dark:border-zinc-700 text-black dark:text-white px-4 py-2 rounded-full items-center space-x-2 hover:bg-violet-50 dark:hover:bg-violet-900/20 transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {session ? (
                 <>
                   <IconLogout className="h-4 w-4 text-violet-600 dark:text-violet-400" />
-                  <span>Sign Out</span>
+                  <span>{isSigningOut ? "Signing Out..." : "Sign Out"}</span>
                 </>
               ) : (
                 <>
@@ -183,18 +222,22 @@ export function Navbar({ className }: { className?: string }) {
               <div className="pt-4">
                 {session?.user && (
                   <div className="px-3 py-2 mb-2 text-sm font-medium text-neutral-500 dark:text-neutral-400">
-                    Signed in as: <span className="text-violet-600 dark:text-violet-400">{(session.user as { role?: string }).role || 'user'}</span>
+                    Welcome, <span className="text-violet-600 dark:text-violet-400">{session.user.name || 'User'}</span>
                   </div>
                 )}
                 
                 <button
-                  onClick={handleSignInOut}
-                  className="w-full mt-1 flex items-center px-3 py-3 text-base font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-zinc-700 hover:text-violet-600 dark:hover:text-violet-400 rounded-md transition-colors space-x-3"
+                  onClick={async () => {
+                    setMobileMenuOpen(false);
+                    await handleSignInOut();
+                  }}
+                  disabled={isSigningOut}
+                  className="w-full mt-1 flex items-center px-3 py-3 text-base font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-zinc-700 hover:text-violet-600 dark:hover:text-violet-400 rounded-md transition-colors space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {session ? (
                     <>
                       <IconLogout className="h-5 w-5 text-violet-600 dark:text-violet-400" />
-                      <span>Sign Out</span>
+                      <span>{isSigningOut ? "Signing Out..." : "Sign Out"}</span>
                     </>
                   ) : (
                     <>

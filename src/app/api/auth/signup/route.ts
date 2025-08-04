@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createUser, generateToken } from '@/lib/auth';
+import { createUser } from '@/lib/auth';
+import dbConnect from '@/lib/db';
 
 export async function POST(request: NextRequest) {
   try {
+    await dbConnect();
     const { email, password, name, role, referralCode } = await request.json();
 
     if (!email || !password || !name) {
@@ -12,10 +14,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const user = await createUser(email, password, name, role, referralCode);
-    const token = generateToken(user);
+    const user = await createUser(email, password, name, role || 'student', referralCode);
 
-    const response = NextResponse.json(
+    return NextResponse.json(
       { 
         message: 'User created successfully',
         user: {
@@ -28,15 +29,6 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
-
-    response.cookies.set('auth-token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7 
-    });
-
-    return response;
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Internal server error';
     return NextResponse.json(

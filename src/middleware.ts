@@ -1,47 +1,62 @@
-import { getToken } from "next-auth/jwt";
+import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
 
-interface Token {
-    role?: string;
-    email?: string | null;
-    name?: string | null;
-    sub?: string;
-}
-
-export async function middleware(req: NextRequest): Promise<NextResponse> {
-    const token: Token | null = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+export default withAuth(
+  function middleware(req) {
     const { pathname } = req.nextUrl;
+    const token = req.nextauth.token;
 
     // Protect admin routes
     if (pathname.startsWith("/admin")) {
-        if (!token || token.role !== "admin") {
-            return NextResponse.redirect(new URL("/unauthorized", req.url));
-        }
+      if (!token || token.role !== "admin") {
+        return NextResponse.redirect(new URL("/login", req.url));
+      }
     }
 
     // Protect dashboard routes based on role
     if (pathname.startsWith("/student")) {
-        if (!token || token.role !== "student") {
-            return NextResponse.redirect(new URL("/login", req.url));
-        }
+      if (!token || token.role !== "student") {
+        return NextResponse.redirect(new URL("/login", req.url));
+      }
     }
 
     if (pathname.startsWith("/recruiter")) {
-        if (!token || token.role !== "recruiter") {
-            return NextResponse.redirect(new URL("/login", req.url));
-        }
-    }
-
-    // Redirect authenticated users away from auth pages
-    if (token && (pathname.startsWith("/login") || pathname.startsWith("/register"))) {
-        const dashboardPath = token.role === "student" ? "/student" : "/recruiter";
-        return NextResponse.redirect(new URL(dashboardPath, req.url));
+      if (!token || token.role !== "recruiter") {
+        return NextResponse.redirect(new URL("/login", req.url));
+      }
     }
 
     return NextResponse.next();
-}
+  },
+  {
+    callbacks: {
+      authorized: ({ token, req }) => {
+        const { pathname } = req.nextUrl;
+        
+        // Allow access to public routes
+        if (
+          pathname === "/" || 
+          pathname.startsWith("/api/auth") || 
+          pathname.startsWith("/register") || 
+          pathname.startsWith("/login") ||
+          pathname.startsWith("/jobs") ||
+          pathname.startsWith("/practice")
+        ) {
+          return true;
+        }
+
+        // For protected routes, require authentication
+        return !!token;
+      },
+    },
+  }
+);
 
 export const config = {
-  matcher: ["/admin/:path*", "/student/:path*", "/recruiter/:path*", "/login", "/register"],
+  matcher: [
+    "/admin/:path*", 
+    "/student/:path*", 
+    "/recruiter/:path*", 
+    "/dashboard/:path*"
+  ],
 };

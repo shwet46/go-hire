@@ -1,0 +1,1596 @@
+{
+  "coding_resources_for_placements": {
+    "meta": {
+      "description": "Comprehensive list of coding courses and resources for internship and placement preparation",
+      "last_updated": "2025",
+      "categories": ["dsa", "system_design", "web_development", "competitive_programming", "interview_prep", "free_resources", "paid_courses", "aptitude", "soft_skills", "projects", "certifications"]
+    },
+    "data_structures_algorithms": {
+      "free_resources": [
+        {
+          "name": "GeeksforGeeks DSA Course",
+          "url": "https://www.geeksforgeeks.org/dsa-tutorial-learn-data-structures-and-algorithms/",
+          "type": "Tutorial",
+          "difficulty": "Beginner to Advanced",
+          "description": "Comprehensive DSA tutorials with practice problems"
+        },
+        {
+          "name": "LeetCode",
+          "url": "https://leetcode.com/",
+          "type": "Practice Platform",
+          "difficulty": "Easy to Hard",
+          "description": "Top platform for coding interview preparation with 2000+ problems"
+        },
+        {
+          "name": "HackerRank",
+          "url": "https://www.hackerrank.com/",
+          "type": "Practice Platform",
+          "difficulty": "Easy to Expert",
+          "description": "Programming challenges and skill assessments"
+        },
+        {
+          "name": "CodeChef",
+          "url": "https://www.codechef.com/",
+          "type": "Competitive Programming",
+          "difficulty": "Beginner to Advanced",
+          "description": "Monthly contests and practice problems"
+        },
+        {
+          "name": "Algorithms for Competitive Programming",
+          "url": "https://cp-algorithms.com/",
+          "type": "Tutorial",
+          "difficulty": "Intermediate to Advanced",
+          "description": "Detailed explanations of algorithms and data structures"
+        },
+        {
+          "name": "Visualgo",
+          "url": "https://visualgo.net/",
+          "type": "Visualization Tool",
+          "difficulty": "Beginner to Intermediate",
+          "description": "Visual learning tool for algorithms and data structures"
+        },
+        {
+          "name": "Abdul Bari Algorithm Course",
+          "url": "https://www.youtube.com/playlist?list=PLDN4rrl48XKpZkf03iYFl-O29szjTrs_O",
+          "type": "YouTube Course",
+          "difficulty": "Beginner to Advanced",
+          "description": "Complete algorithms course with clear explanations"
+        }
+      ],
+      "paid_courses": [
+        {
+          "name": "Striver's A2Z DSA Course",
+          "url": "https://takeuforward.org/strivers-a2z-dsa-course/",
+          "price": "Free + Paid Content",
+          "duration": "6-12 months",
+          "description": "Complete DSA course by Raj Vikramaditya (Striver)"
+        },
+        {
+          "name": "CodeHelp - Love Babbar DSA Course",
+          "url": "https://www.codingninjas.com/",
+          "price": "$200-500",
+          "duration": "6 months",
+          "description": "Popular DSA course with placement assistance"
+        },
+        {
+          "name": "Pepcoding",
+          "url": "https://www.pepcoding.com/",
+          "price": "$300-800",
+          "duration": "8-12 months",
+          "description": "DSA, Web Development, and System Design courses"
+        },
+        {
+          "name": "AlgoExpert",
+          "url": "https://www.algoexpert.io/",
+          "price": "$99-164",
+          "duration": "Self-paced",
+          "description": "Curated coding interview questions with video explanations"
+        },
+        {
+          "name": "InterviewCake",
+          "url": "https://www.interviewcake.com/",
+          "price": "$249",
+          "duration": "Self-paced",
+          "description": "Programming interview questions with step-by-step solutions"
+        }
+      ],
+      "books": [
+        {
+          "name": "Introduction to Algorithms (CLRS)",
+          "author": "Cormen, Leiserson, Rivest, Stein",
+          "price": "$200-250",
+          "description": "Comprehensive algorithms textbook"
+        },
+        {
+          "name": "Cracking the Coding Interview",
+          "author": "Gayle Laakmann McDowell",
+          "price": "$30-40",
+          "description": "Essential book for coding interview preparation"
+        },
+        {
+          "name": "Elements of Programming Interviews",
+          "author": "Aziz, Lee, Prakash",
+          "price": "$35-45",
+          "description": "Language-specific coding interview problems"
+        }
+      ]
+    },
+    "system_design": {
+      "free_resources": [
+        {
+          "name": "System Design Primer",
+          "url": "https://github.com/donnemartin/system-design-primer",
+          "type": "GitHub Repository",
+          "difficulty": "Intermediate to Advanced",
+          "description": "Comprehensive system design resource on GitHub"
+        },
+        {
+          "name": "High Scalability",
+          "url": "http://highscalability.com/",
+          "type": "Blog",
+          "difficulty": "Intermediate to Advanced",
+          "description": "Real-world system design case studies"
+        },
+        {
+          "name": "System Design Interview Questions",
+          "url": "https://github.com/checkcheckzz/system-design-interview",
+          "type": "GitHub Repository",
+          "difficulty": "Intermediate to Advanced",
+          "description": "Collection of system design interview questions"
+        },
+        {
+          "name": "Distributed Systems Course",
+          "url": "https://www.youtube.com/playlist?list=PLrw6a1wE39_tb2fErI4-WkMbsvGQk9_UB",
+          "type": "YouTube Course",
+          "difficulty": "Advanced",
+          "description": "MIT distributed systems course lectures"
+        }
+      ],
+      "paid_courses": [
+        {
+          "name": "Educative - Grokking System Design",
+          "url": "https://www.educative.io/courses/grokking-the-system-design-interview",
+          "price": "$79/month",
+          "duration": "3-6 months",
+          "description": "Popular system design interview preparation course"
+        },
+        {
+          "name": "InterviewBit System Design",
+          "url": "https://www.interviewbit.com/courses/system-design/",
+          "price": "Free + Premium",
+          "duration": "2-4 months",
+          "description": "System design fundamentals and interview questions"
+        },
+        {
+          "name": "Grokking Modern System Design",
+          "url": "https://www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers",
+          "price": "$79/month",
+          "duration": "4-8 months",
+          "description": "Advanced system design concepts for senior roles"
+        }
+      ],
+      "books": [
+        {
+          "name": "Designing Data-Intensive Applications",
+          "author": "Martin Kleppmann",
+          "price": "$45-55",
+          "description": "Essential book on distributed systems and data architecture"
+        },
+        {
+          "name": "System Design Interview",
+          "author": "Alex Xu",
+          "price": "$30-40",
+          "description": "Popular system design interview preparation book"
+        }
+      ]
+    },
+    "web_development": {
+      "frontend": [
+        {
+          "name": "freeCodeCamp",
+          "url": "https://www.freecodecamp.org/",
+          "type": "Free Course",
+          "technologies": ["HTML", "CSS", "JavaScript", "React"],
+          "duration": "300+ hours",
+          "description": "Complete frontend development curriculum"
+        },
+        {
+          "name": "The Odin Project",
+          "url": "https://www.theodinproject.com/",
+          "type": "Free Course",
+          "technologies": ["HTML", "CSS", "JavaScript", "React", "Node.js"],
+          "duration": "1000+ hours",
+          "description": "Full-stack web development curriculum"
+        },
+        {
+          "name": "React Official Tutorial",
+          "url": "https://react.dev/learn",
+          "type": "Official Documentation",
+          "technologies": ["React"],
+          "duration": "20-40 hours",
+          "description": "Official React learning resource"
+        },
+        {
+          "name": "Vue.js Guide",
+          "url": "https://vuejs.org/guide/",
+          "type": "Official Documentation",
+          "technologies": ["Vue.js"],
+          "duration": "20-30 hours",
+          "description": "Official Vue.js learning resource"
+        },
+        {
+          "name": "Angular Tutorial",
+          "url": "https://angular.io/tutorial",
+          "type": "Official Documentation",
+          "technologies": ["Angular", "TypeScript"],
+          "duration": "30-50 hours",
+          "description": "Official Angular learning resource"
+        },
+        {
+          "name": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/",
+          "type": "Documentation",
+          "technologies": ["HTML", "CSS", "JavaScript"],
+          "duration": "Self-paced",
+          "description": "Comprehensive web development documentation"
+        }
+      ],
+      "backend": [
+        {
+          "name": "Node.js Documentation",
+          "url": "https://nodejs.org/en/docs/",
+          "type": "Official Documentation",
+          "technologies": ["Node.js"],
+          "duration": "Self-paced",
+          "description": "Official Node.js documentation and guides"
+        },
+        {
+          "name": "Django Documentation",
+          "url": "https://docs.djangoproject.com/",
+          "type": "Official Documentation",
+          "technologies": ["Python", "Django"],
+          "duration": "Self-paced",
+          "description": "Official Django framework documentation"
+        },
+        {
+          "name": "Spring Boot Official Guides",
+          "url": "https://spring.io/guides",
+          "type": "Official Documentation",
+          "technologies": ["Java", "Spring Boot"],
+          "duration": "Self-paced",
+          "description": "Official Spring Boot guides and tutorials"
+        },
+        {
+          "name": "Express.js Guide",
+          "url": "https://expressjs.com/",
+          "type": "Official Documentation",
+          "technologies": ["Node.js", "Express"],
+          "duration": "Self-paced",
+          "description": "Official Express.js documentation"
+        },
+        {
+          "name": "FastAPI Documentation",
+          "url": "https://fastapi.tiangolo.com/",
+          "type": "Official Documentation",
+          "technologies": ["Python", "FastAPI"],
+          "duration": "Self-paced",
+          "description": "Modern Python web framework documentation"
+        }
+      ],
+      "paid_courses": [
+        {
+          "name": "Udemy - Complete Web Development Bootcamp",
+          "url": "https://www.udemy.com/",
+          "price": "$50-100",
+          "duration": "65+ hours",
+          "description": "Full-stack web development course by Angela Yu"
+        },
+        {
+          "name": "Coursera - Full-Stack Web Development",
+          "url": "https://www.coursera.org/",
+          "price": "$49/month",
+          "duration": "6 months",
+          "description": "University-level web development specialization"
+        },
+        {
+          "name": "Pluralsight Web Development Paths",
+          "url": "https://www.pluralsight.com/",
+          "price": "$35/month",
+          "duration": "Variable",
+          "description": "Technology-specific web development learning paths"
+        }
+      ]
+    },
+    "competitive_programming": {
+      "platforms": [
+        {
+          "name": "Codeforces",
+          "url": "https://codeforces.com/",
+          "type": "Contest Platform",
+          "difficulty": "Newbie to International Grandmaster",
+          "description": "Premier competitive programming platform"
+        },
+        {
+          "name": "AtCoder",
+          "url": "https://atcoder.jp/",
+          "type": "Contest Platform",
+          "difficulty": "Beginner to Advanced",
+          "description": "Japanese competitive programming platform"
+        },
+        {
+          "name": "TopCoder",
+          "url": "https://www.topcoder.com/",
+          "type": "Contest Platform",
+          "difficulty": "Division 2 to Division 1",
+          "description": "One of the oldest competitive programming platforms"
+        },
+        {
+          "name": "CodeChef",
+          "url": "https://www.codechef.com/",
+          "type": "Contest Platform",
+          "difficulty": "Beginner to Advanced",
+          "description": "Monthly contests and practice problems"
+        },
+        {
+          "name": "HackerRank",
+          "url": "https://www.hackerrank.com/",
+          "type": "Contest Platform",
+          "difficulty": "Easy to Expert",
+          "description": "Programming challenges and contests"
+        },
+        {
+          "name": "Google Code Jam",
+          "url": "https://codingcompetitions.withgoogle.com/codejam",
+          "type": "Annual Contest",
+          "difficulty": "Advanced",
+          "description": "Google's premier programming competition"
+        }
+      ],
+      "learning_resources": [
+        {
+          "name": "CP-Algorithms",
+          "url": "https://cp-algorithms.com/",
+          "type": "Tutorial Website",
+          "difficulty": "Intermediate to Advanced",
+          "description": "Comprehensive algorithms and data structures tutorials"
+        },
+        {
+          "name": "USACO Guide",
+          "url": "https://usaco.guide/",
+          "type": "Structured Course",
+          "difficulty": "Bronze to Platinum",
+          "description": "Structured competitive programming curriculum"
+        },
+        {
+          "name": "Competitive Programming Handbook",
+          "url": "https://cses.fi/book/book.pdf",
+          "type": "Free Book",
+          "difficulty": "Beginner to Advanced",
+          "description": "Complete guide to competitive programming"
+        },
+        {
+          "name": "CSES Problem Set",
+          "url": "https://cses.fi/problemset/",
+          "type": "Practice Platform",
+          "difficulty": "Beginner to Advanced",
+          "description": "High-quality problem set for competitive programming"
+        }
+      ]
+    },
+    "interview_preparation": {
+      "coding_interview": [
+        {
+          "name": "InterviewBit",
+          "url": "https://www.interviewbit.com/",
+          "type": "Interview Platform",
+          "price": "Free + Premium",
+          "description": "Structured interview preparation with company-specific questions"
+        },
+        {
+          "name": "Pramp",
+          "url": "https://www.pramp.com/",
+          "type": "Mock Interview Platform",
+          "price": "Free",
+          "description": "Peer-to-peer mock technical interviews"
+        },
+        {
+          "name": "Blind 75",
+          "url": "https://leetcode.com/discuss/general-discussion/460599/blind-75-leetcode-questions",
+          "type": "Problem List",
+          "price": "Free",
+          "description": "Curated list of 75 important LeetCode problems"
+        },
+        {
+          "name": "NeetCode 150",
+          "url": "https://neetcode.io/practice",
+          "type": "Problem List",
+          "price": "Free + Premium",
+          "description": "Extended problem list with video solutions"
+        },
+        {
+          "name": "CodeSignal",
+          "url": "https://codesignal.com/",
+          "type": "Assessment Platform",
+          "price": "Free + Premium",
+          "description": "Coding assessments and interview practice"
+        }
+      ],
+      "system_design_interview": [
+        {
+          "name": "Grokking System Design Interview",
+          "url": "https://www.educative.io/courses/grokking-the-system-design-interview",
+          "price": "$79/month",
+          "description": "Systematic approach to system design interviews"
+        },
+        {
+          "name": "System Design Interview Book",
+          "author": "Alex Xu",
+          "price": "$30-40",
+          "description": "Popular book on system design interview preparation"
+        },
+        {
+          "name": "System Design Primer",
+          "url": "https://github.com/donnemartin/system-design-primer",
+          "price": "Free",
+          "description": "Open-source system design interview preparation"
+        }
+      ],
+      "behavioral_interview": [
+        {
+          "name": "Glassdoor Interview Questions",
+          "url": "https://www.glassdoor.com/",
+          "type": "Question Database",
+          "price": "Free",
+          "description": "Company-specific interview questions and experiences"
+        },
+        {
+          "name": "STAR Method Guide",
+          "type": "Framework",
+          "price": "Free",
+          "description": "Situation, Task, Action, Result framework for behavioral questions"
+        },
+        {
+          "name": "Behavioral Interview Guide",
+          "url": "https://www.themuse.com/advice/behavioral-interview-questions-answers-examples",
+          "type": "Guide",
+          "price": "Free",
+          "description": "Common behavioral questions and answer strategies"
+        }
+      ],
+      "mock_interview_platforms": [
+        {
+          "name": "Interviewing.io",
+          "url": "https://interviewing.io/",
+          "price": "Free + Premium",
+          "description": "Anonymous mock interviews with engineers"
+        },
+        {
+          "name": "Gainlo",
+          "url": "http://www.gainlo.co/",
+          "price": "$60-120/session",
+          "description": "Mock interviews with experienced engineers"
+        },
+        {
+          "name": "TechMockInterview",
+          "url": "https://techmockinterview.com/",
+          "price": "$50-100/session",
+          "description": "Mock technical interviews with feedback"
+        }
+      ]
+    },
+    "aptitude_and_reasoning": {
+      "quantitative_aptitude": [
+        {
+          "name": "R.S. Aggarwal Quantitative Aptitude",
+          "type": "Book",
+          "price": "$15-25",
+          "description": "Comprehensive quantitative aptitude book"
+        },
+        {
+          "name": "IndiaBix Aptitude",
+          "url": "https://www.indiabix.com/",
+          "type": "Online Platform",
+          "price": "Free",
+          "description": "Aptitude questions with solutions"
+        },
+        {
+          "name": "Hitbullseye",
+          "url": "https://www.hitbullseye.com/",
+          "type": "Online Platform",
+          "price": "Free + Premium",
+          "description": "CAT and placement aptitude preparation"
+        },
+        {
+          "name": "Cracku",
+          "url": "https://cracku.in/",
+          "type": "Online Platform",
+          "price": "Free + Premium",
+          "description": "MBA and placement aptitude tests"
+        }
+      ],
+      "logical_reasoning": [
+        {
+          "name": "R.S. Aggarwal Logical Reasoning",
+          "type": "Book",
+          "price": "$15-25",
+          "description": "Comprehensive logical reasoning book"
+        },
+        {
+          "name": "Lofoya",
+          "url": "https://www.lofoya.com/",
+          "type": "Online Platform",
+          "price": "Free",
+          "description": "Logical reasoning practice questions"
+        }
+      ],
+      "verbal_ability": [
+        {
+          "name": "Wren and Martin English Grammar",
+          "type": "Book",
+          "price": "$10-20",
+          "description": "Classic English grammar reference"
+        },
+        {
+          "name": "Grammarly",
+          "url": "https://www.grammarly.com/",
+          "type": "Writing Tool",
+          "price": "Free + Premium",
+          "description": "Grammar and writing improvement tool"
+        }
+      ]
+    },
+    "company_specific_preparation": {
+      "faang_companies": [
+        {
+          "name": "Google",
+          "focus_areas": ["DSA", "System Design", "Googleyness", "Leadership"],
+          "resources": [
+            "LeetCode Google Tagged Questions",
+            "Google's SWE Interview Process Guide",
+            "Google Coding Interview University"
+          ],
+          "interview_rounds": ["Phone Screen", "On-site Technical", "System Design", "Behavioral"],
+          "difficulty": "Very High"
+        },
+        {
+          "name": "Amazon",
+          "focus_areas": ["DSA", "System Design", "Leadership Principles", "Behavioral"],
+          "resources": [
+            "Amazon Leadership Principles Guide",
+            "LeetCode Amazon Tagged Questions",
+            "Amazon Bar Raiser Interview Guide"
+          ],
+          "interview_rounds": ["Online Assessment", "Phone Screen", "On-site Loop"],
+          "difficulty": "High"
+        },
+        {
+          "name": "Microsoft",
+          "focus_areas": ["DSA", "System Design", "Coding", "Design Patterns"],
+          "resources": [
+            "Microsoft Interview Guide",
+            "LeetCode Microsoft Tagged Questions",
+            "Microsoft Learn Platform"
+          ],
+          "interview_rounds": ["Phone Screen", "Virtual On-site", "Behavioral"],
+          "difficulty": "High"
+        },
+        {
+          "name": "Meta (Facebook)",
+          "focus_areas": ["DSA", "System Design", "Product Sense", "Behavioral"],
+          "resources": [
+            "Meta Interview Process Guide",
+            "LeetCode Meta Tagged Questions",
+            "Meta Engineering Blog"
+          ],
+          "interview_rounds": ["Phone Screen", "On-site Technical", "System Design"],
+          "difficulty": "Very High"
+        },
+        {
+          "name": "Apple",
+          "focus_areas": ["DSA", "System Design", "iOS/macOS Development", "Hardware Knowledge"],
+          "resources": [
+            "LeetCode Apple Tagged Questions",
+            "Apple Developer Documentation",
+            "iOS Interview Questions"
+          ],
+          "interview_rounds": ["Phone Screen", "Technical Interview", "Design Interview"],
+          "difficulty": "High"
+        },
+        {
+          "name": "Netflix",
+          "focus_areas": ["DSA", "System Design", "Distributed Systems", "Culture Fit"],
+          "resources": [
+            "Netflix Technology Blog",
+            "LeetCode Netflix Tagged Questions",
+            "Netflix Culture Deck"
+          ],
+          "interview_rounds": ["Phone Screen", "Technical On-site", "Culture Interview"],
+          "difficulty": "Very High"
+        }
+      ],
+      "indian_companies": [
+        {
+          "name": "TCS",
+          "focus_areas": ["Programming Fundamentals", "Aptitude", "Communication"],
+          "resources": ["TCS NQT Preparation", "TCS Digital Preparation", "TCS Xplore Program"],
+          "interview_rounds": ["Written Test", "Technical Interview", "HR Interview"],
+          "difficulty": "Medium"
+        },
+        {
+          "name": "Infosys",
+          "focus_areas": ["Programming", "Database", "Communication"],
+          "resources": ["Infosys Mysore Training Materials", "InfyTQ Platform", "Infosys Springboard"],
+          "interview_rounds": ["Online Test", "Technical Interview", "HR Interview"],
+          "difficulty": "Medium"
+        },
+        {
+          "name": "Wipro",
+          "focus_areas": ["Coding", "Aptitude", "Technical Knowledge"],
+          "resources": ["Wipro NLTH Preparation", "Coding Assessment Practice", "Wipro TalentNext"],
+          "interview_rounds": ["Written Test", "Technical Interview", "HR Interview"],
+          "difficulty": "Medium"
+        },
+        {
+          "name": "Flipkart",
+          "focus_areas": ["DSA", "System Design", "Problem Solving"],
+          "resources": ["LeetCode Flipkart Questions", "System Design Interview Prep", "Flipkart Engineering Blog"],
+          "interview_rounds": ["Online Coding", "Technical Rounds", "Hiring Manager Round"],
+          "difficulty": "High"
+        },
+        {
+          "name": "Paytm",
+          "focus_areas": ["DSA", "Backend Development", "Payment Systems"],
+          "resources": ["LeetCode Paytm Questions", "Fintech System Design", "Payment Gateway Concepts"],
+          "interview_rounds": ["Coding Round", "Technical Interview", "System Design"],
+          "difficulty": "High"
+        },
+        {
+          "name": "Zomato",
+          "focus_areas": ["DSA", "Web Development", "Database Design"],
+          "resources": ["LeetCode Zomato Questions", "Food Delivery System Design", "Backend Development"],
+          "interview_rounds": ["Coding Test", "Technical Interview", "Culture Fit"],
+          "difficulty": "Medium-High"
+        }
+      ],
+      "startups": [
+        {
+          "name": "Razorpay",
+          "focus_areas": ["DSA", "Payment Systems", "API Design"],
+          "difficulty": "High"
+        },
+        {
+          "name": "Swiggy",
+          "focus_areas": ["DSA", "System Design", "Location-based Services"],
+          "difficulty": "High"
+        },
+        {
+          "name": "Ola",
+          "focus_areas": ["DSA", "Real-time Systems", "Mobile Development"],
+          "difficulty": "High"
+        },
+        {
+          "name": "BYJU'S",
+          "focus_areas": ["DSA", "EdTech Systems", "Mobile Development"],
+          "difficulty": "Medium-High"
+        }
+      ]
+    },
+    "mobile_development": {
+      "android": [
+        {
+          "name": "Android Developer Documentation",
+          "url": "https://developer.android.com/",
+          "type": "Official Documentation",
+          "technologies": ["Java", "Kotlin"],
+          "description": "Official Android development resources"
+        },
+        {
+          "name": "Udacity Android Nanodegree",
+          "url": "https://www.udacity.com/",
+          "price": "$399/month",
+          "duration": "4 months",
+          "description": "Comprehensive Android development program"
+        },
+        {
+          "name": "Android Development Course by Google",
+          "url": "https://developer.android.com/courses",
+          "type": "Free Course",
+          "technologies": ["Kotlin", "Android"],
+          "description": "Official Google Android development course"
+        },
+        {
+          "name": "Coding in Flow Android Tutorials",
+          "url": "https://www.youtube.com/c/CodinginFlow",
+          "type": "YouTube Channel",
+          "technologies": ["Java", "Kotlin"],
+          "description": "Comprehensive Android development tutorials"
+        }
+      ],
+      "ios": [
+        {
+          "name": "Apple Developer Documentation",
+          "url": "https://developer.apple.com/documentation/",
+          "type": "Official Documentation",
+          "technologies": ["Swift", "Objective-C"],
+          "description": "Official iOS development resources"
+        },
+        {
+          "name": "Ray Wenderlich iOS Tutorials",
+          "url": "https://www.kodeco.com/",
+          "price": "Free + Premium",
+          "description": "High-quality iOS development tutorials"
+        },
+        {
+          "name": "Stanford CS193p",
+          "url": "https://cs193p.sites.stanford.edu/",
+          "type": "University Course",
+          "technologies": ["Swift", "SwiftUI"],
+          "description": "Stanford's iOS development course"
+        },
+        {
+          "name": "100 Days of SwiftUI",
+          "url": "https://www.hackingwithswift.com/100/swiftui",
+          "type": "Free Course",
+          "technologies": ["Swift", "SwiftUI"],
+          "description": "Complete SwiftUI learning course"
+        }
+      ],
+      "cross_platform": [
+        {
+          "name": "Flutter Documentation",
+          "url": "https://flutter.dev/docs",
+          "type": "Official Documentation",
+          "technologies": ["Dart", "Flutter"],
+          "description": "Official Flutter development resources"
+        },
+        {
+          "name": "React Native Documentation",
+          "url": "https://reactnative.dev/docs/getting-started",
+          "type": "Official Documentation",
+          "technologies": ["JavaScript", "React Native"],
+          "description": "Official React Native development resources"
+        },
+        {
+          "name": "Flutter & Dart - The Complete Guide",
+          "url": "https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/",
+          "price": "$50-100",
+          "duration": "40+ hours",
+          "description": "Comprehensive Flutter development course"
+        },
+        {
+          "name": "Xamarin Documentation",
+          "url": "https://docs.microsoft.com/en-us/xamarin/",
+          "type": "Official Documentation",
+          "technologies": ["C#", "Xamarin"],
+          "description": "Microsoft's cross-platform mobile development"
+        }
+      ]
+    },
+    "devops_and_cloud": {
+      "containerization": [
+        {
+          "name": "Docker Documentation",
+          "url": "https://docs.docker.com/",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "Official Docker documentation and tutorials"
+        },
+        {
+          "name": "Kubernetes Documentation",
+          "url": "https://kubernetes.io/docs/",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "Official Kubernetes documentation"
+        }
+      ],
+      "ci_cd": [
+        {
+          "name": "Jenkins Documentation",
+          "url": "https://www.jenkins.io/doc/",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "Jenkins CI/CD pipeline documentation"
+        },
+        {
+          "name": "GitHub Actions Documentation",
+          "url": "https://docs.github.com/en/actions",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "GitHub's CI/CD platform documentation"
+        }
+      ],
+      "monitoring": [
+        {
+          "name": "Prometheus Documentation",
+          "url": "https://prometheus.io/docs/",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "Monitoring and alerting system documentation"
+        },
+        {
+          "name": "Grafana Documentation",
+          "url": "https://grafana.com/docs/",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "Data visualization and monitoring platform"
+        }
+      ]
+    },
+    "placement_platforms": {
+      "job_portals": [
+        {
+          "name": "LinkedIn",
+          "url": "https://www.linkedin.com/",
+          "type": "Professional Network",
+          "description": "Professional networking and job search platform"
+        },
+        {
+          "name": "AngelList",
+          "url": "https://angel.co/",
+          "type": "Startup Jobs",
+          "description": "Startup and tech company job platform"
+        },
+        {
+          "name": "Naukri.com",
+          "url": "https://www.naukri.com/",
+          "type": "Job Portal",
+          "description": "Leading job portal in India"
+        },
+        {
+          "name": "Unstop (formerly Dare2Compete)",
+          "url": "https://unstop.com/",
+          "type": "Competition & Jobs",
+          "description": "Competitions, hackathons, and placement opportunities"
+        },
+        {
+          "name": "Indeed",
+          "url": "https://www.indeed.com/",
+          "type": "Job Portal",
+          "description": "Global job search platform"
+        },
+        {
+          "name": "Glassdoor",
+          "url": "https://www.glassdoor.com/",
+          "type": "Job Portal + Reviews",
+          "description": "Job search with company reviews and salary insights"
+        },
+        {
+          "name": "Monster.com",
+          "url": "https://www.monster.com/",
+          "type": "Job Portal",
+          "description": "Career opportunities and job search platform"
+        },
+        {
+          "name": "Dice",
+          "url": "https://www.dice.com/",
+          "type": "Tech Jobs",
+          "description": "Technology-focused job search platform"
+        },
+        {
+          "name": "Stack Overflow Jobs",
+          "url": "https://stackoverflow.com/jobs",
+          "type": "Developer Jobs",
+          "description": "Job platform for developers and tech professionals"
+        }
+      ],
+      "coding_assessment_platforms": [
+        {
+          "name": "HackerEarth",
+          "url": "https://www.hackerearth.com/",
+          "type": "Assessment Platform",
+          "description": "Coding challenges and company assessments"
+        },
+        {
+          "name": "Coding Ninjas Test Platform",
+          "url": "https://www.codingninjas.com/",
+          "type": "Practice Platform",
+          "description": "Mock tests and coding assessments"
+        },
+        {
+          "name": "PrepInsta",
+          "url": "https://prepinsta.com/",
+          "type": "Preparation Platform",
+          "description": "Company-specific preparation and mock tests"
+        },
+        {
+          "name": "HackerRank for Work",
+          "url": "https://www.hackerrank.com/work/",
+          "type": "Assessment Platform",
+          "description": "Technical screening and assessment platform"
+        },
+        {
+          "name": "Codility",
+          "url": "https://www.codility.com/",
+          "type": "Assessment Platform",
+          "description": "Programming skills assessment platform"
+        },
+        {
+          "name": "TestGorilla",
+          "url": "https://www.testgorilla.com/",
+          "type": "Skills Assessment",
+          "description": "Multi-skill assessment platform"
+        }
+      ],
+      "internship_platforms": [
+        {
+          "name": "Internshala",
+          "url": "https://internshala.com/",
+          "type": "Internship Platform",
+          "description": "Leading internship platform in India"
+        },
+        {
+          "name": "LetsIntern",
+          "url": "https://www.letsintern.com/",
+          "type": "Internship Platform",
+          "description": "Internship and early career opportunities"
+        },
+        {
+          "name": "Twenty19",
+          "url": "https://www.twenty19.com/",
+          "type": "Skill Assessment + Jobs",
+          "description": "Skill-based hiring platform for freshers"
+        },
+        {
+          "name": "Forage",
+          "url": "https://www.theforage.com/",
+          "type": "Virtual Experience",
+          "description": "Virtual work experience programs with top companies"
+        }
+      ]
+    },
+    "additional_skills": {
+      "database": [
+        {
+          "name": "W3Schools SQL Tutorial",
+          "url": "https://www.w3schools.com/sql/",
+          "type": "Tutorial",
+          "price": "Free",
+          "description": "Comprehensive SQL tutorial for beginners"
+        },
+        {
+          "name": "MongoDB University",
+          "url": "https://university.mongodb.com/",
+          "type": "Official Course",
+          "price": "Free",
+          "description": "Official MongoDB courses and certifications"
+        },
+        {
+          "name": "PostgreSQL Tutorial",
+          "url": "https://www.postgresqltutorial.com/",
+          "type": "Tutorial",
+          "price": "Free",
+          "description": "Complete PostgreSQL tutorial"
+        },
+        {
+          "name": "Redis Documentation",
+          "url": "https://redis.io/documentation",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "In-memory data structure store documentation"
+        },
+        {
+          "name": "Oracle Database Tutorial",
+          "url": "https://docs.oracle.com/en/database/",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "Oracle database documentation and tutorials"
+        }
+      ],
+      "cloud_computing": [
+        {
+          "name": "AWS Training and Certification",
+          "url": "https://aws.amazon.com/training/",
+          "type": "Cloud Platform",
+          "price": "Free + Paid Certifications",
+          "description": "Official AWS training resources"
+        },
+        {
+          "name": "Google Cloud Training",
+          "url": "https://cloud.google.com/training",
+          "type": "Cloud Platform",
+          "price": "Free + Paid Certifications",
+          "description": "Official Google Cloud training resources"
+        },
+        {
+          "name": "Microsoft Azure Learning",
+          "url": "https://docs.microsoft.com/en-us/learn/azure/",
+          "type": "Cloud Platform",
+          "price": "Free + Paid Certifications",
+          "description": "Official Microsoft Azure training resources"
+        },
+        {
+          "name": "Cloud Computing Specialization (Coursera)",
+          "url": "https://www.coursera.org/specializations/cloud-computing",
+          "type": "Specialization",
+          "price": "$49/month",
+          "description": "University of Illinois cloud computing program"
+        }
+      ],
+      "version_control": [
+        {
+          "name": "Git Documentation",
+          "url": "https://git-scm.com/doc",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "Official Git documentation and tutorials"
+        },
+        {
+          "name": "GitHub Learning Lab",
+          "url": "https://lab.github.com/",
+          "type": "Interactive Tutorial",
+          "price": "Free",
+          "description": "Interactive Git and GitHub tutorials"
+        },
+        {
+          "name": "Atlassian Git Tutorials",
+          "url": "https://www.atlassian.com/git/tutorials",
+          "type": "Tutorial",
+          "price": "Free",
+          "description": "Comprehensive Git tutorials by Atlassian"
+        },
+        {
+          "name": "Pro Git Book",
+          "url": "https://git-scm.com/book",
+          "type": "Free Book",
+          "price": "Free",
+          "description": "Complete Git reference book"
+        }
+      ],
+      "api_development": [
+        {
+          "name": "Postman Learning Center",
+          "url": "https://learning.postman.com/",
+          "type": "Tutorial",
+          "price": "Free",
+          "description": "API development and testing tutorials"
+        },
+        {
+          "name": "REST API Tutorial",
+          "url": "https://restfulapi.net/",
+          "type": "Tutorial",
+          "price": "Free",
+          "description": "RESTful API design and development guide"
+        },
+        {
+          "name": "GraphQL Learning",
+          "url": "https://graphql.org/learn/",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "Official GraphQL learning resources"
+        },
+        {
+          "name": "OpenAPI Specification",
+          "url": "https://swagger.io/specification/",
+          "type": "Documentation",
+          "price": "Free",
+          "description": "API documentation and specification standards"
+        }
+      ],
+      "testing": [
+        {
+          "name": "Selenium Documentation",
+          "url": "https://selenium-python.readthedocs.io/",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "Web application testing framework"
+        },
+        {
+          "name": "Jest Documentation",
+          "url": "https://jestjs.io/docs/getting-started",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "JavaScript testing framework"
+        },
+        {
+          "name": "PyTest Documentation",
+          "url": "https://docs.pytest.org/",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "Python testing framework"
+        },
+        {
+          "name": "Cypress Documentation",
+          "url": "https://docs.cypress.io/",
+          "type": "Official Documentation",
+          "price": "Free",
+          "description": "End-to-end testing framework"
+        }
+      ]
+    },
+    "soft_skills_and_communication": {
+      "communication_skills": [
+        {
+          "name": "Toastmasters International",
+          "url": "https://www.toastmasters.org/",
+          "type": "Organization",
+          "price": "$50-100/year",
+          "description": "Public speaking and leadership development"
+        },
+        {
+          "name": "Coursera Communication Skills",
+          "url": "https://www.coursera.org/courses?query=communication%20skills",
+          "type": "Online Course",
+          "price": "$49/month",
+          "description": "University-level communication courses"
+        },
+        {
+          "name": "TED Talks Public Speaking",
+          "url": "https://www.ted.com/playlists/226/before_public_speaking",
+          "type": "Video Series",
+          "price": "Free",
+          "description": "Public speaking tips from TED speakers"
+        }
+      ],
+      "leadership_skills": [
+        {
+          "name": "LinkedIn Learning Leadership",
+          "url": "https://www.linkedin.com/learning/topics/leadership",
+          "type": "Online Course",
+          "price": "$29.99/month",
+          "description": "Leadership development courses"
+        },
+        {
+          "name": "Harvard Business Review Leadership",
+          "url": "https://hbr.org/topic/leadership",
+          "type": "Articles & Resources",
+          "price": "Free + Premium",
+          "description": "Leadership insights and articles"
+        }
+      ],
+      "time_management": [
+        {
+          "name": "Getting Things Done (GTD)",
+          "type": "Methodology",
+          "author": "David Allen",
+          "description": "Productivity and time management system"
+        },
+        {
+          "name": "Pomodoro Technique",
+          "type": "Methodology",
+          "description": "Time management technique using focused intervals"
+        },
+        {
+          "name": "Todoist Productivity Guide",
+          "url": "https://todoist.com/productivity-methods",
+          "type": "Guide",
+          "price": "Free",
+          "description": "Comprehensive productivity methodologies guide"
+        }
+      ]
+    },
+    "project_ideas": {
+      "beginner_projects": [
+        {
+          "name": "Personal Portfolio Website",
+          "technologies": ["HTML", "CSS", "JavaScript"],
+          "difficulty": "Easy",
+          "duration": "1-2 weeks",
+          "description": "Create a responsive portfolio showcasing your skills and projects"
+        },
+        {
+          "name": "Todo List Application",
+          "technologies": ["JavaScript", "Local Storage"],
+          "difficulty": "Easy",
+          "duration": "1 week",
+          "description": "Build a task management application with CRUD operations"
+        },
+        {
+          "name": "Weather App",
+          "technologies": ["JavaScript", "API Integration"],
+          "difficulty": "Easy-Medium",
+          "duration": "1-2 weeks",
+          "description": "Weather application using external weather API"
+        },
+        {
+          "name": "Calculator",
+          "technologies": ["HTML", "CSS", "JavaScript"],
+          "difficulty": "Easy",
+          "duration": "3-5 days",
+          "description": "Functional calculator with basic mathematical operations"
+        }
+      ],
+      "intermediate_projects": [
+        {
+          "name": "E-commerce Website",
+          "technologies": ["React/Vue", "Node.js", "Database"],
+          "difficulty": "Medium",
+          "duration": "4-6 weeks",
+          "description": "Full-stack e-commerce platform with user authentication and payment integration"
+        },
+        {
+          "name": "Social Media Dashboard",
+          "technologies": ["React", "REST API", "Database"],
+          "difficulty": "Medium",
+          "duration": "3-4 weeks",
+          "description": "Social media management tool with analytics"
+        },
+        {
+          "name": "Chat Application",
+          "technologies": ["Socket.io", "Node.js", "MongoDB"],
+          "difficulty": "Medium",
+          "duration": "2-3 weeks",
+          "description": "Real-time messaging application"
+        },
+        {
+          "name": "Project Management Tool",
+          "technologies": ["Full Stack", "Database", "Authentication"],
+          "difficulty": "Medium-Hard",
+          "duration": "6-8 weeks",
+          "description": "Team collaboration and project tracking application"
+        }
+      ],
+      "advanced_projects": [
+        {
+          "name": "Video Streaming Platform",
+          "technologies": ["Microservices", "CDN", "Database Scaling"],
+          "difficulty": "Hard",
+          "duration": "8-12 weeks",
+          "description": "Netflix-like platform with video upload and streaming capabilities"
+        },
+        {
+          "name": "Distributed Chat System",
+          "technologies": ["Microservices", "Message Queues", "Load Balancing"],
+          "difficulty": "Hard",
+          "duration": "6-10 weeks",
+          "description": "Scalable chat system handling millions of users"
+        },
+        {
+          "name": "Machine Learning Platform",
+          "technologies": ["Python", "ML Libraries", "Cloud Services"],
+          "difficulty": "Hard",
+          "duration": "10-16 weeks",
+          "description": "Platform for training and deploying ML models"
+        },
+        {
+          "name": "Blockchain Application",
+          "technologies": ["Solidity", "Web3", "Smart Contracts"],
+          "difficulty": "Hard",
+          "duration": "8-12 weeks",
+          "description": "Decentralized application with smart contracts"
+        }
+      ]
+    },
+    "certifications": {
+      "cloud_certifications": [
+        {
+          "name": "AWS Certified Solutions Architect",
+          "provider": "Amazon Web Services",
+          "cost": "$150",
+          "validity": "3 years",
+          "difficulty": "Medium-Hard",
+          "description": "Validates expertise in designing distributed systems on AWS"
+        },
+        {
+          "name": "Google Cloud Professional Cloud Architect",
+          "provider": "Google Cloud",
+          "cost": "$200",
+          "validity": "2 years",
+          "difficulty": "Hard",
+          "description": "Demonstrates ability to design and manage Google Cloud solutions"
+        },
+        {
+          "name": "Microsoft Azure Fundamentals",
+          "provider": "Microsoft",
+          "cost": "$99",
+          "validity": "Permanent",
+          "difficulty": "Easy",
+          "description": "Entry-level certification for Azure cloud services"
+        }
+      ],
+      "programming_certifications": [
+        {
+          "name": "Oracle Certified Java Programmer",
+          "provider": "Oracle",
+          "cost": "$245",
+          "validity": "Permanent",
+          "difficulty": "Medium",
+          "description": "Validates Java programming skills"
+        },
+        {
+          "name": "Microsoft Technology Associate (MTA)",
+          "provider": "Microsoft",
+          "cost": "$127",
+          "validity": "Permanent",
+          "difficulty": "Easy-Medium",
+          "description": "Entry-level certification for Microsoft technologies"
+        },
+        {
+          "name": "Python Institute PCEP",
+          "provider": "Python Institute",
+          "cost": "$59",
+          "validity": "Permanent",
+          "difficulty": "Easy",
+          "description": "Entry-level Python programming certification"
+        }
+      ],
+      "database_certifications": [
+        {
+          "name": "MongoDB Certified Developer",
+          "provider": "MongoDB",
+          "cost": "$150",
+          "validity": "3 years",
+          "difficulty": "Medium",
+          "description": "Validates MongoDB development skills"
+        },
+        {
+          "name": "Oracle Database SQL Certified Associate",
+          "provider": "Oracle",
+          "cost": "$245",
+          "validity": "Permanent",
+          "difficulty": "Medium",
+          "description": "SQL and database fundamentals certification"
+        }
+      ],
+      "cybersecurity_certifications": [
+        {
+          "name": "CompTIA Security+",
+          "provider": "CompTIA",
+          "cost": "$370",
+          "validity": "3 years",
+          "difficulty": "Medium",
+          "description": "Entry-level cybersecurity certification"
+        },
+        {
+          "name": "Certified Ethical Hacker (CEH)",
+          "provider": "EC-Council",
+          "cost": "$1,199",
+          "validity": "3 years",
+          "difficulty": "Medium-Hard",
+          "description": "Ethical hacking and penetration testing certification"
+        }
+      ]
+    },
+    "study_schedule_recommendations": {
+      "3_month_plan": {
+        "month_1": {
+          "focus": "DSA Fundamentals",
+          "topics": ["Arrays", "Strings", "Linked Lists", "Stacks", "Queues"],
+          "daily_hours": "4-6 hours",
+          "weekly_goals": [
+            "Complete 20-30 easy problems",
+            "Understand time and space complexity",
+            "Practice basic algorithm patterns"
+          ]
+        },
+        "month_2": {
+          "focus": "Advanced DSA",
+          "topics": ["Trees", "Graphs", "Dynamic Programming", "Recursion", "Sorting"],
+          "daily_hours": "5-7 hours",
+          "weekly_goals": [
+            "Solve 15-25 medium problems",
+            "Learn advanced algorithmic techniques",
+            "Practice system design basics"
+          ]
+        },
+        "month_3": {
+          "focus": "Interview Preparation",
+          "topics": ["Mock Interviews", "Company-specific Problems", "System Design"],
+          "daily_hours": "6-8 hours",
+          "weekly_goals": [
+            "Take 2-3 mock interviews",
+            "Solve company-tagged problems",
+            "Design 2-3 systems per week"
+          ]
+        }
+      },
+      "6_month_plan": {
+        "month_1_2": {
+          "focus": "DSA Foundation + Development",
+          "description": "Build strong DSA fundamentals while learning web development basics",
+          "time_split": "60% DSA, 40% Development"
+        },
+        "month_3_4": {
+          "focus": "Advanced DSA + Projects",
+          "description": "Advanced algorithms and competitive programming with project development",
+          "time_split": "50% DSA, 50% Projects"
+        },
+        "month_5": {
+          "focus": "System Design + Specialization",
+          "description": "System design concepts and choose specialization (mobile, ML, etc.)",
+          "time_split": "40% System Design, 60% Specialization"
+        },
+        "month_6": {
+          "focus": "Interview Preparation",
+          "description": "Intensive interview prep with company-specific preparation",
+          "time_split": "70% Interview Prep, 30% Project Polish"
+        }
+      },
+      "daily_schedule": {
+        "morning_routine": {
+          "time": "6:00 AM - 9:00 AM",
+          "activities": [
+            "DSA Theory (1 hour)",
+            "Problem Solving Practice (2 hours)"
+          ]
+        },
+        "afternoon": {
+          "time": "2:00 PM - 5:00 PM",
+          "activities": [
+            "Development Projects (2 hours)",
+            "System Design Study (1 hour)"
+          ]
+        },
+        "evening": {
+          "time": "7:00 PM - 9:00 PM",
+          "activities": [
+            "Revision and Notes (1 hour)",
+            "Mock Interviews or Aptitude (1 hour)"
+          ]
+        }
+      },
+      "weekly_milestones": [
+        {
+          "week": 1,
+          "goal": "Solve 25 easy problems, complete 1 project milestone"
+        },
+        {
+          "week": 2,
+          "goal": "Solve 20 easy + 5 medium problems, deploy 1 project"
+        },
+        {
+          "week": 3,
+          "goal": "Solve 15 easy + 10 medium problems, learn 1 new technology"
+        },
+        {
+          "week": 4,
+          "goal": "Solve 10 easy + 15 medium problems, complete system design case study"
+        }
+      ]
+    },
+    "tips_and_strategies": {
+      "problem_solving_approach": [
+        {
+          "step": 1,
+          "title": "Understand the Problem",
+          "description": "Read the problem statement carefully, identify inputs/outputs, and clarify constraints"
+        },
+        {
+          "step": 2,
+          "title": "Think of Brute Force",
+          "description": "Start with the simplest approach, even if it's not optimal"
+        },
+        {
+          "step": 3,
+          "title": "Optimize",
+          "description": "Look for patterns, consider different data structures, and optimize time/space complexity"
+        },
+        {
+          "step": 4,
+          "title": "Code",
+          "description": "Write clean, readable code with proper variable names and comments"
+        },
+        {
+          "step": 5,
+          "title": "Test",
+          "description": "Test with edge cases, empty inputs, and boundary conditions"
+        }
+      ],
+      "interview_preparation_tips": [
+        {
+          "category": "Technical Preparation",
+          "tips": [
+            "Practice coding on whiteboard or paper",
+            "Explain your thought process while coding",
+            "Learn multiple solutions for common problems",
+            "Understand time and space complexity analysis"
+          ]
+        },
+        {
+          "category": "Behavioral Preparation",
+          "tips": [
+            "Prepare STAR format answers for common questions",
+            "Have specific examples ready for leadership, teamwork, and problem-solving",
+            "Research the company culture and values",
+            "Prepare thoughtful questions to ask the interviewer"
+          ]
+        },
+        {
+          "category": "Day of Interview",
+          "tips": [
+            "Get plenty of sleep the night before",
+            "Arrive early and dress appropriately",
+            "Bring copies of your resume and a notebook",
+            "Stay calm and think out loud during problem-solving"
+          ]
+        }
+      ],
+      "common_mistakes_to_avoid": [
+        {
+          "mistake": "Starting to code immediately",
+          "solution": "Always understand the problem and plan your approach first"
+        },
+        {
+          "mistake": "Not considering edge cases",
+          "solution": "Think about empty inputs, single elements, and boundary conditions"
+        },
+        {
+          "mistake": "Ignoring time/space complexity",
+          "solution": "Always analyze and discuss the complexity of your solution"
+        },
+        {
+          "mistake": "Not testing your code",
+          "solution": "Walk through your code with sample inputs before submitting"
+        },
+        {
+          "mistake": "Giving up too quickly",
+          "solution": "If stuck, try explaining your thought process or ask for hints"
+        }
+      ]
+    },
+    "resources_by_programming_language": {
+      "java": [
+        {
+          "name": "Oracle Java Documentation",
+          "url": "https://docs.oracle.com/en/java/",
+          "type": "Official Documentation"
+        },
+        {
+          "name": "Java Code Geeks",
+          "url": "https://www.javacodegeeks.com/",
+          "type": "Tutorial Website"
+        },
+        {
+          "name": "Effective Java",
+          "author": "Joshua Bloch",
+          "type": "Book",
+          "price": "$40-50"
+        }
+      ],
+      "python": [
+        {
+          "name": "Python.org Documentation",
+          "url": "https://docs.python.org/3/",
+          "type": "Official Documentation"
+        },
+        {
+          "name": "Real Python",
+          "url": "https://realpython.com/",
+          "type": "Tutorial Website",
+          "price": "Free + Premium"
+        },
+        {
+          "name": "Automate the Boring Stuff",
+          "author": "Al Sweigart",
+          "type": "Free Book",
+          "url": "https://automatetheboringstuff.com/"
+        }
+      ],
+      "javascript": [
+        {
+          "name": "MDN JavaScript Guide",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+          "type": "Official Documentation"
+        },
+        {
+          "name": "JavaScript.info",
+          "url": "https://javascript.info/",
+          "type": "Tutorial Website"
+        },
+        {
+          "name": "You Don't Know JS",
+          "author": "Kyle Simpson",
+          "type": "Book Series",
+          "url": "https://github.com/getify/You-Dont-Know-JS"
+        }
+      ],
+      "cpp": [
+        {
+          "name": "cppreference.com",
+          "url": "https://en.cppreference.com/",
+          "type": "Reference Documentation"
+        },
+        {
+          "name": "GeeksforGeeks C++",
+          "url": "https://www.geeksforgeeks.org/c-plus-plus/",
+          "type": "Tutorial Website"
+        },
+        {
+          "name": "The C++ Programming Language",
+          "author": "Bjarne Stroustrup",
+          "type": "Book",
+          "price": "$60-70"
+        }
+      ]
+    }
+  }
+}
