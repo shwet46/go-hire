@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import Link from "next/link";
 
 const Footer = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -54,34 +55,34 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold text-zinc-200 mb-4">For Students</h3>
             <ul className="space-y-2">
-              <li><a href="/jobs" className="text-zinc-400 hover:text-indigo-400 transition-colors">Jobs</a></li>
-              <li><a href="/internships" className="text-zinc-400 hover:text-indigo-400 transition-colors">Internships</a></li>
-              <li><a href="/practice" className="text-zinc-400 hover:text-indigo-400 transition-colors">Practice</a></li>
+              <li><Link href="/jobs/" className="text-zinc-400 hover:text-indigo-400 transition-colors">Opportunities</Link></li>
+              <li><Link href="/internships" className="text-zinc-400 hover:text-indigo-400 transition-colors">Internships</Link></li>
+              <li><Link href="/practice" className="text-zinc-400 hover:text-indigo-400 transition-colors">Practice</Link></li>
             </ul>
           </div>
           {/* For Recruiters */}
           <div>
             <h3 className="text-lg font-semibold text-zinc-200 mb-4">For Recruiters</h3>
             <ul className="space-y-2">
-              <li><a href="/post-job" className="text-zinc-400 hover:text-indigo-400 transition-colors">Post a Job</a></li>
-              <li><a href="/post-internship" className="text-zinc-400 hover:text-indigo-400 transition-colors">Post an Internship</a></li>
+              <li><Link href="/post-job" className="text-zinc-400 hover:text-indigo-400 transition-colors">Post a Job</Link></li>
+              <li><Link href="/post-internship" className="text-zinc-400 hover:text-indigo-400 transition-colors">Post an Internship</Link></li>
             </ul>
           </div>
           {/* Company */}
           <div>
             <h3 className="text-lg font-semibold text-zinc-200 mb-4">Company</h3>
             <ul className="space-y-2">
-              <li><a href="/about" className="text-zinc-400 hover:text-indigo-400 transition-colors">About Us</a></li>
-              <li><a href="/contact" className="text-zinc-400 hover:text-indigo-400 transition-colors">Contact</a></li>
-              <li><a href="/faq" className="text-zinc-400 hover:text-indigo-400 transition-colors">FAQ</a></li>
+              <li><Link href="/about" className="text-zinc-400 hover:text-indigo-400 transition-colors">About Us</Link></li>
+              <li><Link href="/contact" className="text-zinc-400 hover:text-indigo-400 transition-colors">Contact</Link></li>
+              <li><Link href="/faq" className="text-zinc-400 hover:text-indigo-400 transition-colors">FAQ</Link></li>
             </ul>
           </div>
           {/* Legal */}
           <div>
             <h3 className="text-lg font-semibold text-zinc-200 mb-4">Legal</h3>
             <ul className="space-y-2">
-              <li><a href="/privacy" className="text-zinc-400 hover:text-indigo-400 transition-colors">Privacy Policy</a></li>
-              <li><a href="/terms" className="text-zinc-400 hover:text-indigo-400 transition-colors">Terms of Service</a></li>
+              <li><Link href="/privacy" className="text-zinc-400 hover:text-indigo-400 transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="text-zinc-400 hover:text-indigo-400 transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
         </div>
