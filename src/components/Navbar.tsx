@@ -36,9 +36,12 @@ export function Navbar({ className }: { className?: string }) {
           redirect: false,
           callbackUrl: "/"
         });
-        // Clear any cached data and redirect
-        router.push("/");
-        router.refresh();
+        // Clear any local storage or session data
+        localStorage.clear();
+        sessionStorage.clear();
+        
+        // Force a page reload to clear all state
+        window.location.href = "/";
       } catch (error) {
         console.error("Sign out error:", error);
       } finally {

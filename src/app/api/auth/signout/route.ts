@@ -7,20 +7,23 @@ export async function POST() {
       { status: 200 }
     );
 
-    // Clear the auth token cookie
-    response.cookies.set('auth-token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 0 // This will delete the cookie
-    });
 
-    // Clear NextAuth session cookie
-    response.cookies.set('next-auth.session-token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 0
+    const cookieNames = [
+      'next-auth.session-token',
+      'next-auth.csrf-token',
+      'next-auth.callback-url',
+      '__Secure-next-auth.session-token',
+      '__Host-next-auth.csrf-token', 
+    ];
+
+    cookieNames.forEach(name => {
+      response.cookies.set(name, '', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 0,
+        path: '/'
+      });
     });
 
     return response;
