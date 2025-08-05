@@ -279,7 +279,7 @@ export default function JobsPage() {
                           <span>{job.salary}</span>
                         </div>
                         <span className="text-xs bg-violet-500/20 text-violet-300 px-2 py-1 rounded-full capitalize">
-                          {job.type.replace('-', ' ')}
+                          {job.type ? job.type.replace('-', ' ') : 'Full-time'}
                         </span>
                       </div>
                     </div>

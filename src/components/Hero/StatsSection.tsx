@@ -6,9 +6,9 @@ const StatsSection = () => {
   const stats = [
     { 
       icon: Users, 
-      label: "Active Students", 
-      value: "50K+", 
-      description: "Gamifying their career journey",
+      label: "Talented Students", 
+      value: "25K+", 
+      description: "Ready for internships & projects",
       color: "text-blue-400",
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/20",
@@ -16,9 +16,9 @@ const StatsSection = () => {
     },
     { 
       icon: Building, 
-      label: "Partner Companies", 
-      value: "1,200+", 
-      description: "Fortune 500 & startups",
+      label: "Active Startups", 
+      value: "800+", 
+      description: "Hiring through our platform",
       color: "text-green-400",
       bgColor: "bg-green-500/10",
       borderColor: "border-green-500/20",
@@ -26,9 +26,9 @@ const StatsSection = () => {
     },
     { 
       icon: Briefcase, 
-      label: "Dream Jobs", 
-      value: "15K+", 
-      description: "Matched every month",
+      label: "Successful Hires", 
+      value: "12K+", 
+      description: "Completed every month",
       color: "text-purple-400",
       bgColor: "bg-purple-500/10",
       borderColor: "border-purple-500/20",
@@ -36,9 +36,9 @@ const StatsSection = () => {
     },
     { 
       icon: Trophy, 
-      label: "Points Earned", 
-      value: "50M+", 
-      description: "By our community",
+      label: "Cost Savings", 
+      value: "70%", 
+      description: "vs traditional recruiting",
       color: "text-yellow-400",
       bgColor: "bg-yellow-500/10",
       borderColor: "border-yellow-500/20",
@@ -52,13 +52,13 @@ const StatsSection = () => {
       <div className="text-center mb-12">
         <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-4 border border-neutral-700">
           <TrendingUp size={16} className="text-indigo-400" />
-          <span className="text-sm font-medium text-neutral-300">Real Impact</span>
+          <span className="text-sm font-medium text-neutral-300">Proven Results</span>
         </div>
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-          Powering Career Success
+          Empowering Startup Growth
         </h2>
         <p className="text-neutral-400 max-w-2xl mx-auto">
-          Join a thriving community where students turn career building into an engaging game
+          Connect with the next generation of talent and build your dream team affordably
         </p>
       </div>
 
@@ -105,15 +105,15 @@ const StatsSection = () => {
       <div className="mt-12 flex flex-wrap justify-center items-center gap-6 text-sm text-neutral-500">
         <div className="flex items-center gap-2">
           <Star size={16} className="text-yellow-400" />
-          <span>4.9/5 Student Rating</span>
+          <span>4.8/5 Startup Rating</span>
         </div>
         <div className="flex items-center gap-2">
           <Zap size={16} className="text-indigo-400" />
-          <span>95% Job Match Success</span>
+          <span>2 Weeks Avg. Hire Time</span>
         </div>
         <div className="flex items-center gap-2">
           <Target size={16} className="text-green-400" />
-          <span>3x Faster Hiring</span>
+          <span>92% Retention Rate</span>
         </div>
       </div>
     </div>

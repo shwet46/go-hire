@@ -24,48 +24,48 @@ const CompanyLogoTabs: React.FC<CompanyLogoTabsProps> = ({
   onCompanySelect,
   className = ''
 }) => {
-  // Expanded companies data with 30+ companies for better effect
+  // Updated companies data focused on startups and hiring platforms
   const defaultCompanies: Company[] = [
-    { id: '1', name: 'Apple', logo: 'https://logo.clearbit.com/apple.com', category: 'Technology', website: 'apple.com' },
-    { id: '2', name: 'Google', logo: 'https://logo.clearbit.com/google.com', category: 'Search', website: 'google.com' },
-    { id: '3', name: 'Microsoft', logo: 'https://logo.clearbit.com/microsoft.com', category: 'Software', website: 'microsoft.com' },
-    { id: '4', name: 'Amazon', logo: 'https://logo.clearbit.com/amazon.com', category: 'E-commerce', website: 'amazon.com' },
-    { id: '5', name: 'Meta', logo: 'https://logo.clearbit.com/meta.com', category: 'Social Media', website: 'meta.com' },
-    { id: '6', name: 'Tesla', logo: 'https://logo.clearbit.com/tesla.com', category: 'Automotive', website: 'tesla.com' },
-    { id: '7', name: 'Netflix', logo: 'https://logo.clearbit.com/netflix.com', category: 'Streaming', website: 'netflix.com' },
-    { id: '8', name: 'Spotify', logo: 'https://logo.clearbit.com/spotify.com', category: 'Music', website: 'spotify.com' },
-    { id: '9', name: 'Adobe', logo: 'https://logo.clearbit.com/adobe.com', category: 'Creative', website: 'adobe.com' },
-    { id: '10', name: 'Salesforce', logo: 'https://logo.clearbit.com/salesforce.com', category: 'CRM', website: 'salesforce.com' },
-    { id: '11', name: 'Shopify', logo: 'https://logo.clearbit.com/shopify.com', category: 'E-commerce', website: 'shopify.com' },
-    { id: '12', name: 'Slack', logo: 'https://logo.clearbit.com/slack.com', category: 'Communication', website: 'slack.com' },
-    { id: '13', name: 'Uber', logo: 'https://logo.clearbit.com/uber.com', category: 'Transportation', website: 'uber.com' },
-    { id: '14', name: 'Airbnb', logo: 'https://logo.clearbit.com/airbnb.com', category: 'Travel', website: 'airbnb.com' },
-    { id: '15', name: 'PayPal', logo: 'https://logo.clearbit.com/paypal.com', category: 'FinTech', website: 'paypal.com' },
-    { id: '16', name: 'Stripe', logo: 'https://logo.clearbit.com/stripe.com', category: 'Payments', website: 'stripe.com' },
-    { id: '17', name: 'Zoom', logo: 'https://logo.clearbit.com/zoom.us', category: 'Video', website: 'zoom.us' },
-    { id: '18', name: 'Dropbox', logo: 'https://logo.clearbit.com/dropbox.com', category: 'Storage', website: 'dropbox.com' },
-    { id: '19', name: 'Twitter', logo: 'https://logo.clearbit.com/twitter.com', category: 'Social', website: 'twitter.com' },
-    { id: '20', name: 'LinkedIn', logo: 'https://logo.clearbit.com/linkedin.com', category: 'Professional', website: 'linkedin.com' },
-    { id: '21', name: 'Discord', logo: 'https://logo.clearbit.com/discord.com', category: 'Gaming', website: 'discord.com' },
-    { id: '22', name: 'Twitch', logo: 'https://logo.clearbit.com/twitch.tv', category: 'Streaming', website: 'twitch.tv' },
-    { id: '23', name: 'GitHub', logo: 'https://logo.clearbit.com/github.com', category: 'DevTools', website: 'github.com' },
-    { id: '24', name: 'Figma', logo: 'https://logo.clearbit.com/figma.com', category: 'Design', website: 'figma.com' },
-    { id: '25', name: 'Notion', logo: 'https://logo.clearbit.com/notion.so', category: 'Productivity', website: 'notion.so' },
-    { id: '26', name: 'Canva', logo: 'https://logo.clearbit.com/canva.com', category: 'Design', website: 'canva.com' },
-    { id: '27', name: 'HubSpot', logo: 'https://logo.clearbit.com/hubspot.com', category: 'Marketing', website: 'hubspot.com' },
-    { id: '28', name: 'Mailchimp', logo: 'https://logo.clearbit.com/mailchimp.com', category: 'Email', website: 'mailchimp.com' },
-    { id: '29', name: 'Oracle', logo: 'https://logo.clearbit.com/oracle.com', category: 'Database', website: 'oracle.com' },
-    { id: '30', name: 'Intel', logo: 'https://logo.clearbit.com/intel.com', category: 'Hardware', website: 'intel.com' },
-    { id: '31', name: 'Samsung', logo: 'https://logo.clearbit.com/samsung.com', category: 'Electronics', website: 'samsung.com' },
-    { id: '32', name: 'Pinterest', logo: 'https://logo.clearbit.com/pinterest.com', category: 'Social', website: 'pinterest.com' },
-    { id: '33', name: 'Reddit', logo: 'https://logo.clearbit.com/reddit.com', category: 'Forum', website: 'reddit.com' },
-    { id: '34', name: 'Asana', logo: 'https://logo.clearbit.com/asana.com', category: 'Productivity', website: 'asana.com' },
-    { id: '35', name: 'Atlassian', logo: 'https://logo.clearbit.com/atlassian.com', category: 'DevTools', website: 'atlassian.com' },
-    { id: '36', name: 'Xiaomi', logo: 'https://logo.clearbit.com/mi.com', category: 'Electronics', website: 'mi.com' },
-    { id: '37', name: 'Baidu', logo: 'https://logo.clearbit.com/baidu.com', category: 'Search', website: 'baidu.com' },
-    { id: '38', name: 'Yandex', logo: 'https://logo.clearbit.com/yandex.com', category: 'Search', website: 'yandex.com' },
-    { id: '39', name: 'SAP', logo: 'https://logo.clearbit.com/sap.com', category: 'Enterprise', website: 'sap.com' },
-    { id: '40', name: 'Dell', logo: 'https://logo.clearbit.com/dell.com', category: 'Hardware', website: 'dell.com' }
+    { id: '1', name: 'Y Combinator', logo: 'https://logo.clearbit.com/ycombinator.com', category: 'Accelerator', website: 'ycombinator.com' },
+    { id: '2', name: 'Stripe', logo: 'https://logo.clearbit.com/stripe.com', category: 'FinTech Startup', website: 'stripe.com' },
+    { id: '3', name: 'Airbnb', logo: 'https://logo.clearbit.com/airbnb.com', category: 'Travel Startup', website: 'airbnb.com' },
+    { id: '4', name: 'Uber', logo: 'https://logo.clearbit.com/uber.com', category: 'Mobility Startup', website: 'uber.com' },
+    { id: '5', name: 'Shopify', logo: 'https://logo.clearbit.com/shopify.com', category: 'E-commerce', website: 'shopify.com' },
+    { id: '6', name: 'Canva', logo: 'https://logo.clearbit.com/canva.com', category: 'Design Startup', website: 'canva.com' },
+    { id: '7', name: 'Notion', logo: 'https://logo.clearbit.com/notion.so', category: 'Productivity', website: 'notion.so' },
+    { id: '8', name: 'Figma', logo: 'https://logo.clearbit.com/figma.com', category: 'Design Tools', website: 'figma.com' },
+    { id: '9', name: 'Discord', logo: 'https://logo.clearbit.com/discord.com', category: 'Communication', website: 'discord.com' },
+    { id: '10', name: 'Slack', logo: 'https://logo.clearbit.com/slack.com', category: 'Workplace', website: 'slack.com' },
+    { id: '11', name: 'Zoom', logo: 'https://logo.clearbit.com/zoom.us', category: 'Video Tech', website: 'zoom.us' },
+    { id: '12', name: 'Dropbox', logo: 'https://logo.clearbit.com/dropbox.com', category: 'Cloud Storage', website: 'dropbox.com' },
+    { id: '13', name: 'GitHub', logo: 'https://logo.clearbit.com/github.com', category: 'Developer Tools', website: 'github.com' },
+    { id: '14', name: 'Twitch', logo: 'https://logo.clearbit.com/twitch.tv', category: 'Gaming', website: 'twitch.tv' },
+    { id: '15', name: 'Reddit', logo: 'https://logo.clearbit.com/reddit.com', category: 'Social Platform', website: 'reddit.com' },
+    { id: '16', name: 'Pinterest', logo: 'https://logo.clearbit.com/pinterest.com', category: 'Social Discovery', website: 'pinterest.com' },
+    { id: '17', name: 'Asana', logo: 'https://logo.clearbit.com/asana.com', category: 'Project Mgmt', website: 'asana.com' },
+    { id: '18', name: 'Atlassian', logo: 'https://logo.clearbit.com/atlassian.com', category: 'Dev Tools', website: 'atlassian.com' },
+    { id: '19', name: 'HubSpot', logo: 'https://logo.clearbit.com/hubspot.com', category: 'Marketing', website: 'hubspot.com' },
+    { id: '20', name: 'Mailchimp', logo: 'https://logo.clearbit.com/mailchimp.com', category: 'Email Marketing', website: 'mailchimp.com' },
+    { id: '21', name: 'Zapier', logo: 'https://logo.clearbit.com/zapier.com', category: 'Automation', website: 'zapier.com' },
+    { id: '22', name: 'Airtable', logo: 'https://logo.clearbit.com/airtable.com', category: 'Database', website: 'airtable.com' },
+    { id: '23', name: 'Vercel', logo: 'https://logo.clearbit.com/vercel.com', category: 'Web Platform', website: 'vercel.com' },
+    { id: '24', name: 'Supabase', logo: 'https://logo.clearbit.com/supabase.com', category: 'Backend', website: 'supabase.com' },
+    { id: '25', name: 'Linear', logo: 'https://logo.clearbit.com/linear.app', category: 'Issue Tracking', website: 'linear.app' },
+    { id: '26', name: 'Framer', logo: 'https://logo.clearbit.com/framer.com', category: 'Design Platform', website: 'framer.com' },
+    { id: '27', name: 'Webflow', logo: 'https://logo.clearbit.com/webflow.com', category: 'Web Design', website: 'webflow.com' },
+    { id: '28', name: 'Calendly', logo: 'https://logo.clearbit.com/calendly.com', category: 'Scheduling', website: 'calendly.com' },
+    { id: '29', name: 'Loom', logo: 'https://logo.clearbit.com/loom.com', category: 'Video Messaging', website: 'loom.com' },
+    { id: '30', name: 'Miro', logo: 'https://logo.clearbit.com/miro.com', category: 'Collaboration', website: 'miro.com' },
+    { id: '31', name: 'Typeform', logo: 'https://logo.clearbit.com/typeform.com', category: 'Forms', website: 'typeform.com' },
+    { id: '32', name: 'Hotjar', logo: 'https://logo.clearbit.com/hotjar.com', category: 'Analytics', website: 'hotjar.com' },
+    { id: '33', name: 'Intercom', logo: 'https://logo.clearbit.com/intercom.com', category: 'Customer Support', website: 'intercom.com' },
+    { id: '34', name: 'Segment', logo: 'https://logo.clearbit.com/segment.com', category: 'Data Platform', website: 'segment.com' },
+    { id: '35', name: 'PlanetScale', logo: 'https://logo.clearbit.com/planetscale.com', category: 'Database', website: 'planetscale.com' },
+    { id: '36', name: 'Railway', logo: 'https://logo.clearbit.com/railway.app', category: 'Cloud Platform', website: 'railway.app' },
+    { id: '37', name: 'Render', logo: 'https://logo.clearbit.com/render.com', category: 'Cloud Hosting', website: 'render.com' },
+    { id: '38', name: 'Fly.io', logo: 'https://logo.clearbit.com/fly.io', category: 'Edge Platform', website: 'fly.io' },
+    { id: '39', name: 'Retool', logo: 'https://logo.clearbit.com/retool.com', category: 'Internal Tools', website: 'retool.com' },
+    { id: '40', name: 'Postman', logo: 'https://logo.clearbit.com/postman.com', category: 'API Tools', website: 'postman.com' }
   ]
 
   const companies = propCompanies || defaultCompanies
@@ -232,9 +232,9 @@ const CompanyLogoTabs: React.FC<CompanyLogoTabsProps> = ({
     <div className={className}>
       <div className="text-center mb-8">
         <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-violet-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent mb-3 tracking-tight">
-          Industry Veterans
+          Startup Success Stories
         </h2>
-        <p className="text-zinc-400 text-lg font-medium">Powering innovation across the globe</p>
+        <p className="text-zinc-400 text-lg font-medium">Companies that grew from ideas to industry leaders</p>
       </div>
       
       <div className="relative space-y-8" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -273,7 +273,7 @@ const CompanyLogoTabs: React.FC<CompanyLogoTabsProps> = ({
 
       {/* Centered info text below the rows */}
       <div className="text-center mt-6 text-sm text-zinc-400">
-        All this data is for endorsing purposes only. No real data is used in this demo.
+        These startups found their early talent through platforms like ours
       </div>
     </div>
   )
@@ -358,8 +358,8 @@ export const CompanyTabsExample: React.FC = () => {
                       </a>
                     </div>
                     <p className="text-zinc-300 text-lg leading-relaxed">
-                      Discover why <span className="text-violet-400 font-semibold">{selectedCompany.name}</span> stands as a pioneer in the {selectedCompany.category.toLowerCase()} industry. 
-                      Their innovative solutions and cutting-edge technology have revolutionized how millions of users and businesses operate globally.
+                      <span className="text-violet-400 font-semibold">{selectedCompany.name}</span> started as a small startup and grew into a leading {selectedCompany.category.toLowerCase()} company. 
+                      They found their early talent through platforms connecting startups with passionate students and freelancers, just like you can today.
                     </p>
                   </div>
                 </div>

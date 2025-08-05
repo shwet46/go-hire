@@ -1,22 +1,105 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
-import { redirect } from "next/navigation";
-import Link from "next/link";
-import { Plus, Users, Eye, CheckCircle, Clock, Briefcase, TrendingUp } from "lucide-react";
+"use client";
+import React, { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { 
+  Plus, 
+  Briefcase, 
+  Users, 
+  Eye,
+  Calendar,
+  TrendingUp,
+  MapPin,
+  DollarSign,
+  ArrowRight
+} from 'lucide-react';
 
-interface UserSession {
-  name?: string;
-  role?: string;
-  referralCode?: string;
+interface Job {
+  _id: string;
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  salary: string;
+  createdAt: string;
+  applicants?: number;
+  views?: number;
 }
 
-export default async function RecruiterDashboard() {
-  const session = await getServerSession(authOptions);
-  if (!session || (session.user as UserSession).role !== 'recruiter') {
-    redirect("/login");
-  }
+interface RecruiterStats {
+  totalJobs: number;
+  activeJobs: number;
+  totalApplicants: number;
+  jobViews: number;
+}
 
-  const user = session.user as UserSession;
+export default function RecruiterDashboard() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [stats, setStats] = useState<RecruiterStats>({
+    totalJobs: 0,
+    activeJobs: 0,
+    totalApplicants: 0,
+    jobViews: 0
+  });
+  const [myJobs, setMyJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (status === 'loading') return;
+    
+    if (!session) {
+      router.push('/login');
+      return;
+    }
+
+    fetchRecruiterData();
+  }, [session, status, router]);
+
+  const fetchRecruiterData = async () => {
+    try {
+      // Fetch all jobs to calculate stats (in a real app, you'd have a recruiter-specific endpoint)
+      const jobsResponse = await fetch('/api/jobs');
+      if (jobsResponse.ok) {
+        const jobsData = await jobsResponse.json();
+        const allJobs = jobsData.jobs || [];
+        
+        // Filter jobs posted by current user (if we had user ID tracking)
+        // For now, showing recent jobs as placeholder
+        const recentJobs = allJobs.slice(0, 5);
+        setMyJobs(recentJobs);
+        
+        setStats({
+          totalJobs: allJobs.length,
+          activeJobs: allJobs.length, // Assuming all are active
+          totalApplicants: 0, // Would need to aggregate from applications
+          jobViews: 0 // Would need to track views
+        });
+      }
+
+    } catch (error) {
+      console.error('Error fetching recruiter data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  if (status === 'loading' || loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-violet-950/20 pt-20 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-violet-950/20 pt-20">
@@ -25,162 +108,223 @@ export default async function RecruiterDashboard() {
         <div className="absolute -left-64 md:-left-96 top-10 w-96 h-96 bg-violet-600/30 rounded-full blur-3xl"></div>
         <div className="absolute -right-64 md:-right-96 bottom-10 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
       </div>
-
+      
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-12">
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-12">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-violet-400 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-4">
-              Recruiter Dashboard
+            <h1 className="text-4xl font-bold text-white mb-2">
+              Welcome back, {session?.user?.name || 'Recruiter'}!
             </h1>
             <p className="text-zinc-400 text-lg">
-              Welcome back, <span className="text-violet-400 font-semibold">{user.name}</span>
+              Manage your job postings and find the perfect candidates for your startup.
             </p>
           </div>
+          
           <Link href="/jobs/post">
-            <button className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-violet-900/30 flex items-center space-x-2">
+            <button className="mt-4 md:mt-0 bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-violet-900/30 flex items-center space-x-2">
               <Plus size={20} />
-              <span>Post New Job</span>
+              <span>Post New Opportunity</span>
             </button>
           </Link>
         </div>
 
-        {/* Stats Cards */}
+        {/* Stats Grid */}
         <div className="grid md:grid-cols-4 gap-6 mb-12">
           <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-zinc-400 text-sm">Active Jobs</p>
-                <p className="text-2xl font-bold text-violet-400">8</p>
-              </div>
-              <Briefcase className="text-violet-500" size={32} />
+            <div className="flex items-center justify-between mb-4">
+              <Briefcase className="h-8 w-8 text-violet-400" />
+              <span className="text-2xl font-bold text-white">{stats.totalJobs}</span>
             </div>
+            <h3 className="text-zinc-400 text-sm">Total Opportunities</h3>
+            <p className="text-zinc-500 text-xs mt-1">Posted on platform</p>
           </div>
 
-          <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-zinc-400 text-sm">Total Applications</p>
-                <p className="text-2xl font-bold text-indigo-400">156</p>
-              </div>
-              <Users className="text-indigo-500" size={32} />
+          <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-emerald-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
+            <div className="flex items-center justify-between mb-4">
+              <TrendingUp className="h-8 w-8 text-emerald-400" />
+              <span className="text-2xl font-bold text-white">{stats.activeJobs}</span>
             </div>
+            <h3 className="text-zinc-400 text-sm">Active Listings</h3>
+            <p className="text-zinc-500 text-xs mt-1">Currently hiring</p>
           </div>
 
-          <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-zinc-400 text-sm">Profile Views</p>
-                <p className="text-2xl font-bold text-emerald-400">1,240</p>
-              </div>
-              <Eye className="text-emerald-500" size={32} />
+          <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-indigo-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
+            <div className="flex items-center justify-between mb-4">
+              <Users className="h-8 w-8 text-indigo-400" />
+              <span className="text-2xl font-bold text-white">{stats.totalApplicants}</span>
             </div>
+            <h3 className="text-zinc-400 text-sm">Total Applications</h3>
+            <p className="text-zinc-500 text-xs mt-1">Received this month</p>
           </div>
 
-          <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-zinc-400 text-sm">Hires Made</p>
-                <p className="text-2xl font-bold text-cyan-400">23</p>
-              </div>
-              <CheckCircle className="text-cyan-500" size={32} />
+          <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-amber-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
+            <div className="flex items-center justify-between mb-4">
+              <Eye className="h-8 w-8 text-amber-400" />
+              <span className="text-2xl font-bold text-white">{stats.jobViews}</span>
             </div>
+            <h3 className="text-zinc-400 text-sm">Profile Views</h3>
+            <p className="text-zinc-500 text-xs mt-1">This week</p>
           </div>
         </div>
 
-        {/* Quick Actions */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          <Link href="/jobs/manage" className="group">
-            <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50 hover:border-violet-500/50 transition-all duration-300">
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="p-3 bg-violet-500/20 rounded-lg">
-                  <Briefcase className="text-violet-400" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-violet-300 transition-colors">Manage Jobs</h3>
-                  <p className="text-zinc-400">Edit and track your postings</p>
-                </div>
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* My Jobs */}
+          <div className="lg:col-span-2">
+            <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-white">Recent Opportunities</h2>
+                <Link href="/jobs">
+                  <button className="text-violet-400 hover:text-violet-300 text-sm font-medium flex items-center space-x-1">
+                    <span>Manage All</span>
+                    <ArrowRight size={16} />
+                  </button>
+                </Link>
               </div>
-              <p className="text-sm text-zinc-500 group-hover:text-zinc-400 transition-colors">
-                View, edit, and manage all your job postings in one place
-              </p>
-            </div>
-          </Link>
 
-          <Link href="/applications" className="group">
-            <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50 hover:border-indigo-500/50 transition-all duration-300">
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="p-3 bg-indigo-500/20 rounded-lg">
-                  <Users className="text-indigo-400" size={24} />
+              {myJobs.length === 0 ? (
+                <div className="text-center py-12">
+                  <Briefcase className="h-16 w-16 text-zinc-600 mx-auto mb-6" />
+                  <h3 className="text-xl font-semibold text-white mb-2">No opportunities posted yet</h3>
+                  <p className="text-zinc-400 mb-2">Start building your dream team by posting your first opportunity</p>
+                  <p className="text-zinc-500 text-sm mb-6">Perfect for startup roles, freelance projects, and contract work</p>
+                  <Link href="/jobs/post">
+                    <button className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-8 py-3 rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-violet-900/30">
+                      Post Your First Opportunity
+                    </button>
+                  </Link>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-indigo-300 transition-colors">View Applications</h3>
-                  <p className="text-zinc-400">Review candidate profiles</p>
-                </div>
-              </div>
-              <p className="text-sm text-zinc-500 group-hover:text-zinc-400 transition-colors">
-                Review applications and manage your hiring pipeline
-              </p>
-            </div>
-          </Link>
+              ) : (
+                <div className="space-y-4">
+                  {myJobs.map((job) => (
+                    <div key={job._id} className="p-4 bg-zinc-800/50 rounded-lg border border-zinc-700/50 hover:border-violet-500/50 transition-all duration-200 group">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <h3 className="font-semibold text-white group-hover:text-violet-300 transition-colors">{job.title}</h3>
+                          <p className="text-zinc-400 text-sm">{job.company}</p>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-xs text-zinc-400">{formatDate(job.createdAt)}</span>
+                          <div className="mt-1">
+                            <span className="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">
+                              Active
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex flex-wrap items-center text-zinc-400 text-sm gap-4 mb-4">
+                        <div className="flex items-center space-x-1">
+                          <MapPin size={14} />
+                          <span>{job.location}</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <DollarSign size={14} />
+                          <span>{job.salary}</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <Users size={14} />
+                          <span>{job.applicants || 0} applicants</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <Eye size={14} />
+                          <span>{job.views || 0} views</span>
+                        </div>
+                      </div>
 
-          <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
-            <div className="flex items-center space-x-4 mb-4">
-              <div className="p-3 bg-emerald-500/20 rounded-lg">
-                <TrendingUp className="text-emerald-400" size={24} />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-white">Analytics</h3>
-                <p className="text-zinc-400">Track performance</p>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-zinc-400">Response Rate</span>
-                <span className="text-emerald-400">78%</span>
-              </div>
-              <div className="w-full bg-zinc-700 rounded-full h-2">
-                <div className="bg-emerald-500 h-2 rounded-full w-[78%]"></div>
-              </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs bg-violet-500/20 text-violet-300 px-2 py-1 rounded-full capitalize">
+                          {job.type ? job.type.replace('-', ' ') : 'Full-time'}
+                        </span>
+                        <div className="flex space-x-3">
+                          <Link href={`/jobs/${job._id}`}>
+                            <button className="text-violet-400 hover:text-violet-300 text-sm font-medium">
+                              View
+                            </button>
+                          </Link>
+                          <button className="text-zinc-400 hover:text-zinc-300 text-sm font-medium">
+                            Edit
+                          </button>
+                          <button className="text-zinc-400 hover:text-red-400 text-sm font-medium">
+                            Archive
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
-        </div>
 
-        {/* Recent Applications */}
-        <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
-          <h3 className="text-xl font-bold text-white mb-6">Recent Applications</h3>
-          <div className="space-y-4">
-            {[
-              { name: "John Doe", position: "Frontend Developer", status: "pending", time: "2 hours ago" },
-              { name: "Jane Smith", position: "Backend Engineer", status: "accepted", time: "4 hours ago" },
-              { name: "Mike Johnson", position: "UI/UX Designer", status: "reviewing", time: "1 day ago" },
-            ].map((application, index) => (
-              <div key={index} className="flex items-center justify-between p-4 bg-zinc-800/50 rounded-lg">
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold">
-                    {application.name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div>
-                    <p className="text-white font-medium">{application.name}</p>
-                    <p className="text-zinc-400 text-sm">{application.position}</p>
-                  </div>
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Quick Actions */}
+            <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-indigo-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
+              <h2 className="text-xl font-bold text-white mb-6">Quick Actions</h2>
+              <div className="space-y-3">
+                <Link href="/jobs/post" className="block">
+                  <button className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white py-3 px-4 rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg shadow-violet-900/30">
+                    <Plus size={18} />
+                    <span>Post New Opportunity</span>
+                  </button>
+                </Link>
+                
+                <button className="w-full border border-zinc-600 text-zinc-300 py-3 px-4 rounded-lg hover:border-emerald-500 hover:text-emerald-400 hover:bg-emerald-500/5 transition-all duration-200 flex items-center justify-center space-x-2">
+                  <Users size={18} />
+                  <span>View Applications</span>
+                </button>
+                
+                <button className="w-full border border-zinc-600 text-zinc-300 py-3 px-4 rounded-lg hover:border-amber-500 hover:text-amber-400 hover:bg-amber-500/5 transition-all duration-200 flex items-center justify-center space-x-2">
+                  <TrendingUp size={18} />
+                  <span>Analytics Dashboard</span>
+                </button>
+
+                <button className="w-full border border-zinc-600 text-zinc-300 py-3 px-4 rounded-lg hover:border-blue-500 hover:text-blue-400 hover:bg-blue-500/5 transition-all duration-200 flex items-center justify-center space-x-2">
+                  <Calendar size={18} />
+                  <span>Schedule Interviews</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Startup Hiring Tips */}
+            <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-emerald-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
+              <h2 className="text-xl font-bold text-white mb-4">Startup Hiring Tips</h2>
+              <div className="space-y-3 text-sm">
+                <div className="p-3 bg-zinc-800/50 rounded-lg border border-zinc-700/30">
+                  <p className="text-zinc-300"><span className="text-violet-400">💡</span> Emphasize growth potential and learning opportunities</p>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-2">
-                    {application.status === 'pending' && <Clock className="text-yellow-500" size={16} />}
-                    {application.status === 'accepted' && <CheckCircle className="text-green-500" size={16} />}
-                    {application.status === 'reviewing' && <Eye className="text-blue-500" size={16} />}
-                    <span className={`text-sm capitalize ${
-                      application.status === 'pending' ? 'text-yellow-400' :
-                      application.status === 'accepted' ? 'text-green-400' :
-                      'text-blue-400'
-                    }`}>
-                      {application.status}
-                    </span>
-                  </div>
-                  <span className="text-zinc-500 text-sm">{application.time}</span>
+                <div className="p-3 bg-zinc-800/50 rounded-lg border border-zinc-700/30">
+                  <p className="text-zinc-300"><span className="text-emerald-400">💰</span> Consider equity compensation for early employees</p>
+                </div>
+                <div className="p-3 bg-zinc-800/50 rounded-lg border border-zinc-700/30">
+                  <p className="text-zinc-300"><span className="text-indigo-400">🎯</span> Highlight your mission and impact</p>
+                </div>
+                <div className="p-3 bg-zinc-800/50 rounded-lg border border-zinc-700/30">
+                  <p className="text-zinc-300"><span className="text-amber-400">⚡</span> Move fast - top talent gets snapped up quickly</p>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Platform Stats */}
+            <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-purple-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
+              <h2 className="text-lg font-bold text-white mb-4">Platform Activity</h2>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between items-center">
+                  <span className="text-zinc-400">Active developers</span>
+                  <span className="text-white font-medium">1,247</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-zinc-400">New this week</span>
+                  <span className="text-emerald-400 font-medium">+89</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-zinc-400">Response rate</span>
+                  <span className="text-violet-400 font-medium">94%</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

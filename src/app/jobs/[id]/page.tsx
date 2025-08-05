@@ -235,8 +235,8 @@ export default function JobDetailPage() {
             <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
               <h3 className="text-lg font-bold text-white mb-4">Posted By</h3>
               <div className="space-y-2">
-                <p className="text-white font-medium">{job.postedBy.name}</p>
-                <p className="text-zinc-400 text-sm">{job.postedBy.email}</p>
+                <p className="text-white font-medium">{job.postedBy?.name || 'Anonymous'}</p>
+                <p className="text-zinc-400 text-sm">{job.postedBy?.email || 'Contact through platform'}</p>
               </div>
             </div>
 

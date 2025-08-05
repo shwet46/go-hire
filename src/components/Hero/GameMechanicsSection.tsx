@@ -6,39 +6,39 @@ const GameMechanicsSection = () => {
   const tasks = [
     {
       icon: CheckCircle,
-      title: "Daily Sign-In",
-      points: "10 pts",
-      description: "Check in daily to earn consistent points and maintain your streak"
+      title: "Post Your First Job",
+      points: "Free",
+      description: "Create your startup profile and post your first internship or project role"
     },
     {
       icon: UserPlus,
-      title: "Refer Friends",
-      points: "200 pts",
-      description: "Invite peers to join and earn points when they successfully register"
+      title: "Invite Team Members",
+      points: "Collaborate",
+      description: "Add co-founders and team members to review candidates together"
     },
     {
       icon: Briefcase,
-      title: "Apply for Jobs",
-      points: "5 pts",
-      description: "Each job application through our portal earns you points"
+      title: "Browse Talent Pool",
+      points: "Unlimited",
+      description: "Search through our curated database of students and freelancers"
     },
     {
       icon: Upload,
-      title: "Upload Resume",
-      points: "20 pts",
-      description: "Keep your profile updated with your latest resume"
+      title: "Share Job Requirements",
+      points: "Detailed",
+      description: "Upload project briefs and detailed role descriptions for better matches"
     },
     {
       icon: Target,
-      title: "Complete Profile",
-      points: "50 pts",
-      description: "Fill out all profile fields including education and skills"
+      title: "Set Budget & Timeline",
+      points: "Flexible",
+      description: "Define your hiring budget and project timeline to attract right candidates"
     },
     {
       icon: Trophy,
-      title: "Climb Leaderboard",
-      points: "Bonus",
-      description: "Compete with peers and unlock milestone rewards"
+      title: "Hire Top Talent",
+      points: "Success",
+      description: "Connect with pre-vetted candidates and build your dream team"
     }
   ];
 
@@ -50,10 +50,10 @@ const GameMechanicsSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-violet-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent mb-4">
-            Earn Points, Get Rewarded
+            Simple Hiring Process
           </h2>
           <p className="text-center text-neutral-400 mb-4 max-w-2xl mx-auto text-lg">
-            Complete career-building tasks to earn points, climb the leaderboard, and unlock exclusive rewards
+            From posting your first job to hiring your perfect candidate - we make it simple for startups
           </p>
           <div className="h-1 w-24 bg-gradient-to-r from-violet-500 to-indigo-500 mx-auto rounded-full opacity-70"></div>
         </div>
@@ -63,7 +63,7 @@ const GameMechanicsSection = () => {
             const TaskIcon = task.icon;
             return (
               <div 
-                key={index} 
+                key={index}
                 className="p-7 rounded-xl bg-gradient-to-br from-neutral-900/90 to-neutral-800/90 backdrop-blur-md border border-neutral-700/50 hover:border-violet-500/40 transition-all duration-300 group shadow-xl hover:shadow-violet-500/5"
               >
                 <div className="flex items-center justify-between mb-5">

@@ -26,12 +26,12 @@ function Hero() {
             </div>
             
             <h2 className="text-2xl md:text-4xl font-bold text-white leading-tight">
-              Transform your job search into an 
-              <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent"> engaging game</span>
+              Connect early startups with 
+              <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent"> talented students & freelancers</span>
             </h2>
             
             <p className="text-lg text-neutral-300 leading-relaxed max-w-xl">
-              Earn points by completing career tasks, compete on leaderboards, refer friends, and unlock exclusive rewards while landing your dream job.
+              Find passionate interns, project collaborators, and part-time talent for your startup. Perfect for small-scale hiring with big potential.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -39,7 +39,7 @@ function Hero() {
                 <button className="p-[3px] relative group w-full sm:w-auto">
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
                   <div className="px-8 py-4 bg-black rounded-[6px] relative transition duration-200 text-white hover:bg-transparent flex items-center justify-center space-x-2 font-semibold">
-                    <span>Get Started </span>
+                    <span>Get started</span>
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </div>
                 </button>
@@ -50,15 +50,15 @@ function Hero() {
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-neutral-300">
                 <CheckCircle size={20} className="text-green-400 flex-shrink-0" />
-                <span className="text-base">Earn points for every career action you take</span>
+                <span className="text-base">Connect with motivated students and fresh talent</span>
               </div>
               <div className="flex items-center space-x-3 text-neutral-300">
                 <CheckCircle size={20} className="text-green-400 flex-shrink-0" />
-                <span className="text-base">Compete with peers on global leaderboards</span>
+                <span className="text-base">Post internships and project-based roles easily</span>
               </div>
               <div className="flex items-center space-x-3 text-neutral-300">
                 <CheckCircle size={20} className="text-green-400 flex-shrink-0" />
-                <span className="text-base">Unlock exclusive rewards and job opportunities</span>
+                <span className="text-base">Affordable hiring solutions for early-stage startups</span>
               </div>
             </div>
           </div>
@@ -70,20 +70,20 @@ function Hero() {
               {/* Main Card */}
               <div className="absolute top-0 right-0 w-80 h-64 bg-gradient-to-br from-indigo-900/40 to-purple-900/40 rounded-2xl border border-indigo-500/20 backdrop-blur-sm p-6 transform rotate-3 hover:rotate-0 transition-transform duration-300">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-white font-bold text-lg">Your Progress</h3>
+                  <h3 className="text-white font-bold text-lg">Your Startup</h3>
                   <Trophy className="text-yellow-400" size={24} />
                 </div>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-neutral-300">Points Earned</span>
-                    <span className="text-indigo-400 font-bold">2,847</span>
+                    <span className="text-neutral-300">Applications</span>
+                    <span className="text-indigo-400 font-bold">47</span>
                   </div>
                   <div className="w-full bg-neutral-800 rounded-full h-2">
                     <div className="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full w-3/4"></div>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-neutral-300">Rank</span>
-                    <span className="text-purple-400 font-bold">#47</span>
+                    <span className="text-neutral-300">Interviews</span>
+                    <span className="text-purple-400 font-bold">12</span>
                   </div>
                 </div>
               </div>
@@ -91,43 +91,43 @@ function Hero() {
               {/* Secondary Card */}
               <div className="absolute top-12 left-0 w-72 h-48 bg-gradient-to-br from-purple-900/40 to-pink-900/40 rounded-2xl border border-purple-500/20 backdrop-blur-sm p-6 transform -rotate-2 hover:rotate-0 transition-transform duration-300">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-white font-bold">Achievements</h3>
+                  <h3 className="text-white font-bold">Active Roles</h3>
                   <Gift className="text-pink-400" size={24} />
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                    <span className="text-sm text-neutral-300">Profile 100% Complete</span>
+                    <span className="text-sm text-neutral-300">Frontend Intern - 24 apps</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                    <span className="text-sm text-neutral-300">5 Applications Sent</span>
+                    <span className="text-sm text-neutral-300">Marketing Assistant - 15 apps</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                    <span className="text-sm text-neutral-300">First Interview Booked</span>
+                    <span className="text-sm text-neutral-300">UI/UX Designer - 18 apps</span>
                   </div>
                 </div>
               </div>
               
-              {/* Leaderboard Card */}
+              {/* Talent Pool Card */}
               <div className="absolute bottom-0 right-8 w-64 h-40 bg-gradient-to-br from-green-900/40 to-teal-900/40 rounded-2xl border border-green-500/20 backdrop-blur-sm p-4 transform rotate-1 hover:rotate-0 transition-transform duration-300">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-white font-bold text-sm">Leaderboard</h3>
+                  <h3 className="text-white font-bold text-sm">Top Candidates</h3>
                   <Users className="text-green-400" size={20} />
                 </div>
                 <div className="space-y-1 text-xs">
                   <div className="flex justify-between items-center py-1">
-                    <span className="text-neutral-300">1. Sarah Chen</span>
-                    <span className="text-green-400 font-bold">5,234</span>
+                    <span className="text-neutral-300">Alex Chen - CS Student</span>
+                    <span className="text-green-400 font-bold">★ 4.9</span>
                   </div>
                   <div className="flex justify-between items-center py-1">
-                    <span className="text-neutral-300">2. Mike Johnson</span>
-                    <span className="text-green-400 font-bold">4,876</span>
+                    <span className="text-neutral-300">Maya Patel - Designer</span>
+                    <span className="text-green-400 font-bold">★ 4.8</span>
                   </div>
                   <div className="flex justify-between items-center py-1 bg-indigo-500/20 px-2 rounded">
-                    <span className="text-white">47. You</span>
-                    <span className="text-indigo-400 font-bold">2,847</span>
+                    <span className="text-white">Sam Wilson - Developer</span>
+                    <span className="text-indigo-400 font-bold">★ 4.7</span>
                   </div>
                 </div>
               </div>

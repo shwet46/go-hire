@@ -6,33 +6,33 @@ const FeaturesSection = () => {
   const features = [
     {
       icon: Target,
-      title: "Smart Job Matching",
-      description: "Get matched with jobs that fit your skills, experience, and career goals"
+      title: "Smart Talent Matching",
+      description: "Get matched with candidates that fit your startup's needs, culture, and budget"
     },
     {
       icon: Users,
-      title: "Peer Competition",
-      description: "Compete with classmates and peers on skill-based leaderboards"
+      title: "Student & Freelancer Pool",
+      description: "Access a curated network of motivated students and skilled freelancers"
     },
     {
       icon: TrendingUp,
-      title: "Track Progress",
-      description: "Monitor your career development with detailed analytics and milestones"
+      title: "Track Hiring Progress",
+      description: "Monitor your recruitment pipeline with detailed analytics and hiring insights"
     },
     {
       icon: Building,
-      title: "Direct Recruiter Access",
-      description: "Connect directly with recruiters from top companies actively hiring"
+      title: "Startup-Friendly Pricing",
+      description: "Affordable hiring solutions designed specifically for early-stage companies"
     },
     {
       icon: Zap,
-      title: "Real-time Updates",
-      description: "Get instant notifications about new opportunities and point earnings"
+      title: "Quick Application Process",
+      description: "Post jobs and receive applications within hours, not weeks"
     },
     {
       icon: Star,
-      title: "Practice & Skill Development",
-      description: "Sharpen your skills with our practice feature and prepare for real-world challenges"
+      title: "Pre-Vetted Candidates",
+      description: "All talent is screened for skills and commitment to ensure quality matches"
     },
   ];
 
@@ -40,19 +40,19 @@ const FeaturesSection = () => {
     <div className="mt-20">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-          Powerful Features for Your Career Journey
+          Powerful Features for Smart Hiring
         </h2>
         <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
-          Everything you need to accelerate your job search and professional development
+          Everything you need to find and hire the perfect talent for your startup
         </p>
       </div>
-      
+            
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
         {features.map((feature, index) => {
           const FeatureIcon = feature.icon;
           return (
             <div 
-              key={index} 
+              key={index}
               className="relative p-6 rounded-xl bg-white/5 backdrop-blur-lg border border-white/10 hover:border-white/20 transition-all duration-300 group overflow-hidden"
             >
               {/* Decorative gradient blob in background */}
