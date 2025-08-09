@@ -55,8 +55,8 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold text-zinc-200 mb-4">For Students</h3>
             <ul className="space-y-2">
-              <li><Link href="/jobs/" className="text-zinc-400 hover:text-indigo-400 transition-colors">Opportunities</Link></li>
-              <li><Link href="/internships" className="text-zinc-400 hover:text-indigo-400 transition-colors">Internships</Link></li>
+              <li><Link href="/jobs" className="text-zinc-400 hover:text-indigo-400 transition-colors">Opportunities</Link></li>
+              <li><Link href="/jobs" className="text-zinc-400 hover:text-indigo-400 transition-colors">Internships</Link></li>
               <li><Link href="/practice" className="text-zinc-400 hover:text-indigo-400 transition-colors">Practice</Link></li>
             </ul>
           </div>
@@ -72,9 +72,9 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold text-zinc-200 mb-4">Company</h3>
             <ul className="space-y-2">
-              <li><Link href="/about" className="text-zinc-400 hover:text-indigo-400 transition-colors">About Us</Link></li>
-              <li><Link href="/contact" className="text-zinc-400 hover:text-indigo-400 transition-colors">Contact</Link></li>
-              <li><Link href="/faq" className="text-zinc-400 hover:text-indigo-400 transition-colors">FAQ</Link></li>
+              <li><Link href="#" className="text-zinc-400 hover:text-indigo-400 transition-colors">About Us</Link></li>
+              <li><Link href="#" className="text-zinc-400 hover:text-indigo-400 transition-colors">Contact</Link></li>
+              <li><Link href="#" className="text-zinc-400 hover:text-indigo-400 transition-colors">FAQ</Link></li>
             </ul>
           </div>
           {/* Legal */}

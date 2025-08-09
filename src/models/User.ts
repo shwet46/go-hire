@@ -10,6 +10,16 @@ const UserSchema = new mongoose.Schema({
     enum: ['student', 'recruiter', 'admin'],
     default: 'student'
   },
+
+  // Academic & profile fields for students
+  university: { type: String },
+  degree: { type: String },
+  graduationYear: { type: String },
+  skills: [{ type: String }],
+  bio: { type: String },
+  resumeUrl: { type: String }, 
+  profileCompleted: { type: Boolean, default: false },
+
   // Referral related fields
   referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   referralCode: { type: String, unique: true },

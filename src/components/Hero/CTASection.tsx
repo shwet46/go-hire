@@ -19,7 +19,7 @@ const CTASection = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
               <div className="px-8 py-3 bg-black rounded-[6px] relative transition duration-200 text-white hover:bg-transparent flex items-center space-x-2">
                 <Users size={18} />
-                <span>Start Hiring</span>
+                <span>Get Started</span>
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </div>
             </button>
@@ -27,7 +27,7 @@ const CTASection = () => {
           <Link href="/talent">
             <button className="px-8 py-3 border border-neutral-600 rounded-lg text-white hover:border-indigo-500 transition-colors duration-200 flex items-center space-x-2 justify-center">
               <Briefcase size={18} />
-              <span>Browse Talent</span>
+              <span>Browse</span>
             </button>
           </Link>
         </div>

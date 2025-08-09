@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { ArrowLeft, MapPin, Clock, DollarSign, Building, Calendar, Bookmark, Share2 } from 'lucide-react';
@@ -29,28 +29,49 @@ export default function JobDetailPage() {
   const params = useParams();
   const router = useRouter();
   const { data: session } = useSession();
+  const pathname = usePathname();
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
   const [applying, setApplying] = useState(false);
+  const [jobsList, setJobsList] = useState<Job[]>([]);
+  const [bookmarked, setBookmarked] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
 
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const response = await fetch(`/api/jobs/${params.id}`);
+        if (!params.id) return;
+        // Support both string and array for params.id
+        const jobId = Array.isArray(params.id) ? params.id[0] : params.id;
+        const response = await fetch(`/api/jobs/${jobId}`);
         if (response.ok) {
           const data = await response.json();
           setJob(data.job);
+        } else {
+          setJob(null);
         }
       } catch (error) {
         console.error('Error fetching job:', error);
+        setJob(null);
       } finally {
         setLoading(false);
       }
     };
 
-    if (params.id) {
-      fetchJob();
-    }
+    const fetchJobsList = async () => {
+      try {
+        const response = await fetch('/api/jobs?limit=8');
+        if (response.ok) {
+          const data = await response.json();
+          setJobsList(data.jobs || []);
+        }
+      } catch {
+        setJobsList([]);
+      }
+    };
+
+    fetchJob();
+    fetchJobsList();
   }, [params.id]);
 
   const handleApply = async () => {
@@ -73,6 +94,47 @@ export default function JobDetailPage() {
       alert('Failed to apply');
     } finally {
       setApplying(false);
+    }
+  };
+
+  const handleBookmark = () => {
+    if (!session) {
+      router.push('/login');
+      return;
+    }
+    setBookmarked((prev) => !prev);
+
+  };
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: job?.title,
+          text: `Check out this job: ${job?.title} at ${job?.company}`,
+          url,
+        });
+      } catch {
+        // ignore
+      }
+    } else {
+      setShareOpen(true);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!session || (session.user as ExtendedUser)?.role !== "recruiter") return;
+    if (!window.confirm("Are you sure you want to delete this job?")) return;
+    try {
+      const response = await fetch(`/api/jobs/${job?._id}`, { method: "DELETE" });
+      if (response.ok) {
+        router.push("/jobs");
+      } else {
+        alert("Failed to delete job.");
+      }
+    } catch {
+      alert("Failed to delete job.");
     }
   };
 
@@ -124,7 +186,23 @@ export default function JobDetailPage() {
               <ArrowLeft className="text-zinc-400" size={20} />
             </button>
           </Link>
-          <h1 className="text-2xl font-bold text-white">Job Details</h1>
+          <h1 className="text-2xl font-bold text-white flex-1">Job Details</h1>
+          {/* Edit/Delete buttons for recruiters */}
+          {session?.user && (session.user as ExtendedUser)?.role === "recruiter" && (
+            <>
+              <Link href={`/jobs/${job._id}/edit`}>
+                <button className="ml-4 px-4 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200">
+                  Edit Job
+                </button>
+              </Link>
+              <button
+                className="ml-2 px-4 py-2 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-lg hover:from-red-700 hover:to-pink-700 transition-all duration-200"
+                onClick={handleDelete}
+              >
+                Delete Job
+              </button>
+            </>
+          )}
         </div>
 
         {/* Job Header */}
@@ -169,10 +247,20 @@ export default function JobDetailPage() {
               </button>
               
               <div className="flex space-x-2">
-                <button className="p-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg transition-colors">
+                <button
+                  className={`p-3 rounded-lg transition-colors ${
+                    bookmarked ? "bg-violet-700 text-violet-200" : "bg-zinc-800 hover:bg-zinc-700 text-zinc-300"
+                  }`}
+                  onClick={handleBookmark}
+                  aria-label={bookmarked ? "Remove Bookmark" : "Bookmark"}
+                >
                   <Bookmark size={20} />
                 </button>
-                <button className="p-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg transition-colors">
+                <button
+                  className="p-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg transition-colors"
+                  onClick={handleShare}
+                  aria-label="Share"
+                >
                   <Share2 size={20} />
                 </button>
               </div>
@@ -242,16 +330,27 @@ export default function JobDetailPage() {
 
             {/* Similar Jobs */}
             <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
-              <h3 className="text-lg font-bold text-white mb-4">Similar Jobs</h3>
-              <div className="space-y-3">
-                <Link href="/jobs" className="block p-3 bg-zinc-800/50 hover:bg-zinc-700/50 rounded-lg transition-colors">
-                  <h4 className="text-white font-medium text-sm">Frontend Developer</h4>
-                  <p className="text-zinc-400 text-xs">Tech Corp • San Francisco</p>
-                </Link>
-                <Link href="/jobs" className="block p-3 bg-zinc-800/50 hover:bg-zinc-700/50 rounded-lg transition-colors">
-                  <h4 className="text-white font-medium text-sm">React Developer</h4>
-                  <p className="text-zinc-400 text-xs">Startup Inc • Remote</p>
-                </Link>
+              <h3 className="text-lg font-bold text-white mb-4">Other Jobs</h3>
+              <div className="space-y-3 max-h-64 overflow-y-auto">
+                {jobsList
+                  .filter(j => j._id !== job._id)
+                  .map(j => (
+                  <Link
+                    key={j._id}
+                    href={`/jobs/${j._id}`}
+                    className={`block p-3 rounded-lg transition-colors ${
+                      pathname === `/jobs/${j._id}`
+                        ? "bg-violet-900/40 border border-violet-500"
+                        : "bg-zinc-800/50 hover:bg-zinc-700/50"
+                    }`}
+                  >
+                    <h4 className="text-white font-medium text-sm">{j.title}</h4>
+                    <p className="text-zinc-400 text-xs">{j.company} • {j.location}</p>
+                  </Link>
+                ))}
+                {jobsList.length === 0 && (
+                  <div className="text-zinc-500 text-sm text-center py-4">No other jobs available</div>
+                )}
               </div>
               <Link href="/jobs">
                 <button className="w-full mt-4 text-violet-400 hover:text-violet-300 text-sm font-medium">
@@ -261,6 +360,36 @@ export default function JobDetailPage() {
             </div>
           </div>
         </div>
+
+        {/* Share Modal */}
+        {shareOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-700 w-full max-w-sm">
+              <h3 className="text-lg font-bold text-white mb-2">Share this job</h3>
+              <input
+                type="text"
+                readOnly
+                value={typeof window !== "undefined" ? window.location.href : ""}
+                className="w-full px-3 py-2 rounded bg-zinc-800 text-zinc-200 mb-4"
+              />
+              <button
+                className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-4 py-2 rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200"
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  setShareOpen(false);
+                }}
+              >
+                Copy Link
+              </button>
+              <button
+                className="w-full mt-2 px-4 py-2 rounded-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+                onClick={() => setShareOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

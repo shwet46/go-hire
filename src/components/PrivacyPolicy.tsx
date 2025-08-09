@@ -1,11 +1,14 @@
+"use client";
 import React from 'react';
 
 const PrivacyPolicy = () => {
   return (
-    <div className="bg-zinc-900 text-zinc-300 min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-violet-950/20 pt-20">
       <div className="max-w-4xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
-          <h1 className="text-4xl font-bold text-zinc-100 mt-10 mb-4">Privacy Policy</h1>
+          <h1 className="text-4xl font-bold text-white mt-10 mb-4 bg-gradient-to-r from-violet-400 via-indigo-400 to-pink-400 bg-clip-text text-transparent">
+            Privacy Policy
+          </h1>
           <p className="text-zinc-400">Last updated: May 25, 2025</p>
         </div>
 

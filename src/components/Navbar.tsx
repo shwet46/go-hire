@@ -14,6 +14,9 @@ import {
   IconLogout,
   IconMenu2,
   IconX,
+  IconUser,
+  IconSettings,
+  IconChevronDown,
 } from "@tabler/icons-react";
 
 
@@ -25,7 +28,9 @@ export function Navbar({ className }: { className?: string }) {
   const { data: session, status } = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const profileDropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const handleSignInOut = async () => {
@@ -58,13 +63,15 @@ export function Navbar({ className }: { className?: string }) {
       if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
         setMobileMenuOpen(false);
       }
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target as Node)) {
+        setProfileDropdownOpen(false);
+      }
     }
-    
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [mobileMenuRef]);
+  }, [mobileMenuRef, profileDropdownRef]);
 
   const navItems = [
     {
@@ -82,12 +89,25 @@ export function Navbar({ className }: { className?: string }) {
       link: "/jobs",
       icon: <IconBriefcase className="h-5 w-5" />,
     },
-    // Only show Dashboard if user is authenticated
-    ...(session ? [{
+  ];
+
+  // Add profile menu items
+  const profileMenuItems = [
+    {
       name: "Dashboard",
-      link: (session.user as { role?: string })?.role === 'student' ? "/student" : "/recruiter",
-      icon: <IconLayoutDashboard className="h-5 w-5" />,
-    }] : [])
+      link: (session?.user as { role?: string })?.role === 'student' ? "/student" : "/recruiter",
+      icon: <IconLayoutDashboard className="h-4 w-4" />,
+    },
+    {
+      name: "Profile",
+      link: "/profile",
+      icon: <IconUser className="h-4 w-4" />,
+    },
+    {
+      name: "Settings",
+      link: "/settings",
+      icon: <IconSettings className="h-4 w-4" />,
+    },
   ];
 
   // Don't render navbar content while session is loading
@@ -160,31 +180,61 @@ export function Navbar({ className }: { className?: string }) {
 
           {/* Right side - User Role and Sign In/Out */}
           <div className="flex items-center space-x-4">
-            {/* Display user name if logged in */}
-            {session?.user && (
-              <span className="hidden sm:block text-sm font-medium px-3 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full">
-                {session.user.name || 'User'}
-              </span>
+            {/* Authenticated user dropdown */}
+            {session?.user ? (
+              <div className="relative" ref={profileDropdownRef}>
+                <button
+                  onClick={() => setProfileDropdownOpen((v) => !v)}
+                  className="flex items-center space-x-2 px-3 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full font-medium hover:bg-violet-200 dark:hover:bg-violet-800 transition-colors"
+                >
+                  <span>{session.user.name || "User"}</span>
+                  <IconChevronDown className={`h-4 w-4 transition-transform ${profileDropdownOpen ? "rotate-180" : ""}`} />
+                </button>
+                <AnimatePresence>
+                  {profileDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                      transition={{ duration: 0.18 }}
+                      className="absolute right-0 mt-2 w-48 bg-white dark:bg-zinc-900 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 py-2 z-50"
+                    >
+                      {profileMenuItems.map((item) => (
+                        <Link
+                          key={item.name}
+                          href={item.link}
+                          className="flex items-center px-4 py-2 text-sm text-neutral-700 dark:text-neutral-200 hover:bg-violet-50 dark:hover:bg-violet-800 transition-colors"
+                          onClick={() => setProfileDropdownOpen(false)}
+                        >
+                          <span className="mr-2">{item.icon}</span>
+                          {item.name}
+                        </Link>
+                      ))}
+                      <button
+                        onClick={() => {
+                          setProfileDropdownOpen(false);
+                          handleSignInOut();
+                        }}
+                        disabled={isSigningOut}
+                        className="w-full flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <IconLogout className="h-4 w-4 mr-2" />
+                        {isSigningOut ? "Signing Out..." : "Sign Out"}
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ) : (
+              <button
+                onClick={handleSignInOut}
+                disabled={isSigningOut}
+                className="hidden sm:flex border text-sm font-medium relative border-neutral-200 dark:border-zinc-700 text-black dark:text-white px-4 py-2 rounded-full items-center space-x-2 hover:bg-violet-50 dark:hover:bg-violet-900/20 transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <IconLogin className="h-4 w-4 text-violet-600 dark:text-violet-400" />
+                <span>Sign In</span>
+              </button>
             )}
-
-            <button
-              onClick={handleSignInOut}
-              disabled={isSigningOut}
-              className="hidden sm:flex border text-sm font-medium relative border-neutral-200 dark:border-zinc-700 text-black dark:text-white px-4 py-2 rounded-full items-center space-x-2 hover:bg-violet-50 dark:hover:bg-violet-900/20 transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {session ? (
-                <>
-                  <IconLogout className="h-4 w-4 text-violet-600 dark:text-violet-400" />
-                  <span>{isSigningOut ? "Signing Out..." : "Sign Out"}</span>
-                </>
-              ) : (
-                <>
-                  <IconLogin className="h-4 w-4 text-violet-600 dark:text-violet-400" />
-                  <span>Sign In</span>
-                </>
-              )}
-              <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-violet-500 to-transparent h-px opacity-0 group-hover:opacity-100 transition-opacity" />
-            </button>
 
             {/* Mobile menu button */}
             <button

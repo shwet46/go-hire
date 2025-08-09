@@ -93,6 +93,20 @@ export default function RecruiterDashboard() {
     });
   };
 
+  const handleDeleteJob = async (jobId: string) => {
+    if (!window.confirm("Are you sure you want to delete this job?")) return;
+    try {
+      const response = await fetch(`/api/jobs/${jobId}`, { method: "DELETE" });
+      if (response.ok) {
+        setMyJobs((prev) => prev.filter((j) => j._id !== jobId));
+      } else {
+        alert("Failed to delete job.");
+      }
+    } catch {
+      alert("Failed to delete job.");
+    }
+  };
+
   if (status === 'loading' || loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-violet-950/20 pt-20 flex items-center justify-center">
@@ -243,11 +257,16 @@ export default function RecruiterDashboard() {
                               View
                             </button>
                           </Link>
-                          <button className="text-zinc-400 hover:text-zinc-300 text-sm font-medium">
-                            Edit
-                          </button>
-                          <button className="text-zinc-400 hover:text-red-400 text-sm font-medium">
-                            Archive
+                          <Link href={`/jobs/${job._id}/edit`}>
+                            <button className="text-zinc-400 hover:text-zinc-300 text-sm font-medium">
+                              Edit
+                            </button>
+                          </Link>
+                          <button
+                            className="text-zinc-400 hover:text-red-400 text-sm font-medium"
+                            onClick={() => handleDeleteJob(job._id)}
+                          >
+                            Delete
                           </button>
                         </div>
                       </div>

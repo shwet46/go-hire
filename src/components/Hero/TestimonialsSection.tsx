@@ -78,11 +78,6 @@ const TestimonialsSection = () => {
             {/* Floating gradient orb */}
             <div className={`absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br ${testimonial.gradient} opacity-5 group-hover:opacity-10 rounded-full blur-xl transition-all duration-500 group-hover:scale-125`}></div>
             
-            {/* Quote decoration */}
-            <div className="absolute top-6 right-6 opacity-10 group-hover:opacity-20 transition-opacity duration-300">
-              <Quote size={32} className="text-white" />
-            </div>
-
             {/* Rating and Badge */}
             <div className="flex justify-between items-start mb-6">
               <div className="flex gap-1">
