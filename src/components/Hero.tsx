@@ -1,5 +1,5 @@
 import React from 'react';
-import {ArrowRight, CheckCircle, Users, Trophy, Gift} from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, Trophy, Gift } from 'lucide-react';
 import { BackgroundBeams } from "./ui/background-beams";
 import Link from "next/link";
 import Image from "next/image";
@@ -20,14 +20,14 @@ function Hero() {
           <div className="space-y-8">
             <div className="flex items-center gap-3 mb-6">
               <Image src="/gohire.png" alt="GoHire Logo" width={56} height={56} />
-              <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              <h1 className="text-5xl md:text-6xl font-extrabold text-violet-400">
                 GoHire
               </h1>
             </div>
             
             <h2 className="text-2xl md:text-4xl font-bold text-white leading-tight">
               Connect early startups with 
-              <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent"> talented students & freelancers</span>
+              <span className="text-violet-400"> talented students & freelancers</span>
             </h2>
             
             <p className="text-lg text-neutral-300 leading-relaxed max-w-xl">

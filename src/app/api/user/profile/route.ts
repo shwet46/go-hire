@@ -25,6 +25,9 @@ export async function GET() {
     bio: user.bio,
     resumeUrl: user.resumeUrl,
     profileCompleted: user.profileCompleted,
+    experiences: user.experiences,
+    companyHiringFor: user.companyHiringFor,
+    role: user.role,
   });
 }
 
@@ -36,7 +39,17 @@ export async function PUT(request: NextRequest) {
   }
   const body = await request.json();
   const update: Record<string, unknown> = {};
-  ['university', 'degree', 'graduationYear', 'skills', 'bio', 'resumeUrl', 'profileCompleted'].forEach(field => {
+  [
+    'university',
+    'degree',
+    'graduationYear',
+    'skills',
+    'bio',
+    'resumeUrl',
+    'profileCompleted',
+    'experiences',
+    'companyHiringFor',
+  ].forEach(field => {
     if (body[field] !== undefined) update[field] = body[field];
   });
   const user = await User.findOneAndUpdate(

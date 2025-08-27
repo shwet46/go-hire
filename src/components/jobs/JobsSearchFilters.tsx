@@ -2,7 +2,7 @@ import { Search, MapPin, ChevronDown } from 'lucide-react';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
 export default function JobsSearchFilters({
-  search, setSearch, location, setLocation, jobType, setJobType, handleSearch, loading
+  search, setSearch, location, setLocation, jobType, setJobType, handleSearch, loading, duration, setDuration
 }: {
   search: string;
   setSearch: (v: string) => void;
@@ -12,10 +12,12 @@ export default function JobsSearchFilters({
   setJobType: (v: string) => void;
   handleSearch: () => void;
   loading: boolean;
+  duration: string;
+  setDuration: (v: string) => void;
 }) {
   return (
     <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50 mb-8">
-      <div className="grid md:grid-cols-4 gap-4">
+      <div className="grid md:grid-cols-5 gap-4">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" size={20} />
           <input
@@ -67,6 +69,15 @@ export default function JobsSearchFilters({
               <DropdownMenuItem onClick={() => setJobType("internship")}>Internship</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+        </div>
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Duration (e.g. 6 months)"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
+            className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white placeholder-zinc-400 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all duration-200"
+          />
         </div>
         <button 
           onClick={handleSearch}

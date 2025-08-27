@@ -11,14 +11,33 @@ const UserSchema = new mongoose.Schema({
     default: 'student'
   },
 
-  // Academic & profile fields for students
+  // Academic & profile fields (mainly for students)
   university: { type: String },
   degree: { type: String },
-  graduationYear: { type: String },
+  graduationYear: { type: String }, 
   skills: [{ type: String }],
   bio: { type: String },
   resumeUrl: { type: String }, 
   profileCompleted: { type: Boolean, default: false },
+
+  experiences: [{
+    title: { type: String, required: true }, 
+    company: { type: String, required: true },
+    employmentType: { 
+      type: String, 
+      enum: ['full-time', 'part-time', 'internship', 'freelance', 'contract', 'temporary', 'volunteer', 'other'], 
+      required: true 
+    },
+    location: { type: String },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date }, 
+    isCurrent: { type: Boolean, default: false },
+    description: { type: String }, 
+    skillsUsed: [{ type: String }], 
+  }],
+
+  // Recruiter-specific fields
+  companyHiringFor: { type: String },
 
   // Referral related fields
   referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -49,12 +68,10 @@ const UserSchema = new mongoose.Schema({
     lastUpdated: { type: Date, default: Date.now },
     notes: String
   }],
-  
-  // For recruiters: jobs they've posted
+
   jobsPosted: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
 }, { timestamps: true });
 
-// Generate a unique referral code for each user
 UserSchema.pre('save', function(next) {
   if (!this.referralCode) {
     const prefix = this.name ? this.name.substring(0, 2).toUpperCase() : 'GH';

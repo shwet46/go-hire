@@ -18,7 +18,9 @@ import {
   IconSettings,
   IconChevronDown,
 } from "@tabler/icons-react";
+import dynamic from "next/dynamic";
 
+const SettingsMenu = dynamic(() => import("./Settings/SettingsMenu"), { ssr: false });
 
 function cn(...inputs: (string | undefined | null | boolean)[]) {
   return inputs.filter(Boolean).join(" ");
@@ -29,6 +31,7 @@ export function Navbar({ className }: { className?: string }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const profileDropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -110,6 +113,26 @@ export function Navbar({ className }: { className?: string }) {
     },
   ];
 
+
+  const mobileProfileNavItems = [
+    {
+      name: "Dashboard",
+      link: (session?.user as { role?: string })?.role === 'student' ? "/student" : "/recruiter",
+      icon: <IconLayoutDashboard className="h-5 w-5" />,
+    },
+    {
+      name: "Profile",
+      link: "/profile",
+      icon: <IconUser className="h-5 w-5" />,
+    },
+    {
+      name: "Settings",
+      link: "/settings",
+      icon: <IconSettings className="h-5 w-5" />,
+      onClick: () => setShowSettings(true),
+    },
+  ];
+
   // Don't render navbar content while session is loading
   if (status === "loading") {
     return (
@@ -180,51 +203,83 @@ export function Navbar({ className }: { className?: string }) {
 
           {/* Right side - User Role and Sign In/Out */}
           <div className="flex items-center space-x-4">
-            {/* Authenticated user dropdown */}
+            {/* Authenticated user dropdown (desktop only) */}
             {session?.user ? (
-              <div className="relative" ref={profileDropdownRef}>
-                <button
-                  onClick={() => setProfileDropdownOpen((v) => !v)}
-                  className="flex items-center space-x-2 px-3 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full font-medium hover:bg-violet-200 dark:hover:bg-violet-800 transition-colors"
-                >
-                  <span>{session.user.name || "User"}</span>
-                  <IconChevronDown className={`h-4 w-4 transition-transform ${profileDropdownOpen ? "rotate-180" : ""}`} />
-                </button>
-                <AnimatePresence>
-                  {profileDropdownOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -8, scale: 0.98 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -8, scale: 0.98 }}
-                      transition={{ duration: 0.18 }}
-                      className="absolute right-0 mt-2 w-48 bg-white dark:bg-zinc-900 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 py-2 z-50"
-                    >
-                      {profileMenuItems.map((item) => (
-                        <Link
-                          key={item.name}
-                          href={item.link}
-                          className="flex items-center px-4 py-2 text-sm text-neutral-700 dark:text-neutral-200 hover:bg-violet-50 dark:hover:bg-violet-800 transition-colors"
-                          onClick={() => setProfileDropdownOpen(false)}
-                        >
-                          <span className="mr-2">{item.icon}</span>
-                          {item.name}
-                        </Link>
-                      ))}
-                      <button
-                        onClick={() => {
-                          setProfileDropdownOpen(false);
-                          handleSignInOut();
-                        }}
-                        disabled={isSigningOut}
-                        className="w-full flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              <>
+                <div className="relative hidden md:block" ref={profileDropdownRef}>
+                  <button
+                    onClick={() => setProfileDropdownOpen((v) => !v)}
+                    className="flex items-center space-x-2 px-3 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full font-medium hover:bg-violet-200 dark:hover:bg-violet-800 transition-colors"
+                  >
+                    <span>{session.user.name || "User"}</span>
+                    <IconChevronDown className={`h-4 w-4 transition-transform ${profileDropdownOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  <AnimatePresence>
+                    {profileDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                        transition={{ duration: 0.18 }}
+                        className="absolute right-0 mt-2 w-48 bg-white dark:bg-zinc-900 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 py-2 z-50"
                       >
-                        <IconLogout className="h-4 w-4 mr-2" />
-                        {isSigningOut ? "Signing Out..." : "Sign Out"}
-                      </button>
-                    </motion.div>
+                        {profileMenuItems.map((item) =>
+                          item.name === "Settings" ? (
+                            <button
+                              key={item.name}
+                              onClick={() => {
+                                setShowSettings(true);
+                                setProfileDropdownOpen(false);
+                              }}
+                              className="flex items-center w-full px-4 py-2 text-sm text-neutral-700 dark:text-neutral-200 hover:bg-violet-50 dark:hover:bg-violet-800 transition-colors"
+                            >
+                              <span className="mr-2">{item.icon}</span>
+                              {item.name}
+                            </button>
+                          ) : (
+                            <Link
+                              key={item.name}
+                              href={item.link}
+                              className="flex items-center px-4 py-2 text-sm text-neutral-700 dark:text-neutral-200 hover:bg-violet-50 dark:hover:bg-violet-800 transition-colors"
+                              onClick={() => setProfileDropdownOpen(false)}
+                            >
+                              <span className="mr-2">{item.icon}</span>
+                              {item.name}
+                            </Link>
+                          )
+                        )}
+                        <button
+                          onClick={() => {
+                            setProfileDropdownOpen(false);
+                            handleSignInOut();
+                          }}
+                          disabled={isSigningOut}
+                          className="w-full flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <IconLogout className="h-4 w-4 mr-2" />
+                          {isSigningOut ? "Signing Out..." : "Sign Out"}
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  {/* Settings Modal/Drawer */}
+                  {showSettings && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40">
+                      <div className="relative">
+                        <SettingsMenu onClose={() => setShowSettings(false)} />
+                      </div>
+                    </div>
                   )}
-                </AnimatePresence>
-              </div>
+                </div>
+                {/* Show settings modal for mobile as well */}
+                {showSettings && (
+                  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 md:hidden">
+                    <div className="relative">
+                      <SettingsMenu onClose={() => setShowSettings(false)} />
+                    </div>
+                  </div>
+                )}
+              </>
             ) : (
               <button
                 onClick={handleSignInOut}
@@ -263,25 +318,55 @@ export function Navbar({ className }: { className?: string }) {
             className="md:hidden bg-white dark:bg-zinc-800 shadow-lg border-b border-neutral-200 dark:border-zinc-700"
           >
             <div className="px-4 pt-2 pb-3 space-y-1 divide-y divide-neutral-100 dark:divide-zinc-700">
-              {navItems.map((navItem, idx) => (
+              {navItems.map((navItem) => (
                 <Link
-                  key={`mobile-link-${idx}`}
+                  key={`mobile-link-${navItem.name}`}
                   href={navItem.link}
-                  className="block px-3 py-3 text-base font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-zinc-700 hover:text-violet-600 dark:hover:text-violet-400 rounded-md transition-colors flex items-center space-x-3"
+                  className="px-3 py-3 text-base font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-zinc-700 hover:text-violet-600 dark:hover:text-violet-400 rounded-md transition-colors flex items-center space-x-3"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <span className="text-violet-600 dark:text-violet-400">{navItem.icon}</span>
                   <span>{navItem.name}</span>
                 </Link>
               ))}
-              
+
+              {/* Mobile profile nav items for authenticated user */}
+              {session?.user && (
+                <div className="pt-4 space-y-1">
+                  {mobileProfileNavItems.map((item) =>
+                    item.name === "Settings" ? (
+                      <button
+                        key={`mobile-profile-link-${item.name}`}
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          if (item.onClick) item.onClick();
+                        }}
+                        className="w-full flex items-center px-3 py-3 text-base font-medium text-neutral-700 dark:text-neutral-200 hover:bg-violet-50 dark:hover:bg-violet-800 hover:text-violet-600 dark:hover:text-violet-400 rounded-md transition-colors space-x-3"
+                      >
+                        <span className="text-violet-600 dark:text-violet-400">{item.icon}</span>
+                        <span>{item.name}</span>
+                      </button>
+                    ) : (
+                      <Link
+                        key={item.name}
+                        href={item.link}
+                        className="block px-3 py-3 text-base font-medium text-neutral-700 dark:text-neutral-200 hover:bg-violet-50 dark:hover:bg-violet-800 hover:text-violet-600 dark:hover:text-violet-400 rounded-md transition-colors flex items-center space-x-3"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <span className="text-violet-600 dark:text-violet-400">{item.icon}</span>
+                        <span>{item.name}</span>
+                      </Link>
+                    )
+                  )}
+                </div>
+              )}
+
               <div className="pt-4">
                 {session?.user && (
                   <div className="px-3 py-2 mb-2 text-sm font-medium text-neutral-500 dark:text-neutral-400">
                     Welcome, <span className="text-violet-600 dark:text-violet-400">{session.user.name || 'User'}</span>
                   </div>
                 )}
-                
                 <button
                   onClick={async () => {
                     setMobileMenuOpen(false);

@@ -4,6 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AlertCircle, Eye, EyeOff } from "lucide-react";
+import {
+  validateEmail,
+  validatePassword,
+} from "@/utils/validation";
 
 interface ExtendedUser {
   role?: string;
@@ -15,10 +19,24 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
+  const [touched, setTouched] = useState<{ email?: boolean; password?: boolean }>({});
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setTouched({ email: true, password: true });
+
+    const emailError = validateEmail(email);
+    const passwordError = validatePassword(password);
+
+    setFieldErrors({ email: emailError, password: passwordError });
+
+    if (emailError || passwordError) {
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -53,24 +71,20 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-violet-950/20 flex items-center justify-center px-4">
-      {/* Background effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -left-64 md:-left-96 top-10 w-96 h-96 bg-violet-600/30 rounded-full blur-3xl"></div>
-        <div className="absolute -right-64 md:-right-96 bottom-10 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
-      </div>
+    <div className="min-h-screen flex items-center justify-center bg-zinc-950 px-4">
+      {/* No gradients, just a solid dark background */}
 
       <div className="relative z-10 w-full max-w-md">
-        <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-2xl border border-zinc-700/50 p-8 shadow-2xl">
+        <div className="bg-zinc-900 rounded-2xl border border-zinc-800 p-8 shadow-xl">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-400 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-2">
+            <h1 className="text-3xl font-bold text-zinc-100 mb-2">
               Welcome Back
             </h1>
             <p className="text-zinc-400">Sign in to your account</p>
           </div>
 
           {error && (
-            <div className="mb-6 p-3 bg-red-500/10 border border-red-500/20 rounded-lg flex items-center text-red-400 text-sm">
+            <div className="mb-6 p-3 bg-red-900/20 border border-red-800/40 rounded-lg flex items-center text-red-400 text-sm">
               <AlertCircle size={16} className="mr-2" />
               {error}
             </div>
@@ -78,46 +92,84 @@ export default function LoginPage() {
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">
+              <label className="block text-sm font-medium text-zinc-200 mb-2">
                 Email
               </label>
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white placeholder-zinc-400 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all duration-200"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (touched.email) {
+                    setFieldErrors((prev) => ({
+                      ...prev,
+                      email: validateEmail(e.target.value),
+                    }));
+                  }
+                }}
+                onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
+                className={`w-full px-4 py-3 bg-zinc-800 border rounded-lg text-zinc-100 placeholder-zinc-500 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all duration-200
+                  ${touched.email && fieldErrors.email
+                    ? "border-red-500 focus:ring-red-500/20"
+                    : "border-zinc-700"
+                  }`}
                 placeholder="Enter your email"
                 required
               />
+              {touched.email && fieldErrors.email && (
+                <div className="flex items-center text-red-400 text-xs mt-1">
+                  <AlertCircle size={16} className="mr-1" />
+                  {fieldErrors.email}
+                </div>
+              )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">
+              <label className="block text-sm font-medium text-zinc-200 mb-2">
                 Password
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 pr-12 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white placeholder-zinc-400 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all duration-200"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (touched.password) {
+                      setFieldErrors((prev) => ({
+                        ...prev,
+                        password: validatePassword(e.target.value),
+                      }));
+                    }
+                  }}
+                  onBlur={() => setTouched((prev) => ({ ...prev, password: true }))}
+                  className={`w-full px-4 py-3 pr-12 bg-zinc-800 border rounded-lg text-zinc-100 placeholder-zinc-500 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all duration-200
+                    ${touched.password && fieldErrors.password
+                      ? "border-red-500 focus:ring-red-500/20"
+                      : "border-zinc-700"
+                    }`}
                   placeholder="Enter your password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-300"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-200"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
+              {touched.password && fieldErrors.password && (
+                <div className="flex items-center text-red-400 text-xs mt-1">
+                  <AlertCircle size={16} className="mr-1" />
+                  {fieldErrors.password}
+                </div>
+              )}
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white py-3 rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-violet-900/30 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+              className="w-full bg-violet-600 text-white py-3 rounded-lg hover:bg-violet-700 transition-all duration-200 shadow-md disabled:opacity-50 disabled:cursor-not-allowed font-medium"
             >
               {loading ? "Signing in..." : "Sign In"}
             </button>
@@ -139,4 +191,3 @@ export default function LoginPage() {
     </div>
   );
 }
-

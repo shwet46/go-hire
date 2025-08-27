@@ -2,7 +2,27 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+
+
+import PersonalInfoSection from "../../../components/Profile/PersonalInfoSection";
+import EducationSection from "../../../components/Profile/EducationSection";
+import SkillsSection from "../../../components/Profile/SkillsSection";
+import BioSection from "../../../components/Profile/BioSection";
+import ExperienceSection from "../../../components/Profile/ExperienceSection";
+import ResumeSection from "../../../components/Profile/ResumeSection";
+import FormActionsSection from "../../../components/Profile/FormActionsSection";
+
+interface ExperienceForm {
+  title: string;
+  company: string;
+  employmentType: 'full-time' | 'part-time' | 'internship' | 'freelance' | 'contract' | 'temporary' | 'volunteer' | 'other';
+  location?: string;
+  startDate: string;
+  endDate?: string;
+  isCurrent?: boolean;
+  description?: string;
+  skillsUsed?: string;
+}
 
 interface ProfileForm {
   name: string;
@@ -13,6 +33,9 @@ interface ProfileForm {
   skills: string;
   bio: string;
   resumeUrl: string;
+  experiences: ExperienceForm[];
+  companyHiringFor: string;
+  role?: string;
 }
 
 export default function UpdateProfilePage() {
@@ -27,6 +50,9 @@ export default function UpdateProfilePage() {
     skills: "",
     bio: "",
     resumeUrl: "",
+    experiences: [],
+    companyHiringFor: "",
+    role: "",
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -39,8 +65,7 @@ export default function UpdateProfilePage() {
       return;
     }
     fetchProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session, status]);
+  }, [session, status, router]);
 
   const fetchProfile = async () => {
     setLoading(true);
@@ -57,6 +82,14 @@ export default function UpdateProfilePage() {
           skills: (data.skills || []).join(", "),
           bio: data.bio || "",
           resumeUrl: data.resumeUrl || "",
+          experiences: (data.experiences || []).map((exp: ExperienceForm) => ({
+            ...exp,
+            skillsUsed: Array.isArray(exp.skillsUsed)
+              ? exp.skillsUsed.join(", ")
+              : (exp.skillsUsed || ""),
+          })),
+          companyHiringFor: data.companyHiringFor || "",
+          role: data.role || "",
         });
       }
     } catch {
@@ -99,12 +132,18 @@ export default function UpdateProfilePage() {
           skills: form.skills.split(",").map((s) => s.trim()).filter(Boolean),
           bio: form.bio,
           resumeUrl: form.resumeUrl,
-          // profileCompleted is NOT set here, so update is optional
+          experiences: form.experiences.map((exp) => ({
+            ...exp,
+            skillsUsed: exp.skillsUsed
+              ? exp.skillsUsed.split(",").map((s) => s.trim()).filter(Boolean)
+              : [],
+          })),
+          companyHiringFor: form.companyHiringFor,
         }),
       });
       if (res.ok) {
         setSuccess(true);
-        setTimeout(() => router.push("/student"), 1200);
+        setTimeout(() => router.push("/profile"), 1200);
       } else {
         setSuccess(false);
       }
@@ -116,120 +155,57 @@ export default function UpdateProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-zinc-950 via-zinc-900 to-violet-950/20">
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-zinc-950">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-violet-950/20 pt-20">
-      <div className="max-w-2xl mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold text-white mb-6">Update Your Profile</h1>
-        <form onSubmit={handleSubmit} className="space-y-6 bg-zinc-900/80 rounded-xl p-8 border border-zinc-700/50">
-          <div>
-            <label className="block text-zinc-300 mb-2">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              disabled
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white"
-            />
-          </div>
-          <div>
-            <label className="block text-zinc-300 mb-2">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              disabled
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white"
-            />
-          </div>
-          <div>
-            <label className="block text-zinc-300 mb-2">University</label>
-            <input
-              type="text"
-              name="university"
-              value={form.university}
+    <div className="min-h-screen bg-gray-100 dark:bg-zinc-950 py-28 px-6">
+      <div className="max-w-5xl mx-auto space-y-10">
+        <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-zinc-800">
+          <h1 className="text-3xl font-semibold text-gray-900 dark:text-white mb-8">Update Your Profile</h1>
+          <form onSubmit={handleSubmit} className="space-y-8">
+
+            {/* Personal Info */}
+            <PersonalInfoSection name={form.name} email={form.email} />
+
+
+            {/* Education */}
+            <EducationSection
+              university={form.university}
+              degree={form.degree}
+              graduationYear={form.graduationYear}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white"
             />
-          </div>
-          <div>
-            <label className="block text-zinc-300 mb-2">Degree</label>
-            <input
-              type="text"
-              name="degree"
-              value={form.degree}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white"
+
+
+            {/* Skills */}
+            <SkillsSection skills={form.skills} onChange={handleChange} />
+
+
+            {/* Bio */}
+            <BioSection bio={form.bio} onChange={handleChange} />
+
+
+
+            {/* Experience Section */}
+            <ExperienceSection
+              experiences={form.experiences}
+              setExperiences={(exps) => setForm(f => ({ ...f, experiences: exps }))}
             />
-          </div>
-          <div>
-            <label className="block text-zinc-300 mb-2">Graduation Year</label>
-            <input
-              type="text"
-              name="graduationYear"
-              value={form.graduationYear}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white"
-            />
-          </div>
-          <div>
-            <label className="block text-zinc-300 mb-2">Skills (comma separated)</label>
-            <input
-              type="text"
-              name="skills"
-              value={form.skills}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white"
-              placeholder="e.g. React, Node.js, Python"
-            />
-          </div>
-          <div>
-            <label className="block text-zinc-300 mb-2">Bio</label>
-            <textarea
-              name="bio"
-              value={form.bio}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white"
-              rows={4}
-            />
-          </div>
-          <div>
-            <label className="block text-zinc-300 mb-2">Resume (PDF, max 2MB)</label>
-            <input
-              type="file"
-              accept="application/pdf"
-              onChange={handleResumeUpload}
-              className="block w-full text-zinc-300"
-            />
-            {form.resumeUrl && (
-              <div className="mt-2">
-                <a href={form.resumeUrl} target="_blank" rel="noopener noreferrer" className="text-violet-400 underline">
-                  View Uploaded Resume
-                </a>
-              </div>
-            )}
-          </div>
-          <div className="flex justify-end gap-4">
-            <Link href="/(dashboards)/student">
-              <button type="button" className="px-6 py-3 border border-zinc-600 text-zinc-300 rounded-lg hover:border-zinc-500 transition-colors">
-                Cancel
-              </button>
-            </Link>
-            <button
-              type="submit"
-              disabled={saving}
-              className="px-6 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-violet-900/30 disabled:opacity-50"
-            >
-              {saving ? "Saving..." : "Save Profile"}
-            </button>
-          </div>
-          {success && <div className="text-emerald-400 mt-4">Profile updated successfully!</div>}
-        </form>
+
+
+            {/* Resume */}
+            <ResumeSection resumeUrl={form.resumeUrl} handleResumeUpload={handleResumeUpload} />
+
+
+            {/* Buttons */}
+            <FormActionsSection isLoading={saving} onCancel={() => router.push("/(dashboards)/student")} />
+            {success && <div className="text-emerald-500 mt-4">Profile updated successfully!</div>}
+          </form>
+        </div>
       </div>
     </div>
   );

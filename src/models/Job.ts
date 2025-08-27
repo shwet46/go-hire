@@ -70,11 +70,18 @@ const JobSchema = new mongoose.Schema({
     enum: ['public', 'private'],
     default: 'public',
   },
+  duration: {
+    type: String,
+    trim: true,
+    required: function (this: mongoose.Document) {
+      return this.get('type') === 'internship';
+    },
+  },
 }, {
   timestamps: true,
 });
 
-// Create indexes for better search performance
+
 JobSchema.index({ title: 'text', company: 'text', description: 'text' });
 JobSchema.index({ location: 1 });
 JobSchema.index({ type: 1 });

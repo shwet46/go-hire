@@ -6,6 +6,17 @@ import AuthGuard from '@/components/jobs/AuthGuard';
 import PageHeader from '@/components/jobs/PageHeader';
 import JobForm from '@/components/jobs/JobForm';
 
+interface JobForm {
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  salary: string;
+  description: string;
+  tags: string;
+  duration: string;
+}
+
 export default function PostJobPage() {
   const router = useRouter();
   const { toast } = useToast();
@@ -13,24 +24,23 @@ export default function PostJobPage() {
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState('');
 
-  const [formData, setFormData] = useState({
-    title: '',
-    company: '',
-    location: '',
-    type: 'full-time',
-    salary: '',
-    description: '',
+  const [form, setForm] = useState<JobForm>({
+    title: "",
+    company: "",
+    location: "",
+    type: "",
+    salary: "",
+    description: "",
+    tags: "",
+    duration: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleTypeChange = (type: string) => {
-    setFormData(prev => ({ ...prev, type }));
+    setForm(prev => ({ ...prev, type }));
   };
 
   const addTag = () => {
@@ -50,8 +60,8 @@ export default function PostJobPage() {
 
     try {
       const jobData = {
-        ...formData,
-        tags: tags.filter(tag => tag.trim()), // Filter out empty tags
+        ...form,
+        tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
       };
 
       const response = await fetch('/api/jobs', {
@@ -72,13 +82,15 @@ export default function PostJobPage() {
         });
         
         // Reset form
-        setFormData({
-          title: '',
-          company: '',
-          location: '',
-          type: 'full-time',
-          salary: '',
-          description: '',
+        setForm({
+          title: "",
+          company: "",
+          location: "",
+          type: "",
+          salary: "",
+          description: "",
+          tags: "",
+          duration: "",
         });
         setTags([]);
         setTagInput('');
@@ -119,7 +131,7 @@ export default function PostJobPage() {
           <PageHeader title="Post a New Job" />
           
           <JobForm
-            formData={formData}
+            formData={form}
             tags={tags}
             tagInput={tagInput}
             loading={loading}

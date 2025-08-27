@@ -9,6 +9,7 @@ interface Job {
   type: string;
   salary: string;
   description: string;
+  duration?: string;
   createdAt: string;
   tags: string[];
   postedBy: {
@@ -66,6 +67,12 @@ export default function JobsList({
                       <Clock size={16} />
                       <span>{formatDate(job.createdAt)}</span>
                     </div>
+                    {job.type === "internship" && job.duration && (
+                      <div className="flex items-center space-x-1">
+                        <span className="font-semibold">Duration:</span>
+                        <span>{job.duration}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="text-right">

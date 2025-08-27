@@ -1,13 +1,26 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronDown, AlertCircle, CheckCircle } from "lucide-react";
+
+import { ChevronDown, AlertCircle, CheckCircle, Eye, EyeOff, Loader2 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem
+} from "@/components/ui/dropdown-menu";
+import {
+  validateName,
+  validateEmail,
+  validatePassword,
+  validateReferralCode,
+} from "@/utils/validation";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [role, setRole] = useState("student");
   const [referralCode, setReferralCode] = useState("");
@@ -15,48 +28,16 @@ export default function RegisterPage() {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
   const router = useRouter();
+  const dropdownTriggerRef = useRef<HTMLButtonElement>(null);
+  const [dropdownWidth, setDropdownWidth] = useState<number | undefined>(undefined);
 
-  // Validation functions
-  const validateName = (name: string): string => {
-    if (!name.trim()) return "Name is required";
-    if (name.trim().length < 2) return "Name must be at least 2 characters";
-    if (name.trim().length > 50) return "Name must be less than 50 characters";
-    if (!/^[a-zA-Z\s]+$/.test(name.trim()))
-      return "Name can only contain letters and spaces";
-    return "";
-  };
-
-  const validateEmail = (email: string): string => {
-    if (!email.trim()) return "Email is required";
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) return "Please enter a valid email address";
-    return "";
-  };
-
-  const validatePassword = (password: string): string => {
-    if (!password) return "Password is required";
-    if (password.length < 8) return "Password must be at least 8 characters";
-    if (!/(?=.*[a-z])/.test(password))
-      return "Password must contain at least one lowercase letter";
-    if (!/(?=.*[A-Z])/.test(password))
-      return "Password must contain at least one uppercase letter";
-    if (!/(?=.*\d)/.test(password)) return "Password must contain at least one number";
-    if (!/(?=.*[@$!%*?&])/.test(password))
-      return "Password must contain at least one special character (@$!%*?&)";
-    return "";
-  };
-
-  const validateReferralCode = (code: string): string => {
-    if (code && code.length > 0) {
-      if (code.length < 3) return "Referral code must be at least 3 characters";
-      if (code.length > 20) return "Referral code must be less than 20 characters";
-      if (!/^[a-zA-Z0-9]+$/.test(code))
-        return "Referral code can only contain letters and numbers";
+  useLayoutEffect(() => {
+    if (dropdownTriggerRef.current) {
+      setDropdownWidth(dropdownTriggerRef.current.offsetWidth);
     }
-    return "";
-  };
+  }, [role]);
 
-  // Handle field validation
+  // --- Field handlers ---
   const handleFieldChange = (field: string, value: string) => {
     let error = "";
 
@@ -82,55 +63,28 @@ export default function RegisterPage() {
         break;
     }
 
-    setErrors((prev) => ({
-      ...prev,
-      [field]: error,
-    }));
+    setErrors((prev) => ({ ...prev, [field]: error }));
   };
 
   const handleBlur = (field: string) => {
-    setTouched((prev) => ({
-      ...prev,
-      [field]: true,
-    }));
+    setTouched((prev) => ({ ...prev, [field]: true }));
   };
 
   const isFormValid = () => {
-    const nameError = validateName(name);
-    const emailError = validateEmail(email);
-    const passwordError = validatePassword(password);
-    const referralError = validateReferralCode(referralCode);
-
-    return !nameError && !emailError && !passwordError && !referralError;
+    return (
+      !validateName(name) &&
+      !validateEmail(email) &&
+      !validatePassword(password) &&
+      !validateReferralCode(referralCode)
+    );
   };
 
+  // --- Submit ---
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    setTouched({ name: true, email: true, password: true, referralCode: true });
 
-    // Mark all fields as touched
-    setTouched({
-      name: true,
-      email: true,
-      password: true,
-      referralCode: true,
-    });
-
-    // Validate all fields
-    const nameError = validateName(name);
-    const emailError = validateEmail(email);
-    const passwordError = validatePassword(password);
-    const referralError = validateReferralCode(referralCode);
-
-    setErrors({
-      name: nameError,
-      email: emailError,
-      password: passwordError,
-      referralCode: referralError,
-    });
-
-    if (!isFormValid()) {
-      return;
-    }
+    if (!isFormValid()) return;
 
     setLoading(true);
     const res = await fetch("/api/auth/signup", {
@@ -148,43 +102,34 @@ export default function RegisterPage() {
     setLoading(false);
   };
 
+  // --- Styling helpers ---
   const getInputClassName = (field: string) => {
     const hasError = touched[field] && errors[field];
-    const isValid =
-      touched[field] &&
-      !errors[field] &&
-      ((field === "name" && name) ||
-        (field === "email" && email) ||
-        (field === "password" && password) ||
-        (field === "referralCode"));
+    const isValid = touched[field] && !errors[field];
 
-    return `w-full bg-zinc-800/60 border rounded-lg px-4 py-3 placeholder-zinc-500 focus:outline-none transition ${
-      hasError
+    return `w-full bg-zinc-900/70 border rounded-lg px-4 py-3 placeholder-zinc-500 focus:outline-none transition
+      ${hasError
         ? "border-red-500 focus:ring-2 focus:ring-red-500/40"
         : isValid
         ? "border-green-500 focus:ring-2 focus:ring-green-500/40"
-        : "border-zinc-700 focus:ring-2 focus:ring-violet-500/40"
-    }`;
+        : "border-zinc-700 focus:ring-2 focus:ring-violet-500/40"}`;
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-gradient-to-br from-zinc-950 via-zinc-900 to-violet-950 text-white overflow-hidden px-6 py-24 sm:px-10">
-      {/* Abstract gradient blobs */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-violet-600/30 rounded-full blur-[180px]" />
-      <div className="absolute bottom-0 right-[-120px] w-[400px] h-[400px] bg-indigo-500/20 rounded-full blur-[160px]" />
-      <div className="absolute top-1/2 left-1/2 w-[600px] h-[400px] bg-purple-600/10 -translate-x-1/2 -translate-y-1/2 rotate-45 blur-3xl opacity-20" />
+    <div className="relative min-h-screen flex items-center justify-center bg-zinc-950 text-zinc-100 px-6 py-20">
+      {/* No gradients, just a solid dark background */}
 
-      <div className="relative z-10 max-w-3xl mx-auto">
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 mb-12 text-center">
+      <div className="relative z-10 w-full max-w-2xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl p-10 overflow-hidden">
+        <h1 className="text-4xl font-extrabold text-center text-zinc-100 mb-10">
           Create Your GoHire Account
         </h1>
 
-        <form onSubmit={handleRegister} className="space-y-8">
+        <form onSubmit={handleRegister} className="space-y-6">
+          {/* Full Name & Email */}
           <div className="grid sm:grid-cols-2 gap-6">
+            {/* Name */}
             <div>
-              <label className="text-sm text-zinc-400 mb-1 block">
-                Full Name
-              </label>
+              <label className="text-sm text-zinc-400 mb-1 block">Full Name</label>
               <div className="relative">
                 <input
                   type="text"
@@ -206,10 +151,9 @@ export default function RegisterPage() {
               )}
             </div>
 
+            {/* Email */}
             <div>
-              <label className="text-sm text-zinc-400 mb-1 block">
-                Email Address
-              </label>
+              <label className="text-sm text-zinc-400 mb-1 block">Email Address</label>
               <div className="relative">
                 <input
                   type="email"
@@ -232,78 +176,79 @@ export default function RegisterPage() {
             </div>
           </div>
 
+          {/* Password & Role */}
           <div className="grid sm:grid-cols-2 gap-6">
+            {/* Password */}
             <div>
               <label className="text-sm text-zinc-400 mb-1 block">Password</label>
               <div className="relative">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => handleFieldChange("password", e.target.value)}
                   onBlur={() => handleBlur("password")}
                   className={getInputClassName("password")}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-12 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
                 {touched.password && !errors.password && password && (
-                  <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500" size={20} />
+                  <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500" size={22} />
                 )}
                 {touched.password && errors.password && (
-                  <AlertCircle className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500" size={20} />
+                  <AlertCircle className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500" size={22} />
                 )}
               </div>
               {touched.password && errors.password && (
                 <p className="text-red-400 text-xs mt-1">{errors.password}</p>
               )}
-              {password && !errors.password && (
-                <div className="mt-2 space-y-1">
-                  <div className="flex items-center space-x-2">
-                    <div className="flex-1 bg-zinc-700 rounded-full h-1">
-                      <div
-                        className={`h-1 rounded-full transition-all duration-300 ${
-                          password.length >= 8 &&
-                          /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/.test(password)
-                            ? "bg-green-500 w-full"
-                            : password.length >= 6
-                            ? "bg-yellow-500 w-2/3"
-                            : "bg-red-500 w-1/3"
-                        }`}
-                      />
-                    </div>
-                    <span className="text-xs text-zinc-400">
-                      {password.length >= 8 &&
-                      /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/.test(password)
-                        ? "Strong"
-                        : password.length >= 6
-                        ? "Medium"
-                        : "Weak"}
-                    </span>
-                  </div>
-                </div>
-              )}
             </div>
 
-            {/* Custom Styled Dropdown */}
+            {/* Role */}
             <div>
               <label className="text-sm text-zinc-400 mb-1 block">I am a</label>
-              <div className="relative">
-                <select
-                  value={role}
-                  onChange={(e) => handleFieldChange("role", e.target.value)}
-                  className="appearance-none w-full bg-zinc-800/60 border border-zinc-700 rounded-lg px-4 py-3 pr-10 text-white focus:outline-none focus:ring-2 focus:ring-violet-500/40 transition"
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    type="button"
+                    id="role-dropdown-trigger"
+                    ref={dropdownTriggerRef}
+                    className="w-full flex items-center justify-between bg-gradient-to-r from-violet-950/70 to-indigo-950/60 border border-violet-700 rounded-lg px-4 py-3 pr-10 text-white font-medium shadow-inner focus:outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/40 transition"
+                  >
+                    {role === "student" ? "Student" : "Recruiter"}
+                    <ChevronDown className="ml-2 text-violet-400" size={22} style={{ marginRight: "-0.5rem" }} />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="min-w-0 p-0"
+                  style={{ width: dropdownWidth ? `${dropdownWidth}px` : undefined }}
                 >
-                  <option value="student">Student</option>
-                  <option value="recruiter">Recruiter</option>
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none" size={20} />
-              </div>
+                  <DropdownMenuItem
+                    onSelect={() => handleFieldChange("role", "student")}
+                    className={role === "student" ? "bg-violet-900/60 text-white" : ""}
+                  >
+                    Student
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onSelect={() => handleFieldChange("role", "recruiter")}
+                    className={role === "recruiter" ? "bg-violet-900/60 text-white" : ""}
+                  >
+                    Recruiter
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
           {/* Referral */}
           <div>
-            <label className="text-sm text-zinc-400 mb-1 block">
-              Referral Code (Optional)
-            </label>
+            <label className="text-sm text-zinc-400 mb-1 block">Referral Code (Optional)</label>
             <div className="relative">
               <input
                 type="text"
@@ -314,10 +259,10 @@ export default function RegisterPage() {
                 className={getInputClassName("referralCode")}
               />
               {touched.referralCode && !errors.referralCode && referralCode && (
-                <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500" size={20} />
+                <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500" size={22} />
               )}
               {touched.referralCode && errors.referralCode && (
-                <AlertCircle className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500" size={20} />
+                <AlertCircle className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500" size={22} />
               )}
             </div>
             {touched.referralCode && errors.referralCode && (
@@ -325,24 +270,22 @@ export default function RegisterPage() {
             )}
           </div>
 
-          {/* Submit */}
-          <div className="flex justify-start">
+          {/* Submit Button */}
+          <div className="flex justify-center">
             <button
               type="submit"
               disabled={loading || !isFormValid()}
-              className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-semibold transition duration-200 shadow-lg shadow-violet-800/30 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-semibold transition duration-200 shadow-lg shadow-violet-800/30 disabled:opacity-50 disabled:cursor-not-allowed"
             >
+              {loading && <Loader2 className="animate-spin" size={18} />}
               {loading ? "Creating Account..." : "Create Account"}
             </button>
           </div>
         </form>
 
-        <p className="mt-10 text-center text-sm text-zinc-400">
+        <p className="mt-8 text-center text-sm text-zinc-400">
           Already have an account?{" "}
-          <Link
-            href="/login"
-            className="text-violet-400 hover:text-violet-300 font-medium transition"
-          >
+          <Link href="/login" className="text-violet-400 hover:text-violet-300 font-medium transition">
             Sign in
           </Link>
         </p>

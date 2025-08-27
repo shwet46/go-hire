@@ -12,6 +12,7 @@ interface JobForm {
   salary: string;
   description: string;
   tags: string;
+  duration: string;
 }
 
 export default function EditJobPage() {
@@ -26,6 +27,7 @@ export default function EditJobPage() {
     salary: "",
     description: "",
     tags: "",
+    duration: "",
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -57,6 +59,7 @@ export default function EditJobPage() {
           salary: job.salary || "",
           description: job.description || "",
           tags: (job.tags || []).join(", "),
+          duration: job.duration || "",
         });
       } else {
         setError("Job not found");
@@ -185,6 +188,17 @@ export default function EditJobPage() {
               className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white"
               rows={6}
               required
+            />
+          </div>
+          <div>
+            <label className="block text-zinc-300 mb-2">Duration (for Internship)</label>
+            <input
+              type="text"
+              name="duration"
+              value={form.duration}
+              onChange={handleChange}
+              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700 rounded-lg text-white"
+              placeholder="e.g. 6 months"
             />
           </div>
           <div className="flex justify-end gap-4">

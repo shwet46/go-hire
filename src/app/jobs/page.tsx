@@ -16,6 +16,7 @@ interface Job {
   type: string;
   salary: string;
   description: string;
+  duration?: string;
   createdAt: string;
   tags: string[];
   postedBy: {
@@ -35,6 +36,7 @@ export default function JobsPage() {
   const [search, setSearch] = useState('');
   const [location, setLocation] = useState('');
   const [jobType, setJobType] = useState('');
+  const [duration, setDuration] = useState('');
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [toastState, setToastState] = useState<{ open: boolean; title: string; description: string; variant?: "default" | "destructive" | "success" }>({ open: false, title: "", description: "", variant: "default" });
@@ -52,7 +54,8 @@ export default function JobsPage() {
         limit: '10',
         ...(search && { search }),
         ...(location && { location }),
-        ...(jobType && { jobType })
+        ...(jobType && { jobType }),
+        ...(duration && { duration })
       });
 
       const response = await fetch(`/api/jobs?${params}`);
@@ -77,7 +80,7 @@ export default function JobsPage() {
     } finally {
       setLoading(false);
     }
-  }, [page, search, location, jobType]);
+  }, [page, search, location, jobType, duration]);
 
   useEffect(() => {
     console.log('Fetching jobs...'); 
@@ -139,6 +142,8 @@ export default function JobsPage() {
             setJobType={setJobType}
             handleSearch={handleSearch}
             loading={loading}
+            duration={duration}
+            setDuration={setDuration}
           />
           <JobsStats jobsCount={jobs.length} />
           {/* Job Listings */}
