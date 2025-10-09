@@ -26,7 +26,9 @@ export async function GET() {
   }
   // Count jobs and internships applied for
   const appliedJobs = (user.applications || []).filter((a) => a.jobType !== 'internship').length;
-  const appliedInternships = (user.applications || []).filter((a) => a.jobType === 'internship').length;
+  const appliedInternships = (user.applications || []).filter(
+    (a) => a.jobType === 'internship'
+  ).length;
   // Saved jobs and completed practices would be tracked elsewhere
   return NextResponse.json({
     appliedJobs,

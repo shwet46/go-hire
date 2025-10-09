@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState } from 'react';
 import { Book, Code, Globe, Trophy, Smartphone, Star } from 'lucide-react';
 import CategoryFilter from '@/components/practice/CategoryFilter';
@@ -21,9 +21,11 @@ export default function PracticePage() {
     { id: 'interview', name: 'Interview Prep', icon: Star },
   ];
 
-  const filteredResources = getAllResources().filter(r =>
-    (selectedCategory === 'all' || r.category === selectedCategory) &&
-    (selectedDifficulty === 'all' || r.difficulty?.toLowerCase().includes(selectedDifficulty.toLowerCase()))
+  const filteredResources = getAllResources().filter(
+    (r) =>
+      (selectedCategory === 'all' || r.category === selectedCategory) &&
+      (selectedDifficulty === 'all' ||
+        r.difficulty?.toLowerCase().includes(selectedDifficulty.toLowerCase()))
   );
 
   return (
@@ -47,12 +49,12 @@ export default function PracticePage() {
 
         {/* Filters */}
         <div className="mb-10 space-y-6">
-          <CategoryFilter 
+          <CategoryFilter
             categories={categories}
             selectedCategory={selectedCategory}
             onCategoryChange={setSelectedCategory}
           />
-          <DifficultyFilter 
+          <DifficultyFilter
             selectedDifficulty={selectedDifficulty}
             onDifficultyChange={setSelectedDifficulty}
           />

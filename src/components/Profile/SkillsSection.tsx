@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   skills: string;
@@ -8,7 +8,9 @@ interface Props {
 export default function SkillsSection({ skills, onChange }: Props) {
   return (
     <div className="border-b border-gray-200 dark:border-zinc-800 pb-6">
-      <label className="block text-gray-600 dark:text-gray-300 mb-2 text-lg font-medium">Skills</label>
+      <label className="block text-gray-600 dark:text-gray-300 mb-2 text-lg font-medium">
+        Skills
+      </label>
       <input
         type="text"
         name="skills"

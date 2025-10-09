@@ -44,7 +44,13 @@ export function useAuth() {
     }
   };
 
-  const signup = async (email: string, password: string, name: string, role: 'student' | 'recruiter' = 'student', referralCode?: string) => {
+  const signup = async (
+    email: string,
+    password: string,
+    name: string,
+    role: 'student' | 'recruiter' = 'student',
+    referralCode?: string
+  ) => {
     try {
       const response = await fetch('/api/auth/signup', {
         method: 'POST',

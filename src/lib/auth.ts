@@ -23,12 +23,12 @@ export async function verifyPassword(password: string, hashedPassword: string): 
 
 export function generateToken(user: AuthUser): string {
   return jwt.sign(
-    { 
-      id: user.id, 
+    {
+      id: user.id,
       email: user.email,
       name: user.name,
       role: user.role,
-      referralCode: user.referralCode
+      referralCode: user.referralCode,
     },
     JWT_SECRET,
     { expiresIn: '7d' }
@@ -37,9 +37,9 @@ export function generateToken(user: AuthUser): string {
 
 export function verifyToken(token: string): AuthUser | null {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as jwt.JwtPayload & { 
-      id: string; 
-      email: string; 
+    const decoded = jwt.verify(token, JWT_SECRET) as jwt.JwtPayload & {
+      id: string;
+      email: string;
       role: 'student' | 'recruiter' | 'admin';
       name?: string;
       referralCode?: string;
@@ -49,23 +49,29 @@ export function verifyToken(token: string): AuthUser | null {
       email: decoded.email,
       name: decoded.name || '',
       role: decoded.role,
-      referralCode: decoded.referralCode || ''
+      referralCode: decoded.referralCode || '',
     };
   } catch {
     return null;
   }
 }
 
-export async function createUser(email: string, password: string, name: string, role: 'student' | 'recruiter' = 'student', referredByCode?: string): Promise<AuthUser> {
+export async function createUser(
+  email: string,
+  password: string,
+  name: string,
+  role: 'student' | 'recruiter' = 'student',
+  referredByCode?: string
+): Promise<AuthUser> {
   await dbConnect();
-  
+
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     throw new Error('User already exists');
   }
 
   const hashedPassword = await hashPassword(password);
-  
+
   // Find referrer if referral code provided
   let referredBy;
   if (referredByCode) {
@@ -88,7 +94,7 @@ export async function createUser(email: string, password: string, name: string, 
       email,
       user: user._id,
       status: 'registered',
-      isSuccessful: true
+      isSuccessful: true,
     });
     referredBy.referralCount += 1;
     referredBy.successfulReferrals += 1;
@@ -100,13 +106,13 @@ export async function createUser(email: string, password: string, name: string, 
     email: user.email,
     name: user.name,
     role: user.role,
-    referralCode: user.referralCode
+    referralCode: user.referralCode,
   };
 }
 
 export async function authenticateUser(email: string, password: string): Promise<AuthUser | null> {
   await dbConnect();
-  
+
   const user = await User.findOne({ email });
   if (!user) {
     return null;
@@ -122,13 +128,13 @@ export async function authenticateUser(email: string, password: string): Promise
     email: user.email,
     name: user.name,
     role: user.role,
-    referralCode: user.referralCode
+    referralCode: user.referralCode,
   };
 }
 
 export async function getUserById(id: string): Promise<AuthUser | null> {
   await dbConnect();
-  
+
   const user = await User.findById(id);
   if (!user) {
     return null;
@@ -139,6 +145,6 @@ export async function getUserById(id: string): Promise<AuthUser | null> {
     email: user.email,
     name: user.name,
     role: user.role,
-    referralCode: user.referralCode
+    referralCode: user.referralCode,
   };
 }

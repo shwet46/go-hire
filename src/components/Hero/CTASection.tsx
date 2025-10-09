@@ -1,6 +1,6 @@
-"use client";
-import React from "react";
-import Link from "next/link";
+'use client';
+import React from 'react';
+import Link from 'next/link';
 import { Users, ArrowRight, Briefcase } from 'lucide-react';
 
 const CTASection = () => {
@@ -11,7 +11,8 @@ const CTASection = () => {
           Find Your Perfect Team Today
         </h2>
         <p className="text-xl text-neutral-300 mb-8 max-w-2xl mx-auto">
-          Connect with talented students and passionate freelancers ready to help build your startup. Quality talent, affordable rates, perfect for early-stage companies.
+          Connect with talented students and passionate freelancers ready to help build your
+          startup. Quality talent, affordable rates, perfect for early-stage companies.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/auth/signin">

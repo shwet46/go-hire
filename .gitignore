@@ -20,6 +20,8 @@
 # production
 /build
 
+.prettierignore
+
 # misc
 .DS_Store
 *.pem

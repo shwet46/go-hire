@@ -1,9 +1,9 @@
 import React from 'react';
 import { ArrowRight, CheckCircle, Users, Trophy, Gift } from 'lucide-react';
-import { BackgroundBeams } from "./ui/background-beams";
-import Link from "next/link";
-import Image from "next/image";
-import TrustIndicators from "./Hero/TrustIndicators";
+import { BackgroundBeams } from './ui/background-beams';
+import Link from 'next/link';
+import Image from 'next/image';
+import TrustIndicators from './Hero/TrustIndicators';
 import GameMechanicsSection from './Hero/GameMechanicsSection';
 import FeaturesSection from './Hero/FeaturesSection';
 import StatsSection from './Hero/StatsSection';
@@ -20,32 +20,34 @@ function Hero() {
           <div className="space-y-8">
             <div className="flex items-center gap-3 mb-6">
               <Image src="/gohire.png" alt="GoHire Logo" width={56} height={56} />
-              <h1 className="text-5xl md:text-6xl font-extrabold text-violet-400">
-                GoHire
-              </h1>
+              <h1 className="text-5xl md:text-6xl font-extrabold text-violet-400">GoHire</h1>
             </div>
-            
+
             <h2 className="text-2xl md:text-4xl font-bold text-white leading-tight">
-              Connect early startups with 
+              Connect early startups with
               <span className="text-violet-400"> talented students & freelancers</span>
             </h2>
-            
+
             <p className="text-lg text-neutral-300 leading-relaxed max-w-xl">
-              Find passionate interns, project collaborators, and part-time talent for your startup. Perfect for small-scale hiring with big potential.
+              Find passionate interns, project collaborators, and part-time talent for your startup.
+              Perfect for small-scale hiring with big potential.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/auth/signin">
                 <button className="p-[3px] relative group w-full sm:w-auto">
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
                   <div className="px-8 py-4 bg-black rounded-[6px] relative transition duration-200 text-white hover:bg-transparent flex items-center justify-center space-x-2 font-semibold">
                     <span>Get started</span>
-                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight
+                      size={18}
+                      className="group-hover:translate-x-1 transition-transform"
+                    />
                   </div>
                 </button>
               </Link>
             </div>
-            
+
             {/* Key Benefits */}
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-neutral-300">
@@ -58,11 +60,13 @@ function Hero() {
               </div>
               <div className="flex items-center space-x-3 text-neutral-300">
                 <CheckCircle size={20} className="text-green-400 flex-shrink-0" />
-                <span className="text-base">Affordable hiring solutions for early-stage startups</span>
+                <span className="text-base">
+                  Affordable hiring solutions for early-stage startups
+                </span>
               </div>
             </div>
           </div>
-          
+
           {/* Right Side - Visual Elements */}
           <div className="relative lg:pl-8">
             {/* Floating Cards */}
@@ -87,7 +91,7 @@ function Hero() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Secondary Card */}
               <div className="absolute top-12 left-0 w-72 h-48 bg-gradient-to-br from-purple-900/40 to-pink-900/40 rounded-2xl border border-purple-500/20 backdrop-blur-sm p-6 transform -rotate-2 hover:rotate-0 transition-transform duration-300">
                 <div className="flex items-center justify-between mb-4">
@@ -109,7 +113,7 @@ function Hero() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Talent Pool Card */}
               <div className="absolute bottom-0 right-8 w-64 h-40 bg-gradient-to-br from-green-900/40 to-teal-900/40 rounded-2xl border border-green-500/20 backdrop-blur-sm p-4 transform rotate-1 hover:rotate-0 transition-transform duration-300">
                 <div className="flex items-center justify-between mb-3">
@@ -134,7 +138,7 @@ function Hero() {
             </div>
           </div>
         </div>
-        
+
         <StatsSection />
         <TrustIndicators />
         <GameMechanicsSection />

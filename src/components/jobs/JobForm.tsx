@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 import { Plus, X, ChevronDown } from 'lucide-react';
 import {
@@ -6,7 +6,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 interface JobFormData {
   title: string;
@@ -40,17 +40,20 @@ export default function JobForm({
   onTagInputChange,
   onAddTag,
   onRemoveTag,
-  onSubmit
+  onSubmit,
 }: JobFormProps) {
   const jobTypes = [
     { value: 'full-time', label: 'Full-time' },
     { value: 'part-time', label: 'Part-time' },
     { value: 'contract', label: 'Contract' },
-    { value: 'internship', label: 'Internship' }
+    { value: 'internship', label: 'Internship' },
   ];
 
   return (
-    <form onSubmit={onSubmit} className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-8 border border-zinc-700/50">
+    <form
+      onSubmit={onSubmit}
+      className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-8 border border-zinc-700/50"
+    >
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         <div>
           <label className="block text-sm font-medium text-zinc-300 mb-2">Job Title</label>
@@ -150,7 +153,9 @@ export default function JobForm({
 
       {/* Skills/Tags */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-zinc-300 mb-2">Skills & Technologies</label>
+        <label className="block text-sm font-medium text-zinc-300 mb-2">
+          Skills & Technologies
+        </label>
         <div className="flex gap-2 mb-2">
           <input
             type="text"

@@ -7,39 +7,27 @@ import { verifyToken } from '@/lib/auth';
 export async function POST(request: NextRequest) {
   try {
     await dbConnect();
-    
+
     const token = request.cookies.get('auth-token')?.value;
     if (!token) {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
 
     const user = verifyToken(token);
     if (!user || user.role !== 'student') {
-      return NextResponse.json(
-        { error: 'Only students can apply for jobs' },
-        { status: 403 }
-      );
+      return NextResponse.json({ error: 'Only students can apply for jobs' }, { status: 403 });
     }
 
     const { jobId } = await request.json();
-    
+
     const job = await Job.findById(jobId);
     if (!job) {
-      return NextResponse.json(
-        { error: 'Job not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'Job not found' }, { status: 404 });
     }
 
     const userDoc = await User.findById(user.id);
     if (!userDoc) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     // Check if already applied
@@ -48,10 +36,7 @@ export async function POST(request: NextRequest) {
     );
 
     if (existingApplication) {
-      return NextResponse.json(
-        { error: 'Already applied to this job' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Already applied to this job' }, { status: 400 });
     }
 
     // Add application to user
@@ -59,42 +44,30 @@ export async function POST(request: NextRequest) {
       job: jobId,
       status: 'applied',
       appliedAt: new Date(),
-      lastUpdated: new Date()
+      lastUpdated: new Date(),
     });
 
     await userDoc.save();
 
-    return NextResponse.json(
-      { message: 'Application submitted successfully' },
-      { status: 201 }
-    );
+    return NextResponse.json({ message: 'Application submitted successfully' }, { status: 201 });
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Internal server error';
-    return NextResponse.json(
-      { error: errorMessage },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
 export async function GET(request: NextRequest) {
   try {
     await dbConnect();
-    
+
     const token = request.cookies.get('auth-token')?.value;
     if (!token) {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
 
     const user = verifyToken(token);
     if (!user) {
-      return NextResponse.json(
-        { error: 'Invalid token' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
 
     const userDoc = await User.findById(user.id).populate({
@@ -103,23 +76,17 @@ export async function GET(request: NextRequest) {
       populate: {
         path: 'postedBy',
         model: 'User',
-        select: 'name email'
-      }
+        select: 'name email',
+      },
     });
 
     if (!userDoc) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     return NextResponse.json({ applications: userDoc.applications });
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Internal server error';
-    return NextResponse.json(
-      { error: errorMessage },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

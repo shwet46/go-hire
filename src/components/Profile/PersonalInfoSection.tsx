@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   name: string;
@@ -8,7 +8,9 @@ interface Props {
 export default function PersonalInfoSection({ name, email }: Props) {
   return (
     <div className="border-b border-gray-200 dark:border-zinc-800 pb-6">
-      <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Personal Information</h2>
+      <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+        Personal Information
+      </h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label className="block text-gray-600 dark:text-gray-300 mb-1">Name</label>

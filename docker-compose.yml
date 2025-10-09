@@ -4,13 +4,13 @@ services:
   app:
     build: .
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - NODE_ENV=production
     env_file:
       - .env.local
     restart: unless-stopped
-    
+
   # Optional: Add MongoDB service for local development
   # mongodb:
   #   image: mongo:7
@@ -21,6 +21,5 @@ services:
   #     MONGO_INITDB_ROOT_PASSWORD: password
   #   volumes:
   #     - mongodb_data:/data/db
-
 # volumes:
 #   mongodb_data:

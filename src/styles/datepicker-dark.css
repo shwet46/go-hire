@@ -1,5 +1,6 @@
 /* Hide the white top triangle (pointer) in dark mode */
-.react-datepicker-dark.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle,
+.react-datepicker-dark.react-datepicker-popper[data-placement^='bottom']
+  .react-datepicker__triangle,
 .react-datepicker-dark .react-datepicker__triangle {
   display: none !important;
 }

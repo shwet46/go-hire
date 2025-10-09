@@ -13,7 +13,8 @@ export default function JobsHeader({ session }: { session: { user?: ExtendedUser
           Find Your Dream Job
         </h1>
         <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
-          Discover amazing opportunities from top companies looking for talented individuals like you
+          Discover amazing opportunities from top companies looking for talented individuals like
+          you
         </p>
       </div>
       {session && (session.user as ExtendedUser)?.role === 'recruiter' && (

@@ -3,7 +3,19 @@
     "meta": {
       "description": "Comprehensive list of coding courses and resources for internship and placement preparation",
       "last_updated": "2025",
-      "categories": ["dsa", "system_design", "web_development", "competitive_programming", "interview_prep", "free_resources", "paid_courses", "aptitude", "soft_skills", "projects", "certifications"]
+      "categories": [
+        "dsa",
+        "system_design",
+        "web_development",
+        "competitive_programming",
+        "interview_prep",
+        "free_resources",
+        "paid_courses",
+        "aptitude",
+        "soft_skills",
+        "projects",
+        "certifications"
+      ]
     },
     "data_structures_algorithms": {
       "free_resources": [
@@ -619,7 +631,11 @@
         {
           "name": "Infosys",
           "focus_areas": ["Programming", "Database", "Communication"],
-          "resources": ["Infosys Mysore Training Materials", "InfyTQ Platform", "Infosys Springboard"],
+          "resources": [
+            "Infosys Mysore Training Materials",
+            "InfyTQ Platform",
+            "Infosys Springboard"
+          ],
           "interview_rounds": ["Online Test", "Technical Interview", "HR Interview"],
           "difficulty": "Medium"
         },
@@ -633,21 +649,33 @@
         {
           "name": "Flipkart",
           "focus_areas": ["DSA", "System Design", "Problem Solving"],
-          "resources": ["LeetCode Flipkart Questions", "System Design Interview Prep", "Flipkart Engineering Blog"],
+          "resources": [
+            "LeetCode Flipkart Questions",
+            "System Design Interview Prep",
+            "Flipkart Engineering Blog"
+          ],
           "interview_rounds": ["Online Coding", "Technical Rounds", "Hiring Manager Round"],
           "difficulty": "High"
         },
         {
           "name": "Paytm",
           "focus_areas": ["DSA", "Backend Development", "Payment Systems"],
-          "resources": ["LeetCode Paytm Questions", "Fintech System Design", "Payment Gateway Concepts"],
+          "resources": [
+            "LeetCode Paytm Questions",
+            "Fintech System Design",
+            "Payment Gateway Concepts"
+          ],
           "interview_rounds": ["Coding Round", "Technical Interview", "System Design"],
           "difficulty": "High"
         },
         {
           "name": "Zomato",
           "focus_areas": ["DSA", "Web Development", "Database Design"],
-          "resources": ["LeetCode Zomato Questions", "Food Delivery System Design", "Backend Development"],
+          "resources": [
+            "LeetCode Zomato Questions",
+            "Food Delivery System Design",
+            "Backend Development"
+          ],
           "interview_rounds": ["Coding Test", "Technical Interview", "Culture Fit"],
           "difficulty": "Medium-High"
         }
@@ -1398,24 +1426,15 @@
       "daily_schedule": {
         "morning_routine": {
           "time": "6:00 AM - 9:00 AM",
-          "activities": [
-            "DSA Theory (1 hour)",
-            "Problem Solving Practice (2 hours)"
-          ]
+          "activities": ["DSA Theory (1 hour)", "Problem Solving Practice (2 hours)"]
         },
         "afternoon": {
           "time": "2:00 PM - 5:00 PM",
-          "activities": [
-            "Development Projects (2 hours)",
-            "System Design Study (1 hour)"
-          ]
+          "activities": ["Development Projects (2 hours)", "System Design Study (1 hour)"]
         },
         "evening": {
           "time": "7:00 PM - 9:00 PM",
-          "activities": [
-            "Revision and Notes (1 hour)",
-            "Mock Interviews or Aptitude (1 hour)"
-          ]
+          "activities": ["Revision and Notes (1 hour)", "Mock Interviews or Aptitude (1 hour)"]
         }
       },
       "weekly_milestones": [

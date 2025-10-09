@@ -10,12 +10,16 @@ export async function GET() {
   if (!session || !session.user?.email) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const user = await User.findOne({ email: session.user.email }).lean() as Record<string, unknown> | null;
+  const user = (await User.findOne({ email: session.user.email }).lean()) as Record<
+    string,
+    unknown
+  > | null;
   if (!user) {
     return NextResponse.json({ error: 'User not found' }, { status: 404 });
   }
   // Only return safe fields
   return NextResponse.json({
+    id: (user as any)._id?.toString?.() || (user as any)._id,
     name: user.name,
     email: user.email,
     university: user.university,
@@ -49,9 +53,32 @@ export async function PUT(request: NextRequest) {
     'profileCompleted',
     'experiences',
     'companyHiringFor',
-  ].forEach(field => {
+  ].forEach((field) => {
     if (body[field] !== undefined) update[field] = body[field];
   });
+  const existing = await User.findOne({ email: session.user.email });
+  if (!existing) {
+    return NextResponse.json({ error: 'User not found' }, { status: 404 });
+  }
+  const merged: any = { ...existing.toObject(), ...update };
+
+  if (body.profileCompleted === undefined) {
+    const isStudentComplete = () =>
+      !!(
+        merged.university &&
+        merged.degree &&
+        merged.graduationYear &&
+        Array.isArray(merged.skills) &&
+        merged.skills.length > 0
+      );
+    const isRecruiterComplete = () => !!merged.companyHiringFor;
+    if (existing.role === 'student') {
+      update.profileCompleted = isStudentComplete();
+    } else if (existing.role === 'recruiter') {
+      update.profileCompleted = isRecruiterComplete();
+    }
+  }
+
   const user = await User.findOneAndUpdate(
     { email: session.user.email },
     { $set: update },
@@ -60,5 +87,5 @@ export async function PUT(request: NextRequest) {
   if (!user) {
     return NextResponse.json({ error: 'User not found' }, { status: 404 });
   }
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true, profileCompleted: user.profileCompleted });
 }

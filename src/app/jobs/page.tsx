@@ -1,12 +1,18 @@
-"use client";
+'use client';
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription } from "@/components/ui/toast";
-import JobsHeader from "@/components/jobs/JobsHeader";
-import JobsSearchFilters from "@/components/jobs/JobsSearchFilters";
-import JobsStats from "@/components/jobs/JobsStats";
-import JobsList from "@/components/jobs/JobsList";
+import {
+  ToastProvider,
+  ToastViewport,
+  Toast,
+  ToastTitle,
+  ToastDescription,
+} from '@/components/ui/toast';
+import JobsHeader from '@/components/jobs/JobsHeader';
+import JobsSearchFilters from '@/components/jobs/JobsSearchFilters';
+import JobsStats from '@/components/jobs/JobsStats';
+import JobsList from '@/components/jobs/JobsList';
 
 interface Job {
   _id: string;
@@ -39,9 +45,18 @@ export default function JobsPage() {
   const [duration, setDuration] = useState('');
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [toastState, setToastState] = useState<{ open: boolean; title: string; description: string; variant?: "default" | "destructive" | "success" }>({ open: false, title: "", description: "", variant: "default" });
+  const [toastState, setToastState] = useState<{
+    open: boolean;
+    title: string;
+    description: string;
+    variant?: 'default' | 'destructive' | 'success';
+  }>({ open: false, title: '', description: '', variant: 'default' });
 
-  const showToast = (title: string, description: string, variant: "default" | "destructive" | "success" = "default") => {
+  const showToast = (
+    title: string,
+    description: string,
+    variant: 'default' | 'destructive' | 'success' = 'default'
+  ) => {
     setToastState({ open: true, title, description, variant });
     setTimeout(() => setToastState({ ...toastState, open: false }), 3000);
   };
@@ -55,20 +70,20 @@ export default function JobsPage() {
         ...(search && { search }),
         ...(location && { location }),
         ...(jobType && { jobType }),
-        ...(duration && { duration })
+        ...(duration && { duration }),
       });
 
       const response = await fetch(`/api/jobs?${params}`);
       if (response.ok) {
         const data = await response.json();
-        console.log('API Response:', data); 
-        
+        console.log('API Response:', data);
+
         if (page === 1) {
           setJobs(data.jobs || []);
         } else {
-          setJobs(prev => [...prev, ...(data.jobs || [])]);
+          setJobs((prev) => [...prev, ...(data.jobs || [])]);
         }
-        
+
         setHasMore(data.hasMore || false);
       } else {
         console.error('Failed to fetch jobs:', response.status, response.statusText);
@@ -83,7 +98,7 @@ export default function JobsPage() {
   }, [page, search, location, jobType, duration]);
 
   useEffect(() => {
-    console.log('Fetching jobs...'); 
+    console.log('Fetching jobs...');
     fetchJobs();
   }, [fetchJobs]);
 
@@ -95,21 +110,21 @@ export default function JobsPage() {
 
   const handleLoadMore = () => {
     if (!loading && hasMore) {
-      setPage(prev => prev + 1);
+      setPage((prev) => prev + 1);
     }
   };
 
   const handleApply = () => {
     if (!session) {
-      showToast("Login Required", "Please log in to apply for jobs.", "destructive");
+      showToast('Login Required', 'Please log in to apply for jobs.', 'destructive');
       window.location.href = '/login';
       return;
     }
     if ((session.user as ExtendedUser)?.role !== 'student') {
-      showToast("Access Denied", "Only students can apply for jobs.", "destructive");
+      showToast('Access Denied', 'Only students can apply for jobs.', 'destructive');
       return;
     }
-    showToast("Application Submitted", "Your application was submitted successfully!", "success");
+    showToast('Application Submitted', 'Your application was submitted successfully!', 'success');
   };
 
   const formatDate = (dateString: string) => {
@@ -117,7 +132,7 @@ export default function JobsPage() {
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - date.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays === 1) return '1 day ago';
     if (diffDays < 7) return `${diffDays} days ago`;
     if (diffDays < 30) return `${Math.ceil(diffDays / 7)} weeks ago`;
@@ -157,10 +172,9 @@ export default function JobsPage() {
               <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-8 border border-zinc-700/50 max-w-md mx-auto">
                 <h3 className="text-xl font-bold text-white mb-4">No Jobs Available</h3>
                 <p className="text-zinc-400 mb-6">
-                  {search || location || jobType 
-                    ? "No jobs match your search criteria. Try adjusting your filters." 
-                    : "Be the first to post a job on our platform!"
-                  }
+                  {search || location || jobType
+                    ? 'No jobs match your search criteria. Try adjusting your filters.'
+                    : 'Be the first to post a job on our platform!'}
                 </p>
                 {!session && (
                   <div className="mb-4">
@@ -192,7 +206,7 @@ export default function JobsPage() {
           {/* Load More */}
           {jobs.length > 0 && hasMore && (
             <div className="text-center mt-12">
-              <button 
+              <button
                 onClick={handleLoadMore}
                 disabled={loading}
                 className="bg-gradient-to-r from-zinc-800 to-zinc-700 text-white px-8 py-3 rounded-lg hover:from-zinc-700 hover:to-zinc-600 transition-all duration-200 border border-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed"

@@ -1,9 +1,18 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { ArrowLeft, MapPin, Clock, DollarSign, Building, Calendar, Bookmark, Share2 } from 'lucide-react';
+import {
+  ArrowLeft,
+  MapPin,
+  Clock,
+  DollarSign,
+  Building,
+  Calendar,
+  Bookmark,
+  Share2,
+} from 'lucide-react';
 
 interface Job {
   _id: string;
@@ -16,6 +25,7 @@ interface Job {
   tags: string[];
   createdAt: string;
   postedBy: {
+    _id?: string;
     name: string;
     email: string;
   };
@@ -36,6 +46,12 @@ export default function JobDetailPage() {
   const [jobsList, setJobsList] = useState<Job[]>([]);
   const [bookmarked, setBookmarked] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
+  // Application form state
+  const [note, setNote] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [applied, setApplied] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [recruiterHireCount, setRecruiterHireCount] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -47,6 +63,9 @@ export default function JobDetailPage() {
         if (response.ok) {
           const data = await response.json();
           setJob(data.job);
+          if (typeof data.recruiterHireCount === 'number') {
+            setRecruiterHireCount(data.recruiterHireCount);
+          }
         } else {
           setJob(null);
         }
@@ -79,22 +98,29 @@ export default function JobDetailPage() {
       router.push('/login');
       return;
     }
-
     if ((session.user as ExtendedUser)?.role !== 'student') {
       alert('Only students can apply for jobs');
       return;
     }
-
-    setApplying(true);
+    if (!job) return;
+    setSubmitting(true);
+    setError(null);
     try {
-      // Add application logic here
-      alert('Application submitted successfully!');
-    } catch (error) {
-      console.error('Error applying:', error);
-      alert('Failed to apply');
-    } finally {
-      setApplying(false);
+      const res = await fetch(`/api/jobs/${job._id}/apply`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ note }),
+      });
+      if (res.ok) {
+        setApplied(true);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || 'Failed to apply');
+      }
+    } catch {
+      setError('Failed to apply');
     }
+    setSubmitting(false);
   };
 
   const handleBookmark = () => {
@@ -103,7 +129,6 @@ export default function JobDetailPage() {
       return;
     }
     setBookmarked((prev) => !prev);
-
   };
 
   const handleShare = async () => {
@@ -124,17 +149,17 @@ export default function JobDetailPage() {
   };
 
   const handleDelete = async () => {
-    if (!session || (session.user as ExtendedUser)?.role !== "recruiter") return;
-    if (!window.confirm("Are you sure you want to delete this job?")) return;
+    if (!session || (session.user as ExtendedUser)?.role !== 'recruiter') return;
+    if (!window.confirm('Are you sure you want to delete this job?')) return;
     try {
-      const response = await fetch(`/api/jobs/${job?._id}`, { method: "DELETE" });
+      const response = await fetch(`/api/jobs/${job?._id}`, { method: 'DELETE' });
       if (response.ok) {
-        router.push("/jobs");
+        router.push('/jobs');
       } else {
-        alert("Failed to delete job.");
+        alert('Failed to delete job.');
       }
     } catch {
-      alert("Failed to delete job.");
+      alert('Failed to delete job.');
     }
   };
 
@@ -143,7 +168,7 @@ export default function JobDetailPage() {
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
@@ -188,7 +213,7 @@ export default function JobDetailPage() {
           </Link>
           <h1 className="text-2xl font-bold text-white flex-1">Job Details</h1>
           {/* Edit/Delete buttons for recruiters */}
-          {session?.user && (session.user as ExtendedUser)?.role === "recruiter" && (
+          {session?.user && (session.user as ExtendedUser)?.role === 'recruiter' && (
             <>
               <Link href={`/jobs/${job._id}/edit`}>
                 <button className="ml-4 px-4 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200">
@@ -210,7 +235,7 @@ export default function JobDetailPage() {
           <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
             <div className="flex-1">
               <h1 className="text-3xl font-bold text-white mb-4">{job.title}</h1>
-              
+
               <div className="flex flex-wrap items-center gap-4 mb-4">
                 <div className="flex items-center text-zinc-300">
                   <Building size={18} className="mr-2" />
@@ -238,21 +263,31 @@ export default function JobDetailPage() {
             </div>
 
             <div className="flex flex-col space-y-3">
-              <button
-                onClick={handleApply}
-                disabled={applying}
-                className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-8 py-3 rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-violet-900/30 disabled:opacity-50 font-medium"
-              >
-                {!session ? 'Login to Apply' : applying ? 'Applying...' : 'Apply Now'}
-              </button>
-              
+              {session?.user && (session.user as ExtendedUser)?.role === 'student' && (
+                <button
+                  onClick={handleApply}
+                  disabled={submitting || applied}
+                  className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-8 py-3 rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-violet-900/30 disabled:opacity-50 font-medium"
+                >
+                  {!session
+                    ? 'Login to Apply'
+                    : applied
+                      ? 'Applied'
+                      : submitting
+                        ? 'Applying...'
+                        : 'Apply Now'}
+                </button>
+              )}
+
               <div className="flex space-x-2">
                 <button
                   className={`p-3 rounded-lg transition-colors ${
-                    bookmarked ? "bg-violet-700 text-violet-200" : "bg-zinc-800 hover:bg-zinc-700 text-zinc-300"
+                    bookmarked
+                      ? 'bg-violet-700 text-violet-200'
+                      : 'bg-zinc-800 hover:bg-zinc-700 text-zinc-300'
                   }`}
                   onClick={handleBookmark}
-                  aria-label={bookmarked ? "Remove Bookmark" : "Bookmark"}
+                  aria-label={bookmarked ? 'Remove Bookmark' : 'Bookmark'}
                 >
                   <Bookmark size={20} />
                 </button>
@@ -272,6 +307,36 @@ export default function JobDetailPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
+            {/* Apply Form (Student) */}
+            {session?.user && (session.user as ExtendedUser)?.role === 'student' && !applied && (
+              <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
+                <h2 className="text-lg font-semibold text-white mb-3">
+                  Application Note (Optional)
+                </h2>
+                <textarea
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  rows={4}
+                  maxLength={1000}
+                  placeholder="Add a brief note or cover message to the recruiter"
+                  className="w-full mb-3 px-4 py-3 border border-zinc-600/60 rounded-lg bg-zinc-900/60 text-sm text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-600"
+                />
+                {error && <p className="text-sm text-red-500 mb-2">{error}</p>}
+                <button
+                  onClick={handleApply}
+                  disabled={submitting}
+                  className="px-5 py-2 bg-violet-600 hover:bg-violet-700 disabled:opacity-60 text-white rounded-lg text-sm font-medium"
+                >
+                  {submitting ? 'Submitting...' : 'Submit Application'}
+                </button>
+              </div>
+            )}
+            {applied && (
+              <div className="bg-emerald-600/10 border border-emerald-500/30 text-emerald-400 rounded-lg p-4 text-sm">
+                You have applied to this job. Good luck!
+              </div>
+            )}
+
             {/* Description */}
             <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-800/70 to-violet-900/20 backdrop-blur-2xl rounded-xl p-6 border border-zinc-700/50">
               <h2 className="text-xl font-bold text-white mb-4">Job Description</h2>
@@ -324,7 +389,23 @@ export default function JobDetailPage() {
               <h3 className="text-lg font-bold text-white mb-4">Posted By</h3>
               <div className="space-y-2">
                 <p className="text-white font-medium">{job.postedBy?.name || 'Anonymous'}</p>
-                <p className="text-zinc-400 text-sm">{job.postedBy?.email || 'Contact through platform'}</p>
+                <p className="text-zinc-400 text-sm">
+                  {job.postedBy?.email || 'Contact through platform'}
+                </p>
+                {recruiterHireCount !== null && (
+                  <p className="text-zinc-400 text-xs mt-1">
+                    Hires so far:{' '}
+                    <span className="text-emerald-400 font-semibold">{recruiterHireCount}</span>
+                  </p>
+                )}
+                {session?.user && (session.user as ExtendedUser)?.role === 'student' && (
+                  <Link
+                    href={`/u/${job.postedBy?._id}`}
+                    className="inline-block mt-3 text-violet-400 hover:text-violet-300 text-sm font-medium"
+                  >
+                    View Recruiter Profile
+                  </Link>
+                )}
               </div>
             </div>
 
@@ -333,23 +414,27 @@ export default function JobDetailPage() {
               <h3 className="text-lg font-bold text-white mb-4">Other Jobs</h3>
               <div className="space-y-3 max-h-64 overflow-y-auto">
                 {jobsList
-                  .filter(j => j._id !== job._id)
-                  .map(j => (
-                  <Link
-                    key={j._id}
-                    href={`/jobs/${j._id}`}
-                    className={`block p-3 rounded-lg transition-colors ${
-                      pathname === `/jobs/${j._id}`
-                        ? "bg-violet-900/40 border border-violet-500"
-                        : "bg-zinc-800/50 hover:bg-zinc-700/50"
-                    }`}
-                  >
-                    <h4 className="text-white font-medium text-sm">{j.title}</h4>
-                    <p className="text-zinc-400 text-xs">{j.company} • {j.location}</p>
-                  </Link>
-                ))}
+                  .filter((j) => j._id !== job._id)
+                  .map((j) => (
+                    <Link
+                      key={j._id}
+                      href={`/jobs/${j._id}`}
+                      className={`block p-3 rounded-lg transition-colors ${
+                        pathname === `/jobs/${j._id}`
+                          ? 'bg-violet-900/40 border border-violet-500'
+                          : 'bg-zinc-800/50 hover:bg-zinc-700/50'
+                      }`}
+                    >
+                      <h4 className="text-white font-medium text-sm">{j.title}</h4>
+                      <p className="text-zinc-400 text-xs">
+                        {j.company} • {j.location}
+                      </p>
+                    </Link>
+                  ))}
                 {jobsList.length === 0 && (
-                  <div className="text-zinc-500 text-sm text-center py-4">No other jobs available</div>
+                  <div className="text-zinc-500 text-sm text-center py-4">
+                    No other jobs available
+                  </div>
                 )}
               </div>
               <Link href="/jobs">
@@ -369,7 +454,7 @@ export default function JobDetailPage() {
               <input
                 type="text"
                 readOnly
-                value={typeof window !== "undefined" ? window.location.href : ""}
+                value={typeof window !== 'undefined' ? window.location.href : ''}
                 className="w-full px-3 py-2 rounded bg-zinc-800 text-zinc-200 mb-4"
               />
               <button

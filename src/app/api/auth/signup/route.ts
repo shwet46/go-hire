@@ -17,23 +17,20 @@ export async function POST(request: NextRequest) {
     const user = await createUser(email, password, name, role || 'student', referralCode);
 
     return NextResponse.json(
-      { 
+      {
         message: 'User created successfully',
         user: {
           id: user.id,
           email: user.email,
           name: user.name,
           role: user.role,
-          referralCode: user.referralCode
-        }
+          referralCode: user.referralCode,
+        },
       },
       { status: 201 }
     );
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Internal server error';
-    return NextResponse.json(
-      { error: errorMessage },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

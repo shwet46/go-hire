@@ -1,13 +1,13 @@
-"use client";
-import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { IconLogin, IconLogout, IconMenu2, IconX } from "@tabler/icons-react";
-import Image from "next/image";
-import Link from "next/link";
-import type { JSX } from "react";
+'use client';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { IconLogin, IconLogout, IconMenu2, IconX } from '@tabler/icons-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import type { JSX } from 'react';
 
 function cn(...inputs: (string | undefined | null | boolean)[]) {
-  return inputs.filter(Boolean).join(" ");
+  return inputs.filter(Boolean).join(' ');
 }
 
 export const FloatingNav = ({
@@ -15,7 +15,7 @@ export const FloatingNav = ({
   className,
   isLoggedIn,
   onSignInOut,
-  userRole, 
+  userRole,
 }: {
   navItems: {
     name: string;
@@ -25,7 +25,7 @@ export const FloatingNav = ({
   className?: string;
   isLoggedIn: boolean;
   onSignInOut: () => void;
-  userRole: string; 
+  userRole: string;
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -36,10 +36,10 @@ export const FloatingNav = ({
         setMobileMenuOpen(false);
       }
     }
-    
-    document.addEventListener("mousedown", handleClickOutside);
+
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [mobileMenuRef]);
 
@@ -49,7 +49,7 @@ export const FloatingNav = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
       className={cn(
-        "w-full fixed top-0 left-0 right-0 z-50 bg-white dark:bg-zinc-900 border-b border-neutral-200 dark:border-zinc-700 shadow-sm backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90",
+        'w-full fixed top-0 left-0 right-0 z-50 bg-white dark:bg-zinc-900 border-b border-neutral-200 dark:border-zinc-700 shadow-sm backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90',
         className
       )}
     >
@@ -58,9 +58,9 @@ export const FloatingNav = ({
           {/* Logo/Brand */}
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center">
-              <Image 
-                src="/gohire.png" 
-                alt="GoHire Logo" 
+              <Image
+                src="/gohire.png"
+                alt="GoHire Logo"
                 width={32}
                 height={32}
                 className="h-8 w-auto"
@@ -71,11 +71,7 @@ export const FloatingNav = ({
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((navItem, idx) => (
-              <Link
-                key={`link-${idx}`}
-                href={navItem.link}
-                className="relative group py-2"
-              >
+              <Link key={`link-${idx}`} href={navItem.link} className="relative group py-2">
                 <span className="text-sm font-medium text-neutral-700 dark:text-neutral-200 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
                   {navItem.name}
                 </span>
@@ -116,11 +112,7 @@ export const FloatingNav = ({
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-neutral-700 dark:text-neutral-200 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-neutral-100 dark:hover:bg-zinc-800 focus:outline-none"
             >
-              {mobileMenuOpen ? (
-                <IconX className="h-6 w-6" />
-              ) : (
-                <IconMenu2 className="h-6 w-6" />
-              )}
+              {mobileMenuOpen ? <IconX className="h-6 w-6" /> : <IconMenu2 className="h-6 w-6" />}
             </button>
           </div>
         </div>
@@ -144,18 +136,21 @@ export const FloatingNav = ({
                   href={navItem.link}
                   className="block px-3 py-3 text-base font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-zinc-700 hover:text-violet-600 dark:hover:text-violet-400 rounded-md transition-colors flex items-center space-x-3"
                 >
-                  {navItem.icon && <span className="text-violet-600 dark:text-violet-400">{navItem.icon}</span>}
+                  {navItem.icon && (
+                    <span className="text-violet-600 dark:text-violet-400">{navItem.icon}</span>
+                  )}
                   <span>{navItem.name}</span>
                 </Link>
               ))}
-              
+
               <div className="pt-4">
                 {isLoggedIn && userRole && (
                   <div className="px-3 py-2 mb-2 text-sm font-medium text-neutral-500 dark:text-neutral-400">
-                    Signed in as: <span className="text-violet-600 dark:text-violet-400">{userRole}</span>
+                    Signed in as:{' '}
+                    <span className="text-violet-600 dark:text-violet-400">{userRole}</span>
                   </div>
                 )}
-                
+
                 <button
                   onClick={onSignInOut}
                   className="w-full mt-1 flex items-center px-3 py-3 text-base font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-zinc-700 hover:text-violet-600 dark:hover:text-violet-400 rounded-md transition-colors space-x-3"

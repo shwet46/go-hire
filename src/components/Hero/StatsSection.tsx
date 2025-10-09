@@ -1,49 +1,49 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 import { Briefcase, Users, Building, Trophy, TrendingUp, Star, Zap, Target } from 'lucide-react';
 
 const StatsSection = () => {
   const stats = [
-    { 
-      icon: Users, 
-      label: "Talented Students", 
-      value: "25K+", 
-      description: "Ready for internships & projects",
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/10",
-      borderColor: "border-blue-500/20",
-      hoverBorder: "hover:border-blue-400/40"
+    {
+      icon: Users,
+      label: 'Talented Students',
+      value: '25K+',
+      description: 'Ready for internships & projects',
+      color: 'text-blue-400',
+      bgColor: 'bg-blue-500/10',
+      borderColor: 'border-blue-500/20',
+      hoverBorder: 'hover:border-blue-400/40',
     },
-    { 
-      icon: Building, 
-      label: "Active Startups", 
-      value: "800+", 
-      description: "Hiring through our platform",
-      color: "text-green-400",
-      bgColor: "bg-green-500/10",
-      borderColor: "border-green-500/20",
-      hoverBorder: "hover:border-green-400/40"
+    {
+      icon: Building,
+      label: 'Active Startups',
+      value: '800+',
+      description: 'Hiring through our platform',
+      color: 'text-green-400',
+      bgColor: 'bg-green-500/10',
+      borderColor: 'border-green-500/20',
+      hoverBorder: 'hover:border-green-400/40',
     },
-    { 
-      icon: Briefcase, 
-      label: "Successful Hires", 
-      value: "12K+", 
-      description: "Completed every month",
-      color: "text-purple-400",
-      bgColor: "bg-purple-500/10",
-      borderColor: "border-purple-500/20",
-      hoverBorder: "hover:border-purple-400/40"
+    {
+      icon: Briefcase,
+      label: 'Successful Hires',
+      value: '12K+',
+      description: 'Completed every month',
+      color: 'text-purple-400',
+      bgColor: 'bg-purple-500/10',
+      borderColor: 'border-purple-500/20',
+      hoverBorder: 'hover:border-purple-400/40',
     },
-    { 
-      icon: Trophy, 
-      label: "Cost Savings", 
-      value: "70%", 
-      description: "vs traditional recruiting",
-      color: "text-yellow-400",
-      bgColor: "bg-yellow-500/10",
-      borderColor: "border-yellow-500/20",
-      hoverBorder: "hover:border-yellow-400/40"
-    }
+    {
+      icon: Trophy,
+      label: 'Cost Savings',
+      value: '70%',
+      description: 'vs traditional recruiting',
+      color: 'text-yellow-400',
+      bgColor: 'bg-yellow-500/10',
+      borderColor: 'border-yellow-500/20',
+      hoverBorder: 'hover:border-yellow-400/40',
+    },
   ];
 
   return (
@@ -67,21 +67,30 @@ const StatsSection = () => {
         {stats.map((stat, index) => {
           const StatIcon = stat.icon;
           return (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className={`group relative overflow-hidden text-center p-6 md:p-8 rounded-2xl border transition-all duration-300 hover:transform hover:scale-105 ${stat.borderColor} ${stat.hoverBorder}`}
             >
               {/* Background glow effect on hover */}
-              <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${stat.bgColor}`}></div>
-              
+              <div
+                className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${stat.bgColor}`}
+              ></div>
+
               {/* Icon container */}
-              <div className={`relative flex items-center justify-center w-14 h-14 mx-auto mb-4 rounded-xl transition-all duration-300 ${stat.bgColor} group-hover:scale-110`}>
-                <StatIcon className={`${stat.color} transition-all duration-300 group-hover:scale-110`} size={28} />
+              <div
+                className={`relative flex items-center justify-center w-14 h-14 mx-auto mb-4 rounded-xl transition-all duration-300 ${stat.bgColor} group-hover:scale-110`}
+              >
+                <StatIcon
+                  className={`${stat.color} transition-all duration-300 group-hover:scale-110`}
+                  size={28}
+                />
               </div>
-              
+
               {/* Stats content */}
               <div className="relative">
-                <div className={`text-3xl md:text-4xl font-extrabold mb-1 transition-colors duration-300 ${stat.color}`}>
+                <div
+                  className={`text-3xl md:text-4xl font-extrabold mb-1 transition-colors duration-300 ${stat.color}`}
+                >
                   {stat.value}
                 </div>
                 <div className="text-sm md:text-base font-semibold text-white mb-1 transition-colors duration-300">
@@ -93,8 +102,12 @@ const StatsSection = () => {
               </div>
 
               {/* Subtle corner accent */}
-              <div className={`absolute top-0 right-0 w-16 h-16 opacity-10 group-hover:opacity-20 transition-opacity duration-300`}>
-                <div className={`w-full h-full rounded-bl-2xl ${stat.bgColor.replace('/10', '/30')}`}></div>
+              <div
+                className={`absolute top-0 right-0 w-16 h-16 opacity-10 group-hover:opacity-20 transition-opacity duration-300`}
+              >
+                <div
+                  className={`w-full h-full rounded-bl-2xl ${stat.bgColor.replace('/10', '/30')}`}
+                ></div>
               </div>
             </div>
           );

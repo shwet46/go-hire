@@ -1,17 +1,18 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { 
-  BookOpen, 
-  Briefcase, 
-  Target, 
-  TrendingUp, 
+import {
+  BookOpen,
+  Briefcase,
+  Target,
+  TrendingUp,
   MapPin,
   Building,
   DollarSign,
-  ArrowRight
+  ArrowRight,
+  Users,
 } from 'lucide-react';
 
 interface Job {
@@ -38,7 +39,7 @@ export default function StudentDashboard() {
     totalJobs: 0,
     appliedJobs: 0,
     savedJobs: 0,
-    completedPractices: 0
+    completedPractices: 0,
   });
   const [recentJobs, setRecentJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
@@ -60,14 +61,13 @@ export default function StudentDashboard() {
       if (jobsResponse.ok) {
         jobsData = await jobsResponse.json();
         setRecentJobs(jobsData.jobs || []);
-        setStats(prev => ({ ...prev, totalJobs: jobsData.total || 0 }));
+        setStats((prev) => ({ ...prev, totalJobs: jobsData.total || 0 }));
       }
 
-      // Fetch user-specific stats (replace with real API when available)
       const userStatsResponse = await fetch('/api/user/dashboard-stats');
       if (userStatsResponse.ok) {
         const userStats = await userStatsResponse.json();
-        setStats(prev => ({
+        setStats((prev) => ({
           ...prev,
           appliedJobs: userStats.appliedJobs ?? 0,
           savedJobs: userStats.savedJobs ?? 0,
@@ -85,7 +85,7 @@ export default function StudentDashboard() {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
@@ -104,7 +104,7 @@ export default function StudentDashboard() {
         <div className="absolute -left-64 md:-left-96 top-10 w-96 h-96 bg-violet-600/30 rounded-full blur-3xl"></div>
         <div className="absolute -right-64 md:-right-96 bottom-10 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
       </div>
-      
+
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-12">
         {/* Header */}
         <div className="mb-12">
@@ -112,7 +112,8 @@ export default function StudentDashboard() {
             Welcome back, {session?.user?.name || 'Developer'}!
           </h1>
           <p className="text-zinc-400 text-lg">
-            Ready to find your next opportunity? Here&apos;s what&apos;s happening in your job search.
+            Ready to find your next opportunity? Here&apos;s what&apos;s happening in your job
+            search.
           </p>
         </div>
 
@@ -171,7 +172,10 @@ export default function StudentDashboard() {
               ) : (
                 <div className="space-y-4">
                   {recentJobs.map((job) => (
-                    <div key={job._id} className="p-4 bg-zinc-800/50 rounded-lg border border-zinc-700/50 hover:border-violet-500/50 transition-all duration-200">
+                    <div
+                      key={job._id}
+                      className="p-4 bg-zinc-800/50 rounded-lg border border-zinc-700/50 hover:border-violet-500/50 transition-all duration-200"
+                    >
                       <div className="flex items-start justify-between mb-2">
                         <h3 className="font-semibold text-white">{job.title}</h3>
                         <span className="text-xs text-zinc-400">{formatDate(job.createdAt)}</span>
@@ -219,6 +223,12 @@ export default function StudentDashboard() {
                     <span>Browse Jobs</span>
                   </button>
                 </Link>
+                <Link href="/jobs/applied" className="block">
+                  <button className="w-full border border-zinc-600 text-zinc-300 py-3 px-4 rounded-lg hover:border-violet-500 hover:text-violet-400 hover:bg-violet-500/5 transition-all duration-200 flex items-center justify-center space-x-2">
+                    <Users size={18} />
+                    <span>Applied Jobs</span>
+                  </button>
+                </Link>
                 <Link href="/practice" className="block">
                   <button className="w-full border border-zinc-600 text-zinc-300 py-3 px-4 rounded-lg hover:border-emerald-500 hover:text-emerald-400 hover:bg-emerald-500/5 transition-all duration-200 flex items-center justify-center space-x-2">
                     <Target size={18} />
@@ -237,7 +247,10 @@ export default function StudentDashboard() {
                   <span className="text-emerald-400 font-medium">75%</span>
                 </div>
                 <div className="w-full bg-zinc-700 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-emerald-500 to-emerald-400 h-2 rounded-full" style={{width: '75%'}}></div>
+                  <div
+                    className="bg-gradient-to-r from-emerald-500 to-emerald-400 h-2 rounded-full"
+                    style={{ width: '75%' }}
+                  ></div>
                 </div>
                 <p className="text-zinc-500 text-sm">Add more skills to improve your visibility</p>
               </div>

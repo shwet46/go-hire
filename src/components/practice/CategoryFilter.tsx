@@ -13,7 +13,11 @@ interface CategoryFilterProps {
   onCategoryChange: (category: string) => void;
 }
 
-export default function CategoryFilter({ categories, selectedCategory, onCategoryChange }: CategoryFilterProps) {
+export default function CategoryFilter({
+  categories,
+  selectedCategory,
+  onCategoryChange,
+}: CategoryFilterProps) {
   return (
     <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
       {categories.map(({ id, name, icon: Icon }) => (

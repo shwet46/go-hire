@@ -20,9 +20,12 @@ interface ResourceCardProps {
 export default function ResourceCard({ resource }: ResourceCardProps) {
   const getDifficultyColor = (difficulty: string) => {
     const d = difficulty?.toLowerCase();
-    if (d.includes('beginner') || d.includes('easy')) return 'bg-green-500/20 text-green-300 border-green-500/30';
-    if (d.includes('intermediate') || d.includes('medium')) return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
-    if (d.includes('advanced') || d.includes('hard')) return 'bg-red-500/20 text-red-300 border-red-500/30';
+    if (d.includes('beginner') || d.includes('easy'))
+      return 'bg-green-500/20 text-green-300 border-green-500/30';
+    if (d.includes('intermediate') || d.includes('medium'))
+      return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
+    if (d.includes('advanced') || d.includes('hard'))
+      return 'bg-red-500/20 text-red-300 border-red-500/30';
     return 'bg-violet-500/20 text-violet-300 border-violet-500/30';
   };
 
@@ -39,23 +42,34 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
           {resource.name}
         </h3>
         {resource.url && (
-          <a href={resource.url} target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-violet-400">
+          <a
+            href={resource.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-zinc-400 hover:text-violet-400"
+          >
             <ExternalLink size={18} />
           </a>
         )}
       </div>
-      
+
       <p className="text-zinc-400 text-sm mb-3 line-clamp-3">{resource.description}</p>
 
       <div className="flex flex-wrap gap-2 mb-3">
-        <span className="text-xs bg-zinc-700/50 text-zinc-300 px-2 py-1 rounded-md">{resource.type}</span>
+        <span className="text-xs bg-zinc-700/50 text-zinc-300 px-2 py-1 rounded-md">
+          {resource.type}
+        </span>
         {resource.difficulty && (
-          <span className={`text-xs px-2 py-1 rounded-md border ${getDifficultyColor(resource.difficulty)}`}>
+          <span
+            className={`text-xs px-2 py-1 rounded-md border ${getDifficultyColor(resource.difficulty)}`}
+          >
             {resource.difficulty}
           </span>
         )}
         {resource.price && (
-          <span className={`text-xs px-2 py-1 rounded-md ${getPriceColor(resource.price)}`}>{resource.price}</span>
+          <span className={`text-xs px-2 py-1 rounded-md ${getPriceColor(resource.price)}`}>
+            {resource.price}
+          </span>
         )}
       </div>
 

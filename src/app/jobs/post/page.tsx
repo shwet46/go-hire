@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
@@ -25,14 +25,14 @@ export default function PostJobPage() {
   const [tagInput, setTagInput] = useState('');
 
   const [form, setForm] = useState<JobForm>({
-    title: "",
-    company: "",
-    location: "",
-    type: "",
-    salary: "",
-    description: "",
-    tags: "",
-    duration: "",
+    title: '',
+    company: '',
+    location: '',
+    type: '',
+    salary: '',
+    description: '',
+    tags: '',
+    duration: '',
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -40,18 +40,18 @@ export default function PostJobPage() {
   };
 
   const handleTypeChange = (type: string) => {
-    setForm(prev => ({ ...prev, type }));
+    setForm((prev) => ({ ...prev, type }));
   };
 
   const addTag = () => {
     if (tagInput.trim() && !tags.includes(tagInput.trim())) {
-      setTags(prev => [...prev, tagInput.trim()]);
+      setTags((prev) => [...prev, tagInput.trim()]);
       setTagInput('');
     }
   };
 
   const removeTag = (tagToRemove: string) => {
-    setTags(prev => prev.filter(tag => tag !== tagToRemove));
+    setTags((prev) => prev.filter((tag) => tag !== tagToRemove));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -61,7 +61,10 @@ export default function PostJobPage() {
     try {
       const jobData = {
         ...form,
-        tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
+        tags: form.tags
+          .split(',')
+          .map((t) => t.trim())
+          .filter(Boolean),
       };
 
       const response = await fetch('/api/jobs', {
@@ -76,41 +79,41 @@ export default function PostJobPage() {
 
       if (response.ok) {
         toast({
-          variant: "success",
-          title: "Success!",
-          description: "Your job has been posted successfully and is now live.",
+          variant: 'success',
+          title: 'Success!',
+          description: 'Your job has been posted successfully and is now live.',
         });
-        
+
         // Reset form
         setForm({
-          title: "",
-          company: "",
-          location: "",
-          type: "",
-          salary: "",
-          description: "",
-          tags: "",
-          duration: "",
+          title: '',
+          company: '',
+          location: '',
+          type: '',
+          salary: '',
+          description: '',
+          tags: '',
+          duration: '',
         });
         setTags([]);
         setTagInput('');
-        
+
         // Delay navigation to show toast
         setTimeout(() => {
           router.push('/jobs');
         }, 2000);
       } else {
         toast({
-          variant: "destructive",
-          title: "Error",
+          variant: 'destructive',
+          title: 'Error',
           description: data.error || 'Failed to post job. Please try again.',
         });
       }
     } catch (error) {
       console.error('Error posting job:', error);
       toast({
-        variant: "destructive",
-        title: "Error",
+        variant: 'destructive',
+        title: 'Error',
         description: 'An unexpected error occurred. Please try again.',
       });
     } finally {
@@ -129,7 +132,7 @@ export default function PostJobPage() {
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 py-12">
           <PageHeader title="Post a New Job" />
-          
+
           <JobForm
             formData={form}
             tags={tags}

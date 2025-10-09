@@ -1,8 +1,8 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { useRouter, useParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 interface JobForm {
   title: string;
@@ -20,23 +20,23 @@ export default function EditJobPage() {
   const router = useRouter();
   const params = useParams();
   const [form, setForm] = useState<JobForm>({
-    title: "",
-    company: "",
-    location: "",
-    type: "",
-    salary: "",
-    description: "",
-    tags: "",
-    duration: "",
+    title: '',
+    company: '',
+    location: '',
+    type: '',
+    salary: '',
+    description: '',
+    tags: '',
+    duration: '',
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    if (status === "loading") return;
-    if (!session || (session.user as { role?: string })?.role !== "recruiter") {
-      router.push("/login");
+    if (status === 'loading') return;
+    if (!session || (session.user as { role?: string })?.role !== 'recruiter') {
+      router.push('/login');
       return;
     }
     fetchJob();
@@ -52,20 +52,20 @@ export default function EditJobPage() {
         const data = await res.json();
         const job = data.job;
         setForm({
-          title: job.title || "",
-          company: job.company || "",
-          location: job.location || "",
-          type: job.type || "",
-          salary: job.salary || "",
-          description: job.description || "",
-          tags: (job.tags || []).join(", "),
-          duration: job.duration || "",
+          title: job.title || '',
+          company: job.company || '',
+          location: job.location || '',
+          type: job.type || '',
+          salary: job.salary || '',
+          description: job.description || '',
+          tags: (job.tags || []).join(', '),
+          duration: job.duration || '',
         });
       } else {
-        setError("Job not found");
+        setError('Job not found');
       }
     } catch {
-      setError("Failed to fetch job");
+      setError('Failed to fetch job');
     }
     setLoading(false);
   };
@@ -77,24 +77,27 @@ export default function EditJobPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
-    setError("");
+    setError('');
     try {
       const jobId = Array.isArray(params.id) ? params.id[0] : params.id;
       const res = await fetch(`/api/jobs/${jobId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
-          tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
+          tags: form.tags
+            .split(',')
+            .map((t) => t.trim())
+            .filter(Boolean),
         }),
       });
       if (res.ok) {
         router.push(`/jobs/${jobId}`);
       } else {
-        setError("Failed to update job");
+        setError('Failed to update job');
       }
     } catch {
-      setError("Failed to update job");
+      setError('Failed to update job');
     }
     setSaving(false);
   };
@@ -111,7 +114,10 @@ export default function EditJobPage() {
     <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-violet-950/20 pt-20">
       <div className="max-w-2xl mx-auto px-4 py-12">
         <h1 className="text-3xl font-bold text-white mb-6">Edit Job</h1>
-        <form onSubmit={handleSubmit} className="space-y-6 bg-zinc-900/80 rounded-xl p-8 border border-zinc-700/50">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6 bg-zinc-900/80 rounded-xl p-8 border border-zinc-700/50"
+        >
           <div>
             <label className="block text-zinc-300 mb-2">Title</label>
             <input
@@ -203,7 +209,10 @@ export default function EditJobPage() {
           </div>
           <div className="flex justify-end gap-4">
             <Link href={`/jobs/${params.id}`}>
-              <button type="button" className="px-6 py-3 border border-zinc-600 text-zinc-300 rounded-lg hover:border-zinc-500 transition-colors">
+              <button
+                type="button"
+                className="px-6 py-3 border border-zinc-600 text-zinc-300 rounded-lg hover:border-zinc-500 transition-colors"
+              >
                 Cancel
               </button>
             </Link>
@@ -212,7 +221,7 @@ export default function EditJobPage() {
               disabled={saving}
               className="px-6 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-violet-900/30 disabled:opacity-50"
             >
-              {saving ? "Saving..." : "Save Changes"}
+              {saving ? 'Saving...' : 'Save Changes'}
             </button>
           </div>
           {error && <div className="text-red-400 mt-4">{error}</div>}

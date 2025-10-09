@@ -1,12 +1,20 @@
-import React from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "../../styles/datepicker-dark.css";
+import React from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import '../../styles/datepicker-dark.css';
 
 interface ExperienceForm {
   title: string;
   company: string;
-  employmentType: 'full-time' | 'part-time' | 'internship' | 'freelance' | 'contract' | 'temporary' | 'volunteer' | 'other';
+  employmentType:
+    | 'full-time'
+    | 'part-time'
+    | 'internship'
+    | 'freelance'
+    | 'contract'
+    | 'temporary'
+    | 'volunteer'
+    | 'other';
   location?: string;
   startDate: string;
   endDate?: string;
@@ -25,7 +33,10 @@ export default function ExperienceSection({ experiences, setExperiences }: Props
     <div className="border-b border-gray-200 dark:border-zinc-800 pb-6">
       <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Experience</h2>
       {experiences.map((exp, idx) => (
-        <div key={idx} className="mb-6 p-4 bg-gray-50 dark:bg-zinc-800 rounded-lg border border-gray-200 dark:border-zinc-700">
+        <div
+          key={idx}
+          className="mb-6 p-4 bg-gray-50 dark:bg-zinc-800 rounded-lg border border-gray-200 dark:border-zinc-700"
+        >
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <input
               type="text"
@@ -33,7 +44,7 @@ export default function ExperienceSection({ experiences, setExperiences }: Props
               placeholder="Title (required)"
               value={exp.title}
               required
-              onChange={e => {
+              onChange={(e) => {
                 const newExps = [...experiences];
                 newExps[idx].title = e.target.value;
                 setExperiences(newExps);
@@ -46,7 +57,7 @@ export default function ExperienceSection({ experiences, setExperiences }: Props
               placeholder="Company (required)"
               value={exp.company}
               required
-              onChange={e => {
+              onChange={(e) => {
                 const newExps = [...experiences];
                 newExps[idx].company = e.target.value;
                 setExperiences(newExps);
@@ -57,7 +68,7 @@ export default function ExperienceSection({ experiences, setExperiences }: Props
               name="employmentType"
               value={exp.employmentType}
               required
-              onChange={e => {
+              onChange={(e) => {
                 const newExps = [...experiences];
                 newExps[idx].employmentType = e.target.value as ExperienceForm['employmentType'];
                 setExperiences(newExps);
@@ -79,7 +90,7 @@ export default function ExperienceSection({ experiences, setExperiences }: Props
               name="location"
               placeholder="Location"
               value={exp.location || ''}
-              onChange={e => {
+              onChange={(e) => {
                 const newExps = [...experiences];
                 newExps[idx].location = e.target.value;
                 setExperiences(newExps);
@@ -90,9 +101,9 @@ export default function ExperienceSection({ experiences, setExperiences }: Props
               <label className="block text-gray-600 dark:text-gray-300 mb-1">Start Date</label>
               <DatePicker
                 selected={exp.startDate ? new Date(exp.startDate) : null}
-                onChange={date => {
+                onChange={(date) => {
                   const newExps = [...experiences];
-                  newExps[idx].startDate = date ? date.toISOString().split("T")[0] : "";
+                  newExps[idx].startDate = date ? date.toISOString().split('T')[0] : '';
                   setExperiences(newExps);
                 }}
                 dateFormat="yyyy-MM-dd"
@@ -106,9 +117,9 @@ export default function ExperienceSection({ experiences, setExperiences }: Props
               <label className="block text-gray-600 dark:text-gray-300 mb-1">End Date</label>
               <DatePicker
                 selected={exp.endDate ? new Date(exp.endDate) : null}
-                onChange={date => {
+                onChange={(date) => {
                   const newExps = [...experiences];
-                  newExps[idx].endDate = date ? date.toISOString().split("T")[0] : "";
+                  newExps[idx].endDate = date ? date.toISOString().split('T')[0] : '';
                   setExperiences(newExps);
                 }}
                 dateFormat="yyyy-MM-dd"
@@ -123,7 +134,7 @@ export default function ExperienceSection({ experiences, setExperiences }: Props
               <input
                 type="checkbox"
                 checked={exp.isCurrent || false}
-                onChange={e => {
+                onChange={(e) => {
                   const newExps = [...experiences];
                   newExps[idx].isCurrent = e.target.checked;
                   setExperiences(newExps);
@@ -138,7 +149,7 @@ export default function ExperienceSection({ experiences, setExperiences }: Props
               name="description"
               placeholder="Description"
               value={exp.description || ''}
-              onChange={e => {
+              onChange={(e) => {
                 const newExps = [...experiences];
                 newExps[idx].description = e.target.value;
                 setExperiences(newExps);
@@ -153,7 +164,7 @@ export default function ExperienceSection({ experiences, setExperiences }: Props
               name="skillsUsed"
               placeholder="Skills Used (comma separated)"
               value={exp.skillsUsed || ''}
-              onChange={e => {
+              onChange={(e) => {
                 const newExps = [...experiences];
                 newExps[idx].skillsUsed = e.target.value;
                 setExperiences(newExps);
@@ -166,16 +177,30 @@ export default function ExperienceSection({ experiences, setExperiences }: Props
               type="button"
               className="text-xs text-red-500 hover:underline px-2 py-1"
               onClick={() => setExperiences(experiences.filter((_, i) => i !== idx))}
-            >Remove</button>
+            >
+              Remove
+            </button>
           </div>
         </div>
       ))}
       <button
         type="button"
-        onClick={() => setExperiences([
-          ...experiences,
-          { title: '', company: '', employmentType: 'full-time', location: '', startDate: '', endDate: '', isCurrent: false, description: '', skillsUsed: '' }
-        ])}
+        onClick={() =>
+          setExperiences([
+            ...experiences,
+            {
+              title: '',
+              company: '',
+              employmentType: 'full-time',
+              location: '',
+              startDate: '',
+              endDate: '',
+              isCurrent: false,
+              description: '',
+              skillsUsed: '',
+            },
+          ])
+        }
         className="mt-2 px-5 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors font-medium shadow-sm"
       >
         Add Experience

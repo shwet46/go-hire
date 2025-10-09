@@ -23,7 +23,7 @@ export default function JobsList({
   loading,
   session,
   handleApply,
-  formatDate
+  formatDate,
 }: {
   jobs: Job[];
   loading: boolean;
@@ -67,7 +67,7 @@ export default function JobsList({
                       <Clock size={16} />
                       <span>{formatDate(job.createdAt)}</span>
                     </div>
-                    {job.type === "internship" && job.duration && (
+                    {job.type === 'internship' && job.duration && (
                       <div className="flex items-center space-x-1">
                         <span className="font-semibold">Duration:</span>
                         <span>{job.duration}</span>
@@ -86,9 +86,7 @@ export default function JobsList({
                 </div>
               </div>
 
-              <p className="text-zinc-400 mb-4 line-clamp-2">
-                {job.description}
-              </p>
+              <p className="text-zinc-400 mb-4 line-clamp-2">{job.description}</p>
 
               <div className="flex items-center justify-between">
                 <div className="flex flex-wrap gap-2">
@@ -101,9 +99,7 @@ export default function JobsList({
                     </span>
                   ))}
                   {job.tags && job.tags.length > 3 && (
-                    <span className="text-xs text-zinc-500">
-                      +{job.tags.length - 3} more
-                    </span>
+                    <span className="text-xs text-zinc-500">+{job.tags.length - 3} more</span>
                   )}
                 </div>
               </div>
@@ -115,11 +111,11 @@ export default function JobsList({
                   View Details
                 </button>
               </Link>
-              <button 
+              <button
                 onClick={() => handleApply(job._id)}
                 className={`px-6 py-2 rounded-lg transition-all duration-200 w-full lg:w-auto ${
-                  !session 
-                    ? 'border border-emerald-600 text-emerald-300 hover:border-emerald-500 hover:text-emerald-400' 
+                  !session
+                    ? 'border border-emerald-600 text-emerald-300 hover:border-emerald-500 hover:text-emerald-400'
                     : 'border border-zinc-600 text-zinc-300 hover:border-emerald-500 hover:text-emerald-400'
                 }`}
               >

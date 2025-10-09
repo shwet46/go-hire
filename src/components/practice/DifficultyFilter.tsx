@@ -5,14 +5,17 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 interface DifficultyFilterProps {
   selectedDifficulty: string;
   onDifficultyChange: (difficulty: string) => void;
 }
 
-export default function DifficultyFilter({ selectedDifficulty, onDifficultyChange }: DifficultyFilterProps) {
+export default function DifficultyFilter({
+  selectedDifficulty,
+  onDifficultyChange,
+}: DifficultyFilterProps) {
   const difficulties = ['all', 'beginner', 'intermediate', 'advanced'];
 
   return (
